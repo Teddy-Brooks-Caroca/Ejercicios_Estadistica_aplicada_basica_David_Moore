@@ -757,7 +757,6 @@ cercanas al 50% y durar más de dos años."
 
 # (a) Dibuja un diagrama temporal con los tiempos de las ganadoras.
 
-
 ejercicio_1_21 <- read.csv("ejercicio_1_21_maraton.csv")
 
 str(ejercicio_1_21)
@@ -1097,3 +1096,5 @@ Estos valores atípicos reflejan diferencias significativas en el acceso a medio
 de comunicación entre los países europeos. Malta y Mónaco tienen valores excepcionalmente 
 altos, posiblemente debido a su pequeño tamaño y alta densidad poblacional, mientras 
 que los países balcánicos muestran valores notablemente más bajos."
+
+# :::::::::::::::::::::::::::::::::::::::::::::::::::: FIN SECCIÓN ::::::::::::::::::::::::::::::::::::::::::::::::::::

@@ -45,13 +45,5 @@ source("SECCIÓN_1_2_Gráficos_de_distribuciones.R")
 
 ---
 
-He mejorado el formato del README con:
-- Mejor estructuración de secciones
-- Espaciado más limpio
-- Eliminación de líneas vacías innecesarias
-- Formato de código más legible
-- Mantenimiento de todos los elementos originales pero con mejor presentación
-
-
 
 

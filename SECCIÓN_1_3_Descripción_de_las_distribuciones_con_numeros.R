@@ -496,8 +496,8 @@ stem(ejercicio_1_36$PIB_per_capita.dólares.)
 # una descripción completa—
 
 "El grafico presenta una forma asimétrica a la derecha, lo que significa que el PIB esta a valores pequeños. 
-Su centro de ubica cercano a los 8000, ademas de haberlo calculado por computasora, lo podemos ver en la forma
-, y si excluimos los valores de la cola la dispersión va desde los < 1000 hasta los  25000"
+Su centro de ubica cercano a los 8000, ademas de haberlo calculado por computasora, lo podemos ver en la forma, 
+y si excluimos los valores de la cola la dispersión va desde los < 1000 hasta los  25000"
 
 # **************************************************
 # PREGUNTA 1.37 - Salarios en empresa de consultoría
@@ -688,13 +688,15 @@ boxplot(Educacion_UE$X.PIB_educacion,
 "
 Bloque Unión Europea:
 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  3.100   5.125   5.800   5.957   6.950   8.400 
+  Min.    1st Qu.  Median    Mean    3rd Qu.    Max.
+  ----------------------------------------------------
+  3.100   5.125    5.800     5.957   6.950      8.400 
 
 Bloque Europa del este:
 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  3.600   5.150   5.800   5.573   6.150   6.700 
+   Min.    1st Qu.  Median    Mean    3rd Qu.    Max.
+   --------------------------------------------------
+   3.600   5.150    5.800     5.573   6.150      6.700 
 
 
 Aunque ambos bloques comparten la misma mediana (5.8%), la Unión Europea muestra 
@@ -717,10 +719,45 @@ sugiriendo políticas educativas más estandarizadas en la región.
 #        5,42 5,47 5,63 5,34 5,46 5,30 5,75 5,68 5,85
 
 # (a) Representa gráficamente los datos de la manera que consideres más conveniente.
+
+ejercicio_1_41 <- read.csv("ejercicio_1_41_densidad.csv")
+
+View(ejercicio_1_41)
+
+hist(ejercicio_1_41$Valor,
+     main = "Densidad de la Tierra (Cavendish, 1798)",
+     xlab = "Densidad (múltiplo densidad agua)",
+     ylab = "Frecuencia",
+     col = "lightblue",
+     border = "darkblue")
+
+boxplot(ejercicio_1_41$Valor,
+        main = "Densidad de la Tierra",
+        ylab = "Densidad",
+        col = "lightgreen")
+
+
 # (b) La forma de la distribución, ¿permite utilizar ¯x y s para describirla?
+
+"Teniendo una forma casi simetrica, podemos utilizar la media y desviación para describir"
+
 # (c) Halla ¯x y s.
+
+mean(ejercicio_1_41$Valor)
+
+sd(ejercicio_1_41$Valor)
+
+"
+Media = 5.447931
+Desviación = 0.2209457
+"
 # (d) Teniendo en cuenta todo lo que acabas de hacer, ¿cuál es tu estimación de
-#     la densidad de la Tierra a partir de estas mediciones?
+# la densidad de la Tierra a partir de estas mediciones?
+
+"Nuestra mejor estimación es la media, ya que En una distribución simétrica sin valores 
+atípicos significativos, la media es el mejor estimador del valor verdadero. Cavendish 
+obtuvo 29 mediciones consistentes, y la media de 5.448 veces la densidad del agua representa 
+la mejor estimación puntual."
 
 # **************************************************
 # PREGUNTA 1.42 - ¯x y s no son suficientes
@@ -733,8 +770,43 @@ sugiriendo políticas educativas más estandarizadas en la región.
 # DatosB: 6,58 5,76 7,71 8,84 8,47 7,04 5,25 5,56 7,91 6,89 12,50
 
 # (a) Utiliza tu calculadora y halla ¯x y s de los siguientes conjuntos de datos.
+
+datos_A <- c(9.14, 8.14, 8.74, 8.77, 9.26, 8.10, 6.13, 3.10, 9.13, 7.26, 4.74)
+datos_B <- c(6.58, 5.76, 7.71, 8.84, 8.47, 7.04, 5.25, 5.56, 7.91, 6.89, 12.50)
+
+mean(datos_A)
+mean(datos_B)
+
+sd(datos_A)
+sd(datos_B)
+
+"
+media = 7.500
+desviacion = 2.03
+
+"
 # (b) A continuación dibuja un diagrama de tallos de cada uno de ellos.
+
+library(aplpack)
+
+datos_A_enteros <- round(datos_A * 10) #Multiplicamos para no enredarnos
+datos_B_enteros <- round(datos_B * 10)
+
+
+stem(datos_A_enteros, scale = 2)
+stem(datos_B_enteros,scale = 2)
+
+stem.leaf.backback(datos_A_enteros,datos_B_enteros)
+
+
 # (c) Comenta la forma de cada distribución.
+
+"Los datos A tienen una distribución con valores principalmente altos (entre 8 y 9) 
+y solo un valor muy bajo (3.10), mostrando una asimetría hacia la izquierda. En cambio, 
+los datos B tienen la mayoría de valores concentrados en el rango medio (5 a 8) pero 
+con un valor extremadamente alto (12.50), creando una asimetría muy marcada hacia la derecha. 
+Aunque ambos conjuntos comparten la misma media y desviación típica, sus formas son 
+completamente opuestas, demostrando que estas medidas no capturan la forma real de la distribución."
 
 # **************************************************
 # PREGUNTA 1.43 - Porcentaje de gente mayor de 65 años (EEUU)
@@ -745,7 +817,23 @@ sugiriendo políticas educativas más estandarizadas en la región.
 # a estos datos.
 
 # (a) Como descripción numérica breve, ¿qué prefieres, los cinco números resumen o ¯x y s? ¿Por qué?
+
+"Considernado que tenemos la presencia de observaciones atípicas, es preferible los cinco núme
+ros resumen"
+
 # (b) Calcula la descripción que prefieras.
+
+ejercicio_1_43 <- read.csv("ejercicio_1_43_mayores_65.csv")
+
+View(ejercicio_1_43)
+
+summary(ejercicio_1_43$Porcentaje)
+
+"
+Min.   1st Qu.  Median    Mean    3rd Qu.    Max. 
+--------------------------------------------------
+5.20   11.45    12.70     12.71   13.80      18.50 
+"
 
 # **************************************************
 # PREGUNTA 1.44 - Rendimientos de acciones Philip Morris
@@ -767,19 +855,110 @@ sugiriendo políticas educativas más estandarizadas en la región.
 
 # (a) Dibuja un diagrama de tallos o un histograma con estos datos. ¿Cómo has
 #     decidido qué representación gráfica utilizar?
+
+ejercicio_1_44 <- read.csv("ejercicio_1_44_rendimientos.csv")
+
+View(ejercicio_1_44)
+
+hist(ejercicio_1_44$Rendimiento,
+     main = "Rendimientos de acciones Philip Morris",
+     xlab = "Rendimiento(%)",
+     ylab = "Frecuencia",
+     col = "lightblue",
+     border = "darkblue",
+     breaks = 20,
+     xlim = c(-30,30))
+
 # (b) Existe una clara observación atípica. ¿Cuál es el valor de esta observación?
+
+observaciones_atipicas_negativas <- ejercicio_1_44$Rendimiento[ejercicio_1_44$Rendimiento < -20]
+
+detalles_oa_negativas <- ejercicio_1_44[ejercicio_1_44$Rendimiento == observaciones_atipicas_negativas, ]
+
+print(detalles_oa_negativas)
+
+"
+ Mes       Rendimiento
+ 1993-03  -26.6
+"
 # (c) Después de eliminar la observación atípica, describe la forma, el centro y
-#     la dispersión de los datos.
+# la dispersión de los datos.
+
+ejercicio_1_44_sin_oa <- ejercicio_1_44$Rendimiento[ejercicio_1_44$Rendimiento != -26.6]
+
+hist(ejercicio_1_44_sin_oa,
+     main = "Rendimientos Philip Morris (sin valor atípico)",
+     xlab = "Rendimiento mensual (%)",
+     ylab = "Frecuencia",
+     col = "lightblue",
+     breaks = 15,          
+     xlim = c(-15, 20))
+
+"Tiene una forma que podríamos considerar simétrica, cuyo centro lo podemos ver entre un 3% a 5% de rendimiento mensual
+con una distribución que tenemos desde -15% hasta el 20% de redimiento, lo cual concluir una alta volatilidad en el rendimiento
+en las acciones de Phillips Morris."
+
 # (d) Halla la media y la desviación típica de los rendimientos.
+
+mean(ejercicio_1_44$Rendimiento)
+
+sd(ejercicio_1_44$Rendimiento)
+
+mean(ejercicio_1_44$Rendimiento[ejercicio_1_44$Rendimiento != -26.6])
+
+sd(ejercicio_1_44$Rendimiento[ejercicio_1_44$Rendimiento != -26.6])
+
+resultados <- data.frame(
+  Estadístico = c("Media", "Desviación Estándar"),
+  Con_Outlier = c(mean(ejercicio_1_44$Rendimiento),
+                  sd(ejercicio_1_44$Rendimiento)),
+  Sin_Outlier = c(mean(ejercicio_1_44$Rendimiento[ejercicio_1_44$Rendimiento != -26.6]),
+                  sd(ejercicio_1_44$Rendimiento[ejercicio_1_44$Rendimiento != -26.6]))
+)
+
+print(resultados)
+
+"          
+Estadístico              Con_Outlier Sin_Outlier
+1 Media                  1.878313    2.22561
+2 Desviación Estándar    7.553937    6.90158
+"
 # (e) Si invirtieras 100€ en estas acciones al comienzo de un mes y obtuvieras
-#     el rendimiento medio, ¿cuánto tendrías al final del mes?
+# el rendimiento medio, ¿cuánto tendrías al final del mes?
+
+inversion_inicial <- 100
+rendimiento_medio <- mean(ejercicio_1_44_sin_oa)
+
+capital_final <- inversion_inicial * (1 + rendimiento_medio/100)
+
+"Tendría €102.2256 al final del mes"
+
 # (f) Si invirtieras 100€ en estas acciones al comienzo del peor mes (la observación
 #     atípica), ¿cuánto tendrías al final del mes?
+
+peor_rendimiento <- -26.6
+
+capital_final <- inversion_inicial * (1 + peor_rendimiento/100)
+
+"Tendría €73.4 al final del mes "
+
 # (g) Halla otra vez la media y la desviación típica, pero dejando fuera la observación
-#     atípica. ¿En qué medida afecta esta observación atípica los valores de
-#     la media y de la desviación típica?
+# atípica. ¿En qué medida afecta esta observación atípica los valores de
+# la media y de la desviación típica?
+
+mean(ejercicio_1_44$Rendimiento[ejercicio_1_44$Rendimiento != -26.6])
+
+sd(ejercicio_1_44$Rendimiento[ejercicio_1_44$Rendimiento != -26.6])
+
+"Al ser un valor negativo alto, tanto la media como la desviación estandar aumentan sin las observaciones
+atípicas"
+
 # (h) La eliminación de esta observación atípica, ¿cambiaría el valor de la mediana?
-#     ¿Y los cuartiles? Sin hacer los cálculos, ¿cómo lo puedes saber?
+# ¿Y los cuartiles? Sin hacer los cálculos, ¿cómo lo puedes saber?
+
+"Desde la teoría tanto la mediana como los quartiles no se ven afectados por los valores de las 
+observaciones atípicas, pero si por la cantidad de datos, con lo cual la variación debería ser
+mínima"
 
 # **************************************************
 # PREGUNTA 1.45 - Salarios de atletas (Baltimore Orioles)
@@ -793,6 +972,26 @@ sugiriendo políticas educativas más estandarizadas en la región.
 # 3.089 2.850 2.500 1.950 1.663 1.367 1.333 1.150 900
 # 856 800 800 665 650 450 450 170 170
 
+ejercicio_1_45 <- read.csv("ejercicio_1_45_orioles.csv")
+
+str(ejercicio_1_45)
+
+View(ejercicio_1_45)
+
+hist(ejercicio_1_45$Salario_miles_dolares,
+     main = "Salarios de atletas (Baltimore Orioles)",
+     xlab = "Salario (en miles de dólares)",
+     ylab = "Cantidad de jugadores",
+     col = "lightblue")
+
+summary(ejercicio_1_45$Salario_miles_dolares)
+
+"
+Min.    1st Qu.  Median    Mean    3rd Qu.    Max.
+--------------------------------------------------
+170     800      1663      2555    3600       6495
+"
+
 # **************************************************
 # PREGUNTA 1.46 - Valor neto de un patrimonio
 # **************************************************
@@ -801,7 +1000,22 @@ sugiriendo políticas educativas más estandarizadas en la región.
 # 51.000 y 212.000 €, respectivamente.
 
 # (a) ¿Cuál de estos valores corresponde a la media? ¿Y a la mediana?
+
+ejercicio_1_46 <- read.csv("ejercicio_1_24_estados_europeos.csv")
+
+View(ejercicio_1_46)
+
+mean(ejercicio_1_46$PIB_per_capita.dólares.)
+
+median(ejercicio_1_46$PIB_per_capita.dólares.)
+
+"Si consideramos los valores de 1994 (media = 12591; mediana = 8685) podemos suponer
+que 51000 corresponde a mediana y 212000 a media"
+
 # (b) Justifica tus respuestas.
+
+"Esto es debido a que el valor 212000 puede estar afectado por observaciones atipicas
+o de países con un mayor PIB"
 
 # **************************************************
 # PREGUNTA 1.47 - Salarios millonarios de la NBA
@@ -811,7 +1025,13 @@ sugiriendo políticas educativas más estandarizadas en la región.
 # ganaban más de 2,36 millones de dólares.
 
 # (a) ¿2,36 es la media o la mediana de las ganancias de los jugadores?
+
+"Corresponde a la media de los salarios"
+
 # (b) ¿Por qué?
+
+"Esto es así porque la muestra representa a la proporción de mayor ganacia que no
+necesariamente es la mitad de los jugadores"
 
 # **************************************************
 # PREGUNTA 1.48 - ¿Media o mediana?
@@ -821,10 +1041,22 @@ sugiriendo políticas educativas más estandarizadas en la región.
 # la media o la mediana?
 
 # (a) El Ayuntamiento de Barcelona está considerando la posibilidad de aplicar
-#     un nuevo impuesto sobre los ingresos de los hogares de la ciudad. Para ello,
-#     quiere conocer los ingresos totales de los hogares.
+# un nuevo impuesto sobre los ingresos de los hogares de la ciudad. Para ello,
+# quiere conocer los ingresos totales de los hogares.
+
+"MEDIA
+
+Explicación: El ayuntamiento necesita conocer la suma total de todos los ingresos 
+para calcular la recaudación potencial del impuesto"
+
 # (b) En un estudio sobre el nivel de vida de los barceloneses, un sociólogo
-#     quiere conocer la renta típica de un hogar de la ciudad.
+# quiere conocer la renta típica de un hogar de la ciudad.
+
+"MEDIANA
+
+Explicación: El sociólogo busca un valor 'típico' que represente el centro de la 
+distribución de ingresos. La mediana es más robusta ante valores extremos (outliers) 
+como ingresos muy altos que podrían distorsionar la media."
 
 # **************************************************
 # PREGUNTA 1.49 - Ejercicio sobre desviación típica
@@ -834,7 +1066,29 @@ sugiriendo políticas educativas más estandarizadas en la región.
 # repetidos) de manera que:
 
 # (a) La desviación típica de estos números sea la más pequeña posible.
+
+cuatro_numeros_minimo <- c(5,5,5,5)
+
+sd(cuatro_numeros_minimo)
+
+"Da como resultado 0"
+
 # (b) La desviación típica de estos números sea la mayor posible.
+
+cuatro_numeros_maximo <- c(0,0,10,10)
+
+sd(cuatro_numeros_maximo)
+
+"Da como resultado 5.773503"
+
 # (c) ¿Hay más de una posibilidad en (a) y (b)? Justifica tu respuesta.
+
+"
+Para (a): Sí, hay múltiples posibilidades (cualquier número a tal que 0 ≤ a ≤ 10
+repetido 4 veces).
+
+Para (b): Solo hay una combinación distinta de números (dos 0 y dos 10), aunque 
+hay varias permutaciones de esta combinación. Otras combinaciones (como [0,0,0,10] 
+o [0,10,10,10]) tienen una desviación típica menor."
 
 # :::::::::::::::::::::::::::::::::::::::::::::::::::: FIN SECCIÓN ::::::::::::::::::::::::::::::::::::::::::::::::::::

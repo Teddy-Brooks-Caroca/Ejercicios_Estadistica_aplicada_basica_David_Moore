@@ -1,20 +1,12 @@
-# ```markdown
-
-# \# Ejercicios de Estadística Aplicada Básica 📊
-
-# 
-
-# Este repositorio contiene el desarrollo en \*\*R\*\* de los ejercicios del libro \*\*"Estadística aplicada básica" de David S. Moore (2005)\*\*.  
-
-# El objetivo es organizar los \*\*datos\*\* y \*\*scripts\*\* de cada sección del libro, de manera que sea fácil reproducir y seguir los ejemplos prácticos.
-
-# 
-
 # ---
 
 # 
 
-# \## 📂 Estructura del repositorio
+# \# 📊 Ejercicios en R – \*Estadística Aplicada Básica\* (David S. Moore, 2005)
+
+# 
+
+# Este repositorio contiene la resolución de ejercicios del libro \*\*Estadística Aplicada Básica\*\* de David S. Moore (2005), realizados en \*\*R\*\*.
 
 # 
 
@@ -22,135 +14,105 @@
 
 # 
 
-# ```
+# \* \*\*Carpeta `Archivos/`\*\* → contiene los datos en formato `.csv` de cada ejercicio.
 
 # 
 
-# .
+# &nbsp; \* Ejemplo: `ejercicio\_1\_10\_fondos.csv`, `ejercicio\_1\_12\_mortandad.csv`.
 
-# ├── Archivos/                       # Carpeta con todos los archivos CSV del libro
-
-# │   └── ...
-
-# │
-
-# ├── SECCIÓN\\\_1\\\_2\\\_Gráficos\\\_de\\\_distribuciones.R
-
-# ├── SECCIÓN\\\_1\\\_3\\\_Descripción\\\_de\\\_las\\\_distribuciones\\\_con\\\_numeros.R
-
-# │
-
-# └── README.md
+# \* \*\*Scripts en R\*\* → cada script corresponde a una \*\*sección\*\* de un capítulo del libro.
 
 # 
 
-# ````
+# &nbsp; \* Ejemplo: `SECCIÓN\_1\_2\_Gráficos\_de\_distribuciones.R`, `SECCIÓN\_1\_3\_Descripción\_de\_las\_distribuciones\_con\_numeros.R`.
 
 # 
 
-# \- \*\*`Archivos/`\*\* → Contiene todos los archivos CSV correspondientes a las tablas del libro.  
-
-# \- \*\*Scripts `.R`\*\* → Resolución de los ejercicios de cada sección, con nombres descriptivos.  
-
-# 
-
-# ---
-
-# 
-
-# \## 🚀 Cómo usar este repositorio
-
-# 
-
-# 1\. Clona el repositorio:
-
-# &nbsp;  ```bash
-
-# &nbsp;  git clone https://github.com/tu-usuario/estadistica-moore.git
-
-# &nbsp;  cd estadistica-moore
-
-# ````
-
-# 
-
-# 2\. Abre el script de la sección que quieras trabajar, por ejemplo:
-
-# 
-
-# &nbsp;  ```r
-
-# &nbsp;  file.edit("SECCIÓN\_1\_3\_Descripción\_de\_las\_distribuciones\_con\_numeros.R")
-
-# &nbsp;  ```
-
-# 
-
-# 3\. Si el script usa datos, asegúrate de tener los CSV correspondientes en la carpeta \*\*Archivos/\*\*.
-
-# 
-
-# 4\. Ejecuta el script en \*\*R\*\* o \*\*RStudio\*\*:
-
-# 
-
-# &nbsp;  ```r
-
-# &nbsp;  source("SECCIÓN\_1\_3\_Descripción\_de\_las\_distribuciones\_con\_numeros.R")
-
-# &nbsp;  ```
-
-# 
-
-# ---
-
-# 
-
-# \## 📖 Libro de referencia
-
-# 
-
-# \* Moore, D. S. (2005). \*Estadística aplicada básica\*. Antoni Bosch Editor.
-
-# 
-
-# Este repositorio es solo un apoyo de estudio y práctica personal, no contiene el texto completo del libro.
-
-# 
-
-# ---
-
-# 
-
-# \## 🤝 Contribuciones
-
-# 
-
-# Este proyecto es principalmente de uso personal como cuaderno de estudio, pero si quieres aportar correcciones o ideas, eres bienvenido a hacer un \*\*fork\*\* o abrir un \*\*pull request\*\*.
-
-# 
-
-# ---
-
-# 
-
-# \## 📜 Licencia
-
-# 
-
-# Este repositorio se distribuye bajo la licencia \*\*MIT\*\*, por lo que puedes usarlo y modificarlo libremente.
-
-# Los datos provienen del libro y se utilizan únicamente con fines educativos.
+# \## 📂 Estructura del repositorio
 
 # 
 
 # ```
 
+# ├── Archivos/
+
+# │   ├── ejercicio\_1\_10\_fondos.csv
+
+# │   ├── ejercicio\_1\_12\_mortandad.csv
+
+# │   └── ejercicio\_1\_13\_longitud.csv
+
+# ├── SECCIÓN\_1\_2\_Gráficos\_de\_distribuciones.R
+
+# ├── SECCIÓN\_1\_3\_Descripción\_de\_las\_distribuciones\_con\_numeros.R
+
+# └── ...
+
+# ```
+
+# 
+
+# \## ▶️ Cómo usarlo
+
+# 
+
+# 1\. Clona o descarga este repositorio.
+
+# 2\. Abre \*\*RStudio\*\* o tu editor preferido.
+
+# 3\. Asegúrate de que la carpeta `Archivos/` esté en el mismo directorio que los scripts.
+
+# 4\. Ejecuta el script de la sección que quieras revisar.
+
+# 
+
+# Ejemplo en R:
+
+# 
+
+# ```R
+
+# \# Leer un archivo de datos
+
+# datos <- read.csv("Archivos/ejercicio\_1\_10\_fondos.csv")
+
+# 
+
+# \# Ejecutar un script de sección
+
+# source("SECCIÓN\_1\_2\_Gráficos\_de\_distribuciones.R")
+
+# ```
+
+# 
+
+# \## 📖 Referencia
+
+# 
+
+# \* Moore, D. S. (2005). \*Estadística aplicada básica\*.
+
+# 
+
+# \## ✨ Autor
+
+# 
+
+# \*\*Teddy Brooks Caroca\*\*
+
+# 
+
+# \* \[LinkedIn](https://www.linkedin.com/in/teddy-brooks-caroca/)
+
+# \* \[Medium](https://medium.com/@brooks.teddy)
+
 # 
 
 # ---
 
 # 
+
+
 
 
 

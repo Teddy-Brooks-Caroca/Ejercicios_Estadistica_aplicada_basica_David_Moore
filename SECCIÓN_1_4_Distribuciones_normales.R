@@ -217,8 +217,18 @@ puntuacion_Meritxell <- (680 - 500) / 100
 
 puntuacion_Clara <- (27 - 18) / 6
 
-cat("Puntuación de Meritxell:", puntuacion_Meritxell,"\n")
-cat("Puntuación de Clara: ", puntuacion_Clara)
+resultados_pruebas <- data.frame(
+  Estudiantes = c("Meritxell","Clara"),
+  Puntuaciones = c(puntuacion_Meritxell,puntuacion_Clara)
+)
+
+print(resultados_pruebas)
+
+"
+  Estudiantes Puntuaciones
+1   Meritxell          1.8
+2       Clara          1.5
+"
 
 # (b) Suponiendo que los dos exámenes sean similares, ¿qué estudiante obtuvo 
 # mayor puntuación relativa en comparación con su distribución?

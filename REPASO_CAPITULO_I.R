@@ -1,0 +1,460 @@
+# EJERCICIOS "Estadistica básica aplicada" de David S. Moore (2005)
+
+# CAPÍTULO I "Análisis de distribuciones"
+
+# REPASO CAPÍTULO I
+
+getwd()
+
+setwd("C://Users//brook//OneDrive//Escritorio//Portafolio//Ejercicios_Estadistica_aplicada_b-sica_David_Moore//Archivos")
+
+# **************************************************
+# PREGUNTA 1.72 - Preferencias en la votación
+# **************************************************
+
+# Las preferencias políticas de los españoles dependen de la edad, de los ingresos y del sexo de los votantes. 
+# Una investigadora selecciona una amplia muestra de votantes. De cada uno de ellos, la investigadora 
+# registra el sexo, la edad, los ingresos y si votó al Partido Popular, al Partido Socialista o a otro partido 
+# en las últimas elecciones. 
+
+# (a) De estas variables, ¿cuáles son categóricas y cuáles son cuantitativas?
+
+"
+CATEGÓRICAS: sexo
+CUANTITATIVAS: ingresos, edad
+"
+
+# **************************************************
+# PREGUNTA 1.73 - Armas asesinas
+# **************************************************
+
+# El Anuario Estadístico de 1997 de los Estados Unidos, proporciona datos del FBI sobre asesinatos en 1995. 
+# En ese año, el 55,8% de todos los asesinatos se cometieron con pistolas, el 12,4% con otras armas de fuego, 
+# el 12,6% con armas blancas, el 5,9% con alguna parte del cuerpo (en general las manos y los pies) y el 4,5% 
+# con algún objeto contundente. 
+
+# (a) Representa gráficamente estos datos. 
+
+datos_asesinatos <- data.frame(
+  Tipos_asesinatos = c("Pistolas","Otra arma de fuego","Arma blanca","Parte del cuerpo","Objeto contundente"),
+  Porcentajes = c(55.8,12.4,12.6,5.9,4.5)
+)
+
+print(datos_asesinatos)
+
+pie(datos_asesinatos$Porcentajes,
+    main = "Datos del FBI sobre asesinatos en 1995",
+    labels = datos_asesinatos$Tipos_asesinatos)
+
+write.csv(datos_asesinatos,"ejercicio_1_73_asesinatos.csv")
+
+# (b) ¿Necesitas la categoría de "otros métodos"?
+
+sum(datos_asesinatos$Porcentajes)
+
+datos_asesinatos_corregidos <- data.frame(
+  Tipos_asesinatos = c("Pistolas","Otra arma de fuego","Arma blanca","Parte del cuerpo","Objeto contundente","Otros metodos"),
+  Porcentajes = c(55.8,12.4,12.6,5.9,4.5,8.8)
+)
+
+print(datos_asesinatos_corregidos)
+
+pie(datos_asesinatos_corregidos$Porcentajes,
+    main = "Datos del FBI sobre asesinatos en 1995",
+    labels = datos_asesinatos_corregidos$Tipos_asesinatos)
+
+"La totalidad de los porcentajes tiene como resultado 91.2%, con lo cual falta una fracción
+que puede suplir la categoria 'otros metodos'"
+
+# **************************************************
+# PREGUNTA 1.74 - Nunca en domingo
+# **************************************************
+
+# En la provincia canadiense de Ontario se ha realizado un estudio estadístico sobre el funcionamiento 
+# del sistema de sanidad pública. Los diagramas de barras de la figura 1.27 proceden del estudio de los ingresos 
+# y las altas de los hospitales de Ontario. Estos diagramas muestran el número de pacientes con problemas 
+# de corazón que fueron ingresados y dados de alta cada día de la semana durante un periodo de 2 años.
+
+# (a) Explica por qué no cabe esperar diferencias en el número de ingresos de pacientes con cardiopatías 
+# en los distintos días de la semana. ¿Es ésta una deducción correcta a partir de los datos que se aportan?
+
+install.packages("magick")
+library(magick)
+
+figura_1_27 <- image_read("figura_1_27.png")
+
+print(figura_1_27)
+
+"No esperamos diferencias marcadas porque los eventos cardiovasculares agudos no se programan y deberían 
+ocurrir de forma aproximadamente uniforme a lo largo de la semana. El diagrama de ingresos es casi plano, 
+lo que es compatible con esa idea. Sin embargo, el gráfico por sí solo no demuestra igualdad exacta entre días; 
+solo sugiere que no hay diferencias sustanciales."
+
+# (b) Describe la distribución de las altas. ¿Existe alguna diferencia con la distribución de ingresos? 
+# ¿Cómo se puede explicar esta diferencia?
+
+"Las altas muestran un patrón semanal: muchas de lunes a viernes (con pico el viernes) y muy pocas el fin de semana, 
+especialmente el domingo. A diferencia de los ingresos, que son relativamente uniformes, las altas dependen de procesos 
+organizativos: hay más recursos y trámites disponibles en días hábiles y se tiende a concentrar las altas antes del fin 
+de semana. Por eso, la diferencia entre ambos gráficos responde a la planificación hospitalaria, no a cambios reales en 
+la ocurrencia de cardiopatías."
+
+# **************************************************
+# PREGUNTA 1.75 - De casa a la universidad
+# **************************************************
+
+# El profesor Moore, autor de este libro, que vive a unos kilómetros del campus universitario de la 
+# Universidad de Purdue, ha registrado durante 42 días el tiempo que tarda conduciendo desde su casa hasta 
+# la universidad. He aquí los tiempos (en minutos) correspondientes a 42 días consecutivos:
+
+# 8,25 7,83 8,30 8,42 8,50 8,67 8,17 9,00 9,00 8,17 7,92
+# 9,00 8,50 9,00 7,75 7,92 8,00 8,08 8,42 8,75 8,08 9,75
+# 8,33 7,83 7,92 8,58 7,83 8,42 7,75 7,42 6,75 7,42 8,50
+# 8,67 10,17 8,75 8,58 8,67 9,17 9,08 8,83 8,67
+
+# (a) Dibuja un diagrama de tallos correspondiente a estos datos. (Redondea a décimas de minuto y divide los tallos.) 
+# La distribución de datos, ¿es aproximadamente simétrica, claramente asimétrica o ninguna de las dos cosas? 
+# ¿Existen observaciones atípicas?
+
+ejercicio_1_75 <- read.csv("ejercicio_1_75_tiempos.csv")
+
+View(ejercicio_1_75)
+
+stem(ejercicio_1_75$Valores, scale = 2)
+
+"Si no dividimos  los tallos podemos ver una distribución aproximadamente simétrica, sin embargo al dividir los tallos
+tenemos una curva asimetrica a la izquierda, lo que significa que el doctor demora mas en algunos días, sin embargo debemos considerar
+las observaciones atípicas (10.17)"
+
+# (b) Dibuja un diagrama temporal con estos datos. (Marca en el eje de abscisas los días consecutivos desde el 1 hasta el 42.) 
+# El gráfico no deja entrever ninguna tendencia. De todas formas, se observa que hay un día en el que la duración del 
+# trayecto fue muy corta y dos días en que fue muy larga. Señala estos valores en tu gráfico.
+
+plot(ejercicio_1_75$Día,
+     ejercicio_1_75$Valores,
+     main = "Registro de tiempos",
+     xlab = "Días (consecutivos)",
+     ylab = "Tiempo (en minutos)",
+     type = "o",
+     xaxt = "n",
+     yaxt = "n")
+axis(1, at = ejercicio_1_75$Día, labels = ejercicio_1_75$Día, las = 2, cex.axis = 0.8)
+axis(2, at = ejercicio_1_75$Valores, labels = ejercicio_1_75$Valores, las = 1, cex.axis = 0.8)
+points(which.min(ejercicio_1_75$Valores),
+       min(ejercicio_1_75$Valores), col = "red", pch = 19)
+points(which.max(ejercicio_1_75$Valores),
+       max(ejercicio_1_75$Valores), col = "blue", pch = 19)
+grid()
+
+
+# (c) Las tres observaciones que se salen un poco de la distribución general se pueden explicar. El día que el profesor Moore 
+# tardó muy poco tiempo en llegar a la universidad corresponde al Día de Acción de Gracias (Thanksgiving Day), que en EEUU 
+# es festivo. Los dos días que tardó mucho más de lo normal corresponden, por un lado, a un día en el que ocurrió un accidente 
+# con las inevitables retenciones, y, por otro, a un día en el que se produjeron unas fuertes nevadas que dificultaron la conducción. 
+# Elimina estas tres observaciones y calcula la media y la desviación típica de las restantes 39 observaciones.
+
+ejercicio_1_75 %>%
+  arrange(Valores)
+
+excluir <- ejercicio_1_75$Valores > 9.16
+
+prom_dias <- mean(ejercicio_1_75$Valores)
+des_dias <- sd(ejercicio_1_75$Valores)
+
+prom_dias_cor <- mean(ejercicio_1_75$Valores[!excluir])
+des_dias_cor <- sd(ejercicio_1_75$Valores[!excluir])
+
+
+resultados_dias <- data.frame(
+  Medidas = c("Media", "Desviación típica"),
+  Resultados_con_obs = c(prom_dias,des_dias),
+  Resultados_sin_obs = c(prom_dias_cor,des_dias_cor)
+)
+
+print(resultados_dias)
+
+"
+            Medidas Resultados_con_obs Resultados_sin_obs
+1             Media          8.4004762          8.3007692
+2 Desviación típica          0.6233347          0.5129398
+"
+# (d) Haz un recuento del número de observaciones entre ¯x−s y ¯x+s, entre ¯x−2s y ¯x+2s, y finalmente entre ¯x−3s y ¯x+3s. 
+# Halla el porcentaje de observaciones en cada uno de los intervalos anteriores. Compara estos porcentajes con los que 
+# les correspondería de acuerdo con la regla del 68-95-99,7.
+
+media_tiempos <- mean(ejercicio_1_75$Valores)
+des_tiempos <- sd(ejercicio_1_75$Valores)
+
+# **************************************************
+# PREGUNTA 1.76 - Rendimiento de las acciones
+# **************************************************
+
+# La tabla 1.8 proporciona los rendimientos mensuales de las acciones de Philip Morris para el periodo que va de julio de 1990 
+# a mayo de 1997. Los datos se presentan ordenados cronológicamente empezando con −5,7%, el rendimiento de julio de 1990.
+
+# (a) Dibuja un diagrama temporal con estos datos. Este periodo corresponde a una época de movilizaciones crecientes en contra del tabaco. 
+#     Por tanto, cabe esperar una tendencia decreciente en los rendimientos de las acciones. Sin embargo, también aparece un periodo 
+#     en el cual el valor de las acciones crece de forma rápida. ¿Qué puede haber provocado esta tendencia creciente? 
+#     ¿Qué muestra tu diagrama temporal?
+
+# **************************************************
+# PREGUNTA 1.77 - Nueva variedad de maíz
+# **************************************************
+
+# El maíz es un alimento importante para los animales. De todas formas, este alimento carece de algunos aminoácidos que son esenciales. 
+# Un grupo de científicos desarrolló una nueva variedad que sí contenía dichos aminoácidos a niveles apreciables. 
+# Para comprobar el valor de esta nueva variedad para la alimentación animal se llevó a cabo el siguiente experimento: 
+# a un grupo de 20 pollos de un día se les suministró un pienso que contenía harina de maíz de la nueva variedad. 
+# A otro grupo de 20 pollos (grupo de control) se le alimentó con un pienso idéntico al anterior, aunque no contenía harina de la 
+# variedad mejorada de maíz. Los resultados que se obtuvieron sobre las ganancias de peso de los pollos (en gramos), al cabo de 
+# 21 días de alimentación, fueron los siguientes:
+
+# Variedad normal: 380 321 366 356 361 447 401 375 283 349 402 462 434 403 393 426 356 410 329 399
+# Variedad mejorada: 406 318 467 407 350 384 316 272 427 420 477 392 345 455 360 431 430 339 410 326
+
+# (a) Calcula los cinco números resumen correspondientes a la ganancia de peso de los dos grupos de pollos. 
+#     Para comparar las dos distribuciones, representa los dos diagramas de caja en un mismo gráfico. 
+#     ¿Qué se puede deducir de estos diagramas de caja?
+# (b) En el trabajo original donde aparecieron los datos, los autores calcularon las medias y las desviaciones típicas de cada grupo de pollos. 
+#     ¿Cuáles son sus valores? ¿Qué diferencia hay entre las medias de cada grupo?
+
+# **************************************************
+# PREGUNTA 1.78 - Alfredo Di Stefano
+# **************************************************
+
+# Antes de ir a España y fichar por el Real Madrid en la temporada 1952/53 y posteriormente por el Real Club Deportivo Español de 
+# Barcelona en la temporada 1964/65, Alfredo Di Stefano jugó en varios equipos suramericanos: River Plate de Buenos Aires, 
+# Huracán de Buenos Aires y Millonarios de Bogotá. 
+
+# Mientras jugó en Suramérica el número de goles por temporada en la liga fue:
+# Temporada 1944/45: 0 goles
+# Temporada 1945/46: 11 goles
+# Temporada 1946/47: 27 goles
+# Temporada 1947/48: 14 goles
+# Temporada 1948/49: 24 goles
+# Temporada 1949/50: 23 goles
+# Temporada 1950/51: 32 goles
+# Temporada 1951/52: 19 goles
+
+# Mientras jugó en España el número de goles por temporada en la liga fue:
+# Temporada 1953/54: 28 goles
+# Temporada 1954/55: 25 goles
+# Temporada 1955/56: 24 goles
+# Temporada 1956/57: 31 goles
+# Temporada 1957/58: 19 goles
+# Temporada 1958/59: 23 goles
+# Temporada 1959/60: 12 goles
+# Temporada 1960/61: 21 goles
+# Temporada 1961/62: 10 goles
+# Temporada 1962/63: 12 goles
+# Temporada 1963/64: 11 goles
+# Temporada 1964/65: 7 goles
+# Temporada 1965/66: 4 goles
+
+# (a) Calcula los cinco números resumen correspondientes al tiempo que Di Stefano jugó en Suramérica y al tiempo que jugó en España.
+# (b) Sitúa los dos diagramas de caja en un mismo gráfico y compara las dos distribuciones.
+
+# **************************************************
+# PREGUNTA 1.79 - Los todoterrenos, ¿desperdician combustible?
+# **************************************************
+
+# La tabla 1.2 da los consumos, en litros a los cien kilómetros, de 26 modelos de coches de tamaño medio de 1998. 
+# Aquí presentamos los consumos de 19 modelos de todoterreno de ese año:
+
+# Modelo              Consumo (litros/100km)
+# Acura SLX           12,5
+# Chevrolet Blazer    11,8
+# Chevrolet Tahoe     12,5
+# Dodge Durango       13,9
+# Ford Expedition     13,1
+# Ford Explorer       12,5
+# Honda Passport      11,8
+# Infiniti QX4        12,5
+# Isuzu Trooper       12,5
+# Jeep Grand Cherokee 13,1
+# Jeep Wrangler       12,5
+# Land Rover          14,8
+# Mazda MPV           12,5
+# Mercedes-Benz ML320 11,3
+# Mitsubishi Montero  11,8
+# Nissan Pathfinder   12,5
+# Suzuki Sidekick     9,1
+# Toyota RAV4         9,1
+# Toyota 4Runner      10,8
+
+# (a) Describe gráfica y numéricamente los consumos en carretera de los 4×4. 
+#     ¿Cuáles son las principales características de esta distribución?
+# (b) Dibuja diagramas de caja para comparar la distribución de los automóviles medianos con la de los 4×4. 
+#     ¿Cuáles son las principales diferencias entre estas dos distribuciones?
+
+# **************************************************
+# PREGUNTA 1.80 - Supervivencia de conejillos de Indias
+# **************************************************
+
+# En la tabla 1.9 se presentan los tiempos de supervivencia, en días, de 72 conejillos de Indias después de que se les 
+# inyectara el bacilo de la tuberculosis en un experimento médico. La distribución de los tiempos de supervivencia, 
+# ya sea de máquinas (sobrecargadas), ya sea de personas enfermas (por ejemplo, personas que están bajo tratamiento oncológico), 
+# se suele caracterizar por ser asimétricas hacia la derecha.
+
+# Tiempos de supervivencia (días):
+# 43 45 53 56 56 57 58 66 67 73
+# 74 79 80 80 81 81 81 82 83 83
+# 84 88 89 91 91 92 92 97 99 99
+# 100 100 101 102 102 102 103 104 107 108
+# 109 113 114 118 121 123 126 128 137 138
+# 139 144 145 147 156 162 174 178 179 184
+# 191 198 211 214 243 249 329 380 403 511
+# 522 598
+
+# (a) Representa gráficamente estos datos y describe sus características más destacables. 
+#     La distribución, ¿es asimétrica hacia la derecha?
+# (b) He aquí los resultados del programa estadístico Data Desk correspondientes a estos datos:
+#     Summary statistics for dias
+#     Mean: 141.84722
+#     Median: 102.50000
+#     Cases: 72
+#     StdDev: 109.20863
+#     Min: 43
+#     Max: 598
+#     25th%ile: 82.250000
+#     75th%ile: 153.75000
+#     Explica cómo la relación entre la media y la mediana refleja la asimetría de los datos.
+# (c) Calcula los cinco números resumen y explica brevemente cómo se puede detectar la asimetría de los datos a partir de ellos.
+
+# **************************************************
+# PREGUNTA 1.81 - Acciones calientes
+# **************************************************
+
+# La tasa de rendimiento de una acción se deriva de la variación de su precio y de los dividendos pagados, y normalmente se expresa 
+# como un porcentaje respecto a su valor inicial. A continuación se presentan datos sobre las tasas de rendimiento mensuales de las 
+# acciones de los almacenes Wal-Mart desde el año 1973 hasta el año 1991. Tenemos un total de 228 observaciones.
+
+# (a) Calcula los cinco números resumen de estos datos.
+# (b) Describe las principales características de la distribución.
+# (c) Si tuvieras 1.000 dólares en acciones de Wal-Mart al inicio del mejor mes de los 19 años considerados, 
+#     ¿cuánto dinero habrías ganado al final del mes? Si tuvieras 1.000 dólares en acciones al comienzo del peor mes, 
+#     ¿cuánto valdría tu dinero al final de dicho mes?
+
+# **************************************************
+# PREGUNTA 1.82 - El criterio 1,5 × RI
+# **************************************************
+
+# Un criterio que puedes utilizar para detectar observaciones atípicas de un conjunto de datos es el siguiente:
+# 1. Halla los cuartiles Q1 y Q3 y el recorrido intercuartílico RI = Q3 − Q1.
+# 2. Califica como atípica una observación si se sitúa más a la izquierda de 1,5 × RI desde el primer cuartil o más a la derecha 
+#    de 1,5 × RI a partir del tercer cuartil.
+
+# (a) Halla el recorrido intercuartílico RI correspondiente a los datos del ejercicio anterior.
+# (b) De acuerdo con el criterio que acabamos de ver, ¿existe alguna observación atípica?
+# (c) ¿Crees que este criterio es el mismo que utiliza el programa estadístico para seleccionar las observaciones atípicas?
+
+# **************************************************
+# PREGUNTA 1.83 - Rendimiento de acciones
+# **************************************************
+
+# ¿Crees que ha cambiado el rendimiento de las acciones de Wal-Mart en los 19 años que van desde 1973 hasta 1991? 
+# En el ejercicio 1.81 vimos la distribución de los 228 rendimientos mensuales. Este tipo de descripción no puede responder 
+# a preguntas sobre los cambios acaecidos a lo largo del tiempo.
+
+# (a) ¿Se observa alguna tendencia en los rendimientos mensuales típicos a lo largo de estos años?
+# (b) ¿Se observa alguna tendencia en la dispersión anual de los datos?
+# (c) El diagrama de tallos de la figura 1.28 señala algunas observaciones atípicas. 
+#     ¿Cuáles de éstas se pueden detectar en los diagramas de caja? ¿En qué años ocurren? 
+#     ¿Refuerza esto las conclusiones que has obtenido en el apartado (b)?
+#     ¿Hay alguna observación atípica especialmente sorprendente después de tener en cuenta tu respuesta en (b)?
+
+# **************************************************
+# PREGUNTA 1.84 - Edad de presidentes de EE UU
+# **************************************************
+
+# Julia dice: "La gente ahora vive más años que antes, por tanto, es probable que los nuevos presidentes de EE UU sean mayores 
+# que los anteriores cuando acceden a la Casa Blanca". Juan responde: "No, a los votantes de ahora les gusta la juventud y no 
+# respetan a la gente mayor, por tanto, es probable que los presidentes de EE UU sean más jóvenes que hace unos años".
+
+# (a) Dibuja un gráfico temporal con la edad de los presidentes de EE UU que tienes en la tabla 1.7. 
+#     En el eje de las abscisas sitúalos desde el primero, que corresponde a Washington, hasta el que ocupa el lugar número 42, 
+#     que corresponde a Clinton.
+# (b) ¿Se observa alguna tendencia a lo largo del tiempo?
+# (c) ¿A quién da la razón los datos, a Julia o a Juan?
+
+# **************************************************
+# PREGUNTA 1.85 - Coste de la capacidad de los ordenadores
+# **************************************************
+
+# Los usuarios de informática saben que el coste de la potencia de los ordenadores ha ido disminuyendo de forma muy rápida. 
+# Por ejemplo, el coste de la capacidad, en megabytes, de los mayores discos duros del mercado de los ordenadores personales 
+# para Macintosh es:
+
+# Año     Coste (€)
+# 1992    5,07
+# 1993    2,40
+# 1994    1,14
+# 1995    0,53
+# 1996    0,36
+
+# Estos costes se han ajustado de acuerdo con la inflación de cada año para facilitar su comparación.
+
+# (a) Dibuja un diagrama temporal con estos datos.
+# (b) Señala si observas alguna tendencia.
+
+# **************************************************
+# PREGUNTA 1.86 - Grandes robles y pequeñas bellotas
+# **************************************************
+
+# De las 50 especies de roble de los EE UU, 28 crecen en la costa atlántica y 11 en la costa de California. 
+# Estamos interesados en la distribución del tamaño de las bellotas de los robles. He aquí datos sobre el volumen de bellotas 
+# (en centímetros cúbicos) de estas 39 especies de roble:
+
+# Atlántico: 1,4 3,4 9,1 1,6 10,5 2,5 0,9 4,1 5,9 17,1 6,8 1,8 0,3 0,9 0,8 2,0 1,1 1,6 2,6 0,4 0,6 1,8 4,8 1,1 3,0 1,1 1,1 2,0
+# California: 6,0 7,1 3,6 8,1 3,6 1,8 0,4 1,1 1,2 5,5 1,0
+
+# (a) Dibuja un histograma con los 39 volúmenes de bellota. Describe la distribución. Incluye un resumen numérico adecuado.
+# (b) Compara las distribuciones de las regiones atlántica y californiana con un gráfico y con resúmenes numéricos. 
+#     ¿Qué has hallado?
+
+# **************************************************
+# PREGUNTA 1.87 - Datos sobre Estados europeos
+# **************************************************
+
+# La tabla 1.6 hace referencia a los Estados europeos. Existe mucha más información. 
+# Entra en la página web de la Comisión Europea o acércate a la biblioteca de la Comisión Europea que tengas más próxima 
+# y busca más datos estadísticos sobre los Estados europeos.
+
+# (a) ¿Qué porcentaje representa la población ocupada en agricultura en cada Estado?
+# (b) Compara la inflación de los distintos Estados europeos. Representa gráficamente la información que hayas encontrado. 
+#     Calcula los resúmenes numéricos más adecuados. ¿Cuáles son tus conclusiones?
+
+# **************************************************
+# PREGUNTA 1.88 - Adopción de la cultura anglosajona
+# **************************************************
+
+# La prueba ARSMA (Acculturation Rating Scale for Mexican Americans) es una prueba psicológica que se utiliza para determinar 
+# el nivel de integración cultural de los estadounidenses de origen mexicano. Las puntuaciones posibles van de 1,0 a 5,0. 
+# Los valores más altos de esta escala corresponden a niveles más elevados de adaptación a la cultura anglosajona. 
+# Cuando se efectuó esta prueba con una población experimental, se observó que la distribución de las puntuaciones era 
+# aproximadamente normal con una media de 3,0 y una desviación típica de 0,8. 
+# Un investigador cree que los mexicanos recién llegados a EE UU tienen una puntuación media próxima a 1,7 y que la de la 
+# siguiente generación está próxima a 2,1.
+
+# (a) ¿Qué proporción de la población experimental tiene puntuaciones menores de 1,7?
+# (b) ¿Qué proporción tiene puntuaciones entre 1,7 y 2,1?
+
+# **************************************************
+# PREGUNTA 1.89 - Perímetro craneal de soldados
+# **************************************************
+
+# Según datos del ejército de EE UU, la distribución del perímetro craneal entre sus soldados es aproximadamente normal con 
+# una media de 57,9 cm y una desviación típica de 2,8 cm. Los cascos militares se producen de forma industrial excepto para 
+# los soldados con perímetros craneales situados en el 5% superior o bien en el 5% inferior, para los cuales se hacen a medida.
+
+# (a) ¿Para qué perímetros craneales se hacen estos cascos a medida?
+
+# **************************************************
+# PREGUNTA 1.90 - Adopción de la cultura anglosajona
+# **************************************************
+
+# El ejercicio 1.88 describió la prueba ARSMA.
+
+# (a) ¿Cuál debe ser el resultado de un estadounidense de origen mexicano para pertenecer al 30% de la población experimental 
+#     que obtuvo mejores resultados en la prueba?
+# (b) ¿Qué resultados definen el 30% para los cuales la cultura mexicano-española tiene un mayor peso?

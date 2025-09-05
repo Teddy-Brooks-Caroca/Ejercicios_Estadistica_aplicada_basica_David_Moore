@@ -101,12 +101,12 @@ estos no representan la fracción de la totalidad"
 
 # Causa de defunción                                Número de casos
 # -----------------------------------------------------------------
-# Trastornos del aparato circulatorio               133,499
-# Tumores                                           89,204
-# Trastornos del aparato respiratorio               34,718
-# Trastornos del aparato digestivo                  18,861
-# Trastornos del sistema inmunológico (incluye sida) 5,504
-# Causas externas de traumatismos y envenenamientos 16,324
+# Trastornos del aparato circulatorio                       133,499
+# Tumores                                                    89,204
+# Trastornos del aparato respiratorio                        34,718
+# Trastornos del aparato digestivo                           18,861
+# Trastornos del sistema inmunológico (incluye sida)          5,504
+# Causas externas de traumatismos y envenenamientos          16,324
 
 # (a) Halla el porcentaje de cada una de las causas de defunción y exprésalo con valores enteros. 
 # ¿Qué porcentaje de defunciones se debió a tumores?
@@ -155,32 +155,32 @@ pie(ejercicio_1_4$Porcentaje,
 # Tabla de datos:
 # Modelo              Consumo (litros/100km)
 # ------------------------------------------
-# Acura3,5RL          9,5
-# AudiA6Quattro       9,1
-# BuickCentury        8,2
-# CadillacCatera      9,9
-# CadillacEldorado    9,1
-# ChevroletLumina     8,2
-# ChryslerCirrus      7,9
-# DodgeStratus        8,4
-# FordTaurus          8,4
-# HondaAccord         8,2
-# HyundaiSonata       8,5
-# InfinitiI30         8,4
-# InfinitiQ45        10,3
-# LexusGS300         10,3
-# LexusLS400          9,5
-# LincolnMarkVIII     9,1
-# Mazda626            7,2
-# Mercedes-BenzE320   8,2
-# Mercedes-BenzE420   9,1
-# MitsubishiDiamante  9,9
-# NissanMaxima        8,4
-# OldsmobileAurora    9,1
-# Rolls-RoyceSilverSpur 14,8
-# Saab900S           9,5
-# ToyotaCamry        7,9
-# VolvoS70           9,5
+# Acura3,5RL              9,5
+# AudiA6Quattro           9,1
+# BuickCentury            8,2
+# CadillacCatera          9,9
+# CadillacEldorado        9,1
+# ChevroletLumina         8,2
+# ChryslerCirrus          7,9
+# DodgeStratus            8,4
+# FordTaurus              8,4
+# HondaAccord             8,2
+# HyundaiSonata           8,5
+# InfinitiI30             8,4
+# InfinitiQ45            10,3
+# LexusGS300             10,3
+# LexusLS400              9,5
+# LincolnMarkVIII         9,1
+# Mazda626                7,2
+# Mercedes-BenzE320       8,2
+# Mercedes-BenzE420       9,1
+# MitsubishiDiamante      9,9
+# NissanMaxima            8,4
+# OldsmobileAurora        9,1
+# Rolls-RoyceSilverSpur  14,8
+# Saab900S                9,5
+# ToyotaCamry             7,9
+# VolvoS70                9,5
 
 ejercicio_1_5 <- read.csv("ejercicio_1_5_autos.csv")
 

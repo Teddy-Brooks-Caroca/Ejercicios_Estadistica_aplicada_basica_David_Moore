@@ -185,6 +185,30 @@ print(resultados_dias)
 media_tiempos <- mean(ejercicio_1_75$Valores)
 des_tiempos <- sd(ejercicio_1_75$Valores)
 
+una_des_positiva <- media_tiempos + des_tiempos
+una_des_negativa <- media_tiempos - des_tiempos
+
+dos_des_positiva <- media_tiempos + (2 * des_tiempos)
+dos_des_negativa <- media_tiempos - (2 * des_tiempos)
+
+tres_des_positiva <- media_tiempos + (3 * des_tiempos)
+tres_des_negativa <- media_tiempos - (3 * des_tiempos)
+
+resultados_des_tiempos <- data.frame(
+  Regla = c("68%","95%","99.7%"),
+  Cola_Positiva = c(una_des_positiva,dos_des_positiva,tres_des_positiva),
+  Cola_Negativa = c(una_des_negativa,dos_des_negativa,tres_des_negativa)
+)
+
+print(resultados_des_tiempos)
+
+"
+  Regla Cola_Positiva Cola_Negativa
+1   68%      9.023811      7.777142
+2   95%      9.647146      7.153807
+3 99.7%     10.270480      6.530472
+"
+
 # **************************************************
 # PREGUNTA 1.76 - Rendimiento de las acciones
 # **************************************************
@@ -193,9 +217,37 @@ des_tiempos <- sd(ejercicio_1_75$Valores)
 # a mayo de 1997. Los datos se presentan ordenados cronológicamente empezando con −5,7%, el rendimiento de julio de 1990.
 
 # (a) Dibuja un diagrama temporal con estos datos. Este periodo corresponde a una época de movilizaciones crecientes en contra del tabaco. 
-#     Por tanto, cabe esperar una tendencia decreciente en los rendimientos de las acciones. Sin embargo, también aparece un periodo 
-#     en el cual el valor de las acciones crece de forma rápida. ¿Qué puede haber provocado esta tendencia creciente? 
-#     ¿Qué muestra tu diagrama temporal?
+# Por tanto, cabe esperar una tendencia decreciente en los rendimientos de las acciones. Sin embargo, también aparece un periodo 
+# en el cual el valor de las acciones crece de forma rápida. ¿Qué puede haber provocado esta tendencia creciente? 
+# ¿Qué muestra tu diagrama temporal?
+
+ejercicio_1_76 <- read.csv("ejercicio_1_44_rendimientos.csv")
+
+head(ejercicio_1_76)
+
+str(ejercicio_1_76)
+
+class(ejercicio_1_76$Mes)
+
+View(ejercicio_1_76)
+
+fechas <- as.Date(paste0(ejercicio_1_76$Mes, "-01"))
+
+plot(fechas,
+     ejercicio_1_76$Rendimiento,
+     main = "Rendimientos acciones",
+     xlab = "Fecha",
+     ylab = "Rendimiento de las acciones(%)",
+     type = "o",
+     col = "blue",
+     lwd = 2,
+     xaxt = "n")
+axis.Date(1, at = fechas, labels = format(fechas, "%Y-%m"), cex.axis = 0.8)
+grid()
+
+"A pesar de la presión antitabaco, la empresa implementó estrategias efectivas que 
+generaron valor para los accionistas durante este período específico, demostrando 
+resiliencia empresarial."
 
 # **************************************************
 # PREGUNTA 1.77 - Nueva variedad de maíz
@@ -213,11 +265,68 @@ des_tiempos <- sd(ejercicio_1_75$Valores)
 # Variedad mejorada: 406 318 467 407 350 384 316 272 427 420 477 392 345 455 360 431 430 339 410 326
 
 # (a) Calcula los cinco números resumen correspondientes a la ganancia de peso de los dos grupos de pollos. 
-#     Para comparar las dos distribuciones, representa los dos diagramas de caja en un mismo gráfico. 
-#     ¿Qué se puede deducir de estos diagramas de caja?
-# (b) En el trabajo original donde aparecieron los datos, los autores calcularon las medias y las desviaciones típicas de cada grupo de pollos. 
-#     ¿Cuáles son sus valores? ¿Qué diferencia hay entre las medias de cada grupo?
+# Para comparar las dos distribuciones, representa los dos diagramas de caja en un mismo gráfico. 
+# ¿Qué se puede deducir de estos diagramas de caja?
 
+ejercicio_1_77 <- read.csv("ejercicio_1_77_maiz.csv")
+
+head(ejercicio_1_77)
+
+str(ejercicio_1_77)
+
+class(ejercicio_1_77)
+
+View(ejercicio_1_77)
+
+summary(ejercicio_1_77$Normal)
+summary(ejercicio_1_77$Mejorada)
+
+boxplot_datos_maiz <- list(
+  Normal = c(283.0,356.0,386.5,382.6,404.8,462.0),
+  Mejorada = c(272.0,343.5,399.0,386.6,427.8,477.0)
+)
+
+boxplot(boxplot_datos_maiz,
+        main = "Comparación maíz",
+        ylab = "Ganancia en gramos",
+        col = c("lightblue", "lightgreen"),
+        border = c("blue", "darkgreen"))
+
+"
+Normal:
+Min.    1st Qu.  Median    Mean    3rd Qu.    Max.
+---------------------------------------------------
+283.0   356.0    386.5     382.6   404.8      462.0 
+
+
+Mejorada:
+Min.    1st Qu.  Median    Mean    3rd Qu.    Max.
+---------------------------------------------------
+272.0   343.5    399.0     386.6   427.8      477.0 
+"
+
+# (b) En el trabajo original donde aparecieron los datos, los autores calcularon las medias y las desviaciones típicas de cada grupo de pollos. 
+# ¿Cuáles son sus valores? ¿Qué diferencia hay entre las medias de cada grupo?
+
+media_normal <- mean(ejercicio_1_77$Normal)
+media_mejorada <- mean(ejercicio_1_77$Mejorada)
+
+des_normal <- sd(ejercicio_1_77$Normal)
+des_mejorada <- sd(ejercicio_1_77$Mejorada)
+
+comparativa <- data.frame(
+  Tipo = c("Normal", "Mejorada"),
+  Media = c(media_normal,media_mejorada),
+  Desviación = c(des_normal,des_mejorada)
+)
+
+print(comparativa)
+
+" Tipo     Media    Desviación
+-------------------------------
+1 Normal   382.65   44.23297
+2 Mejorada 386.60   56.11680
+"
 # **************************************************
 # PREGUNTA 1.78 - Alfredo Di Stefano
 # **************************************************
@@ -251,8 +360,49 @@ des_tiempos <- sd(ejercicio_1_75$Valores)
 # Temporada 1964/65: 7 goles
 # Temporada 1965/66: 4 goles
 
+Di_Stefano_america <- data.frame(
+  Temporada = c("1944/45", "1945/46","1946/47","1947/48","1948/49","1949/50","1950/51","1951/52"),
+  Goles = c(0,11,27,14,24,23,32,19)
+)
+
+Di_Stefano_europa <- data.frame(
+  Temporada = c("1953/54","1954/55","1955/56","1956/57","1957/58","1958/59","1959/60","1960/61",
+                "1961/62","1962/63","1963/64","1964/65","1965/66"),
+  Goles = c(28,25,24,31,19,23,12,21,10,12,11,7,4)
+)
+
+write.csv(Di_Stefano_america,"ejercicio_1_78_goles_america.csv")
+write.csv(Di_Stefano_europa,"ejercicio_1_78_goles_europa.csv")
+
 # (a) Calcula los cinco números resumen correspondientes al tiempo que Di Stefano jugó en Suramérica y al tiempo que jugó en España.
+
+summary(Di_Stefano_america$Goles)
+summary(Di_Stefano_europa$Goles)
+
+"
+En América:
+Min.   1st Qu.  Median    Mean    3rd Qu.    Max.
+----------------------------------------------------
+0.00   13.25    21.00     18.75   24.75      32.00 
+
+En España:
+Min.   1st Qu.  Median    Mean    3rd Qu.    Max.
+----------------------------------------------------
+4.00   11.00    19.00     17.46   24.00      31.00 
+"
+
 # (b) Sitúa los dos diagramas de caja en un mismo gráfico y compara las dos distribuciones.
+
+boxplot_datos_goles <- list(
+  América = c(0.00,13.25,21.00,18.75,24.75,32.00),
+  España = c(4.00, 11.00, 19.00, 17.46,24.00,31.00)
+)
+
+boxplot(boxplot_datos_goles,
+        main = "Comparativa goles de DiStefano",
+        ylab = "Cantidad de goles",
+        col = c("lightblue","lightgreen"),
+        border = c("blue","darkgreen"))
 
 # **************************************************
 # PREGUNTA 1.79 - Los todoterrenos, ¿desperdician combustible?
@@ -278,14 +428,115 @@ des_tiempos <- sd(ejercicio_1_75$Valores)
 # Mercedes-Benz ML320 11,3
 # Mitsubishi Montero  11,8
 # Nissan Pathfinder   12,5
-# Suzuki Sidekick     9,1
-# Toyota RAV4         9,1
+# Suzuki Sidekick      9,1
+# Toyota RAV4          9,1
 # Toyota 4Runner      10,8
 
-# (a) Describe gráfica y numéricamente los consumos en carretera de los 4×4. 
-#     ¿Cuáles son las principales características de esta distribución?
+ejercicio_1_79 <- read.csv("ejercicio_1_79_todoterrenos.csv")
+
+head(ejercicio_1_79)
+
+str(ejercicio_1_79)
+
+class(ejercicio_1_79)
+
+View(ejercicio_1_79)
+
+# (a) Describe gráfica y numéricamente los consumos en carretera de los 4×4.
+# ¿Cuáles son las principales características de esta distribución?
+
+# 1. PARA VER POR MODELO
+
+ejercicio_1_79_ordenado <- ejercicio_1_79[order(ejercicio_1_79$Consumo_litros_100km), ]
+
+barplot(ejercicio_1_79_ordenado$Consumo_litros_100km,
+        names.arg = ejercicio_1_79_ordenado$Modelo,
+        main = "Consumo de combustible por modelo (1998)",
+        xlab = "Litros por 100 km",
+        ylab = "",
+        horiz = TRUE,   
+        las = 1,        
+        col = "lightblue",
+        xlim = c(0, 16))
+
+# 2. PARA VER POR DISTRIBUCIÓN
+
+hist(ejercicio_1_79$Consumo_litros_100km,
+          main = "Distribución del consumo en todoterrenos",
+          xlab = "Litros por 100 km",
+          ylab = "Cantidad de modelos",
+          col = "lightblue",
+          border = "black")
+
+# 3. PARA VER RESUMEN NUMÉRICO
+
+summary(ejercicio_1_79$Consumo_litros_100km)
+
+resumen_numerico <- summary(ejercicio_1_79$Consumo_litros_100km)
+
+boxplot(resumen_numerico,
+        main = "Resumen numérico del conjunto",
+        ylab = "Consumo litros por 100 km",
+        col = "lightblue",
+        border = "blue")
+"
+Min.   1st Qu.  Median    Mean    3rd Qu.    Max.
+---------------------------------------------------
+9.10   11.80    12.50     12.14   12.50      14.80 
+
+Los todoterrenos muestran consumos variables, con algunos modelos relativamente eficientes 
+pero la mayoría en el rango de 12-13 L/100km, significativamente mayor que los coches medianos típicos."
+
 # (b) Dibuja diagramas de caja para comparar la distribución de los automóviles medianos con la de los 4×4. 
-#     ¿Cuáles son las principales diferencias entre estas dos distribuciones?
+# ¿Cuáles son las principales diferencias entre estas dos distribuciones?
+
+ejercicio_1_5 <- read.csv("ejercicio_1_5_autos.csv")
+
+head(ejercicio_1_5)
+head(ejercicio_1_79)
+
+str(ejercicio_1_5)
+str(ejercicio_1_79)
+
+
+modelos_4x4 <- c("Acura SLX", "Chevrolet Blazer", "Chevrolet Tahoe", "Dodge Durango",
+                 "Ford Expedition", "Ford Explorer", "Honda Passport", "Infiniti QX4",
+                 "Isuzu Trooper", "Jeep Grand Cherokee", "Jeep Wrangler", "Land Rover",
+                 "Mazda MPV", "Mercedes-Benz ML320", "Mitsubishi Montero", 
+                 "Nissan Pathfinder", "Suzuki Sidekick", "Toyota RAV4", "Toyota 4Runner")
+
+autos_medianos_reales <- ejercicio_1_5[!ejercicio_1_5$Vehiculo %in% modelos_4x4, ]
+
+consumo_medianos <- autos_medianos_reales$Consumo..l.100km.
+consumo_4x4 <- ejercicio_1_79$Consumo_litros_100km
+
+summary(consumo_medianos)
+summary(consumo_4x4)
+
+boxplot(consumo_medianos, consumo_4x4,
+        names = c("Autos medianos", "4x4"),
+        main = "Comparación de consumo: Autos medianos vs 4x4 (1998)",
+        ylab = "Litros por 100 km",
+        xlab = "Tipo de vehículo",
+        col = c("lightblue", "lightgreen"),
+        border = "darkblue")
+
+"
+Vehículos medianos:
+Min.    1st Qu.  Median    Mean    3rd Qu.    Max.
+----------------------------------------------------
+7.20    8.25     9.10      9.10    9.50       14.80 
+
+Vehículos 4x4:
+Min.   1st Qu.  Median    Mean    3rd Qu.    Max.
+---------------------------------------------------
+9.10   11.80    12.50     12.14   12.50      14.80 
+
+Los 4x4 consumen significativamente más combustible que los autos medianos. Mientras 
+los autos medianos tienen una mediana de 9.10 L/100km y un consumo típico entre 8.25-9.50 L, 
+los 4x4 muestran una mediana de 12.50 L/100km con un rango intercuartílico de 11.80-12.50 L. 
+Esta diferencia de aproximadamente 3.4 L/100km representa un 37% más de consumo en los 4x4, 
+confirmando que estos vehículos son considerablemente menos eficientes en el uso de combustible."
 
 # **************************************************
 # PREGUNTA 1.80 - Supervivencia de conejillos de Indias
@@ -458,3 +709,5 @@ des_tiempos <- sd(ejercicio_1_75$Valores)
 # (a) ¿Cuál debe ser el resultado de un estadounidense de origen mexicano para pertenecer al 30% de la población experimental 
 #     que obtuvo mejores resultados en la prueba?
 # (b) ¿Qué resultados definen el 30% para los cuales la cultura mexicano-española tiene un mayor peso?
+
+# :::::::::::::::::::::::::::::::::::::::::::::::::::: FIN REPASO ::::::::::::::::::::::::::::::::::::::::::::::::::::

@@ -558,8 +558,36 @@ confirmando que estos vehículos son considerablemente menos eficientes en el us
 # 522 598
 
 # (a) Representa gráficamente estos datos y describe sus características más destacables. 
-#     La distribución, ¿es asimétrica hacia la derecha?
+# La distribución, ¿es asimétrica hacia la derecha?
+
+ejercicio_1_80 <- read.csv("ejercicio_1_80_conejillos.csv")
+
+head(ejercicio_1_80)
+
+str(ejercicio_1_80)
+
+class(ejercicio_1_80)
+
+View(ejercicio_1_80)
+
+
+stem(ejercicio_1_80$Dias_supervivencia,scale = 2)
+
+hist(ejercicio_1_80$Dias_supervivencia,
+     main = "Distribución de tiempos de supervivencia",
+     xlab = "Días de supervivencia",
+     ylab = "Cantidad de conejillos",
+     col = "lightblue",
+     breaks = 15,  
+     border = "white")
+
+"Tenemos un grafico asimetrico a la derecha, lo que significa que muchos conejillos no llegan a los 150 días, 
+asimismo una dispersión que va desde los 40 días hasta los 598 días, siendo estos ultimos tomados como observaciones 
+atipicas, por lo tanto merecen un exhaustivo estudio y vemos que su centro se ubica entre los 120 - 140 días
+Esto sugiere variabilidad individual en la respuesta a la tuberculosis que merece mayor investigación"
+
 # (b) He aquí los resultados del programa estadístico Data Desk correspondientes a estos datos:
+
 #     Summary statistics for dias
 #     Mean: 141.84722
 #     Median: 102.50000
@@ -569,8 +597,31 @@ confirmando que estos vehículos son considerablemente menos eficientes en el us
 #     Max: 598
 #     25th%ile: 82.250000
 #     75th%ile: 153.75000
-#     Explica cómo la relación entre la media y la mediana refleja la asimetría de los datos.
+
+# Explica cómo la relación entre la media y la mediana refleja la asimetría de los datos.
+
+"La media (141.8 días) es aproximadamente 39 días mayor que la mediana (102.5 días), lo que confirma visualmente 
+la asimetría hacia la derecha observada en el histograma. Esta diferencia se debe a la presencia de valores excepcionalmente 
+altos en los tiempos de supervivencia, que elevan el promedio pero no afectan la mediana, característica típica de 
+distribuciones con cola larga hacia la derecha."
+
 # (c) Calcula los cinco números resumen y explica brevemente cómo se puede detectar la asimetría de los datos a partir de ellos.
+
+summary(ejercicio_1_80$Dias_supervivencia)
+
+boxplot(summary(ejercicio_1_80$Dias_supervivencia),
+        main = "Resumen estadistico",
+        ylab = "Días de supervivencia")
+
+"
+Min.    1st Qu.  Median    Mean    3rd Qu.    Max.
+------------------------------------------------------
+43.00   82.75    102.50    141.85  149.25     598.00 
+
+Los cinco números resumen revelan asimetría hacia la derecha: la mayor distancia entre la mediana y el 
+tercer quartil (46.75 días) comparada con la distancia al primer quartil (19.75 días), junto con la posición 
+descentrada de la mediana hacia valores bajos y la presencia de valores extremos solo en el extremo superior, 
+confirman la distribución asimétrica observada visualmente."
 
 # **************************************************
 # PREGUNTA 1.81 - Acciones calientes
@@ -578,14 +629,60 @@ confirmando que estos vehículos son considerablemente menos eficientes en el us
 
 # La tasa de rendimiento de una acción se deriva de la variación de su precio y de los dividendos pagados, y normalmente se expresa 
 # como un porcentaje respecto a su valor inicial. A continuación se presentan datos sobre las tasas de rendimiento mensuales de las 
-# acciones de los almacenes Wal-Mart desde el año 1973 hasta el año 1991. Tenemos un total de 228 observaciones.
+# acciones de los almacenes Wal-Mart desde el año 1973 hasta el año 1991. Tenemos un total de 228 observaciones.La figura 1.28 muestra 
+# los resultados de un programa estadístico que describe la distribución de estos datos. Fíjate en que el tallo está constituido por
+# las decenas de los porcentajes. Las hojas están constituidas por las unidades. El diagrama de tallos divide los tallos para que la 
+# representación sea mejor. El programa proporciona las observaciones atípicas mayores y las menores de formaseparada. 
+# No las incluye en el diagrama de tallos.
 
 # (a) Calcula los cinco números resumen de estos datos.
-# (b) Describe las principales características de la distribución.
-# (c) Si tuvieras 1.000 dólares en acciones de Wal-Mart al inicio del mejor mes de los 19 años considerados, 
-#     ¿cuánto dinero habrías ganado al final del mes? Si tuvieras 1.000 dólares en acciones al comienzo del peor mes, 
-#     ¿cuánto valdría tu dinero al final de dicho mes?
+ 
+figura_1_28 <- image_read("figura_1_28.png")
 
+print(figura_1_28)
+
+resumen <- data.frame(
+  Medidas = c("Mínimo", "Primer cuartil","Mediana","Tercer cuartil","Máximo"),
+  Resultados = c(-34.04255,-2.950258,3.4691, 8.4511,58.67769)
+)
+
+print(resumen)
+
+"
+         Medidas Resultados
+1         Mínimo -34.042550
+2 Primer cuartil  -2.950258
+3        Mediana   3.469100
+4 Tercer cuartil   8.451100
+5         Máximo  58.677690
+"
+
+# (b) Describe las principales características de la distribución.
+
+"Razonablemente simétrica, con algunas observaciones atípicas a derecha
+ e izquierda, sin embargo no es particularmente asimétrica."
+
+# (c) Si tuvieras 1.000 dólares en acciones de Wal-Mart al inicio del mejor mes de los 19 años considerados, 
+# ¿cuánto dinero habrías ganado al final del mes? Si tuvieras 1.000 dólares en acciones al comienzo del peor mes, 
+# ¿cuánto valdría tu dinero al final de dicho mes?
+
+inversion_inicial <- 1000
+
+capital_final_mejor_mes <- inversion_inicial * (1 + 58.677690/100)
+capital_final_peor_mes <- inversion_inicial * (1 + (-34.042550)/100)
+
+resultados_acciones <- data.frame(
+  Mes = c("Mejor mes", "Peor mes"),
+  Resultado = c(capital_final_mejor_mes,capital_final_peor_mes)
+)
+
+print(resultados_acciones)
+
+"
+        Mes Resultado
+1 Mejor mes 1586.7769
+2  Peor mes  659.5745
+"
 # **************************************************
 # PREGUNTA 1.82 - El criterio 1,5 × RI
 # **************************************************
@@ -596,8 +693,60 @@ confirmando que estos vehículos son considerablemente menos eficientes en el us
 #    de 1,5 × RI a partir del tercer cuartil.
 
 # (a) Halla el recorrido intercuartílico RI correspondiente a los datos del ejercicio anterior.
+
+q1 <- - 2.950258
+
+q3 <- 8.451100
+
+ri <- q3 - q1
+
+limite_inferior <- q1 - ri * 1.5
+limite_superior <- q3 + ri * 1.5
+
+resultados_ri <- data.frame(
+  Medida = c("Primer cuartil (Q1)", "Tercer cuartil (Q3)", 
+             "Recorrido intercuartílico (RI)", 
+             "Límite inferior para outliers", 
+             "Límite superior para outliers"),
+  Valor = c(q1, q3, ri, limite_inferior, limite_superior)
+)
+
+print(resultados_ri)
+
+"
+                          Medida      Valor
+1            Primer cuartil (Q1)  -2.950258
+2            Tercer cuartil (Q3)   8.451100
+3 Recorrido intercuartílico (RI)  11.401358
+4  Límite inferior para outliers -20.052295
+5  Límite superior para outliers  25.553137
+"
+
 # (b) De acuerdo con el criterio que acabamos de ver, ¿existe alguna observación atípica?
+
+"Sí existen observaciones atípicas en ambos extremos de la distribución.
+
+Límite inferior: -20.10%
+
+Límite superior: 31.56%
+
+Valores atípicos por la izquierda: -34.04%, -31.25%, -27.06% (menores que -20.10%)
+
+Valores atípicos por la derecha: 32.02%, 41.81%, 42.06%, 57.89%, 58.68% (mayores que 31.56%)
+"
+
 # (c) ¿Crees que este criterio es el mismo que utiliza el programa estadístico para seleccionar las observaciones atípicas?
+
+"SÍ, es muy probable que el programa estadístico utilice el mismo criterio o uno muy similar basado en el rango intercuartílico (1.5 × RI).
+
+Evidencia:
+
+Los valores reportados como 'Low' y 'High' en el output del programa coinciden exactamente con los que identificamos como atípicos 
+usando el criterio de 1.5 × RI
+
+El valor -26.61290% (del grupo 'Low') NO aparece como atípico en nuestro análisis, y efectivamente NO está listado separadamente por el programa
+
+Todos los valores que superan nuestros límites calculados (-20.10% y 31.56%) son exactamente los mismos que el programa reporta como observaciones extremas"
 
 # **************************************************
 # PREGUNTA 1.83 - Rendimiento de acciones
@@ -605,14 +754,42 @@ confirmando que estos vehículos son considerablemente menos eficientes en el us
 
 # ¿Crees que ha cambiado el rendimiento de las acciones de Wal-Mart en los 19 años que van desde 1973 hasta 1991? 
 # En el ejercicio 1.81 vimos la distribución de los 228 rendimientos mensuales. Este tipo de descripción no puede responder 
-# a preguntas sobre los cambios acaecidos a lo largo del tiempo.
+# a preguntas sobre los cambios acaecidos a lo largo del tiempo. La figura 1.29 es un tipo de gráfico temporal. 
+# En lugar de representar todas las observaciones, éstas se presentan agrupadas por años en forma dediagramas de caja. 
+# Cada año tenemos 12 rendimientos mensuales.
 
 # (a) ¿Se observa alguna tendencia en los rendimientos mensuales típicos a lo largo de estos años?
+
+figura_1_29 <- image_read("figura_1_29.png")
+
+print(figura_1_29)
+
+"Si, se observa una tendencia. Los rendimientos típicos (medianas) muestran una tendencia decreciente a lo largo del tiempo, 
+especialmente notable a partir de mediados de los años 80, donde los rendimientos medios se vuelven menos consistentes y 
+en general más bajos."
+
 # (b) ¿Se observa alguna tendencia en la dispersión anual de los datos?
+
+"Si, se observa un cambio en la dispersión. La variabilidad de los rendimientos aumenta considerablemente con el tiempo:
+
+Los primeros años (1973-1980) muestran diagramas de caja más compactos
+
+A partir de 1981, la dispersión aumenta notablemente
+
+Los años posteriores a 1985 muestran una variabilidad mucho mayor"
+
 # (c) El diagrama de tallos de la figura 1.28 señala algunas observaciones atípicas. 
-#     ¿Cuáles de éstas se pueden detectar en los diagramas de caja? ¿En qué años ocurren? 
-#     ¿Refuerza esto las conclusiones que has obtenido en el apartado (b)?
-#     ¿Hay alguna observación atípica especialmente sorprendente después de tener en cuenta tu respuesta en (b)?
+# ¿Cuáles de éstas se pueden detectar en los diagramas de caja? ¿En qué años ocurren? 
+# ¿Refuerza esto las conclusiones que has obtenido en el apartado (b)?
+# ¿Hay alguna observación atípica especialmente sorprendente después de tener en cuenta tu respuesta en (b)?
+
+"Las observaciones atípicas se detectan claramente en los diagramas de caja como puntos individuales fuera de los bigotes
+
+Años con outliers: Se observan valores atípicos principalmente en años de alta volatilidad (1987, 1990, 1991)
+
+Refuerza las conclusiones: Sí, confirma que la dispersión aumenta con el tiempo, especialmente en años posteriores
+
+Observación especialmente sorprendente: El outlier extremadamente bajo de 1973 (-34%) es particularmente notable dado que ocurrió en un período de relativa estabilidad"
 
 # **************************************************
 # PREGUNTA 1.84 - Edad de presidentes de EE UU

@@ -1005,7 +1005,23 @@ posiblemente influenciadas por factores ambientales o evolutivos regionales."
 # siguiente generación está próxima a 2,1.
 
 # (a) ¿Qué proporción de la población experimental tiene puntuaciones menores de 1,7?
+
+media <- 3.0
+desviacion <- 0.8
+
+pnorm(1.7,media,desviacion)*100
+
+"Un 5.2% tiene una puntuación menor a 1.7 puntos"
+
 # (b) ¿Qué proporción tiene puntuaciones entre 1,7 y 2,1?
+
+(pnorm(2.1,media,desviacion) - pnorm(1.7,media,desviacion))*100
+
+"Un 7.8% tiene un puntuación entre 1.7 hasta 2.1 puntos"
+
+"Esto confirma la hipótesis del investigador: tanto recién llegados como segunda 
+generación tienen puntuaciones significativamente inferiores a la media poblacional, 
+mostrando menor adaptación a la cultura anglosajona."
 
 # **************************************************
 # PREGUNTA 1.89 - Perímetro craneal de soldados
@@ -1017,6 +1033,25 @@ posiblemente influenciadas por factores ambientales o evolutivos regionales."
 
 # (a) ¿Para qué perímetros craneales se hacen estos cascos a medida?
 
+media <- 57.9
+desviacion <- 2.8
+
+percentil_5 <- qnorm(0.05, media, desviacion)
+percentil_95 <- qnorm(0.95, media, desviacion)
+
+resultados <- data.frame(
+  Medida = c("5% superior","5% inferior"),
+  Resultados = c(percentil_95,percentil_5)
+)
+print(resultados)
+
+"
+       Medida Resultados
+1 5% superior   62.50559
+2 5% inferior   53.29441
+
+Los perímetros craneales estan situados entre 53 cms y 63 cms."
+
 # **************************************************
 # PREGUNTA 1.90 - Adopción de la cultura anglosajona
 # **************************************************
@@ -1025,6 +1060,17 @@ posiblemente influenciadas por factores ambientales o evolutivos regionales."
 
 # (a) ¿Cuál debe ser el resultado de un estadounidense de origen mexicano para pertenecer al 30% de la población experimental 
 #     que obtuvo mejores resultados en la prueba?
+
+media <- 3.0
+desviacion <- 0.8
+
+qnorm(0.7,media,desviacion)
+
+"Debe tener una puntuación de 3.4 puntos para pertenecer al 30% de la población experimental"
+
 # (b) ¿Qué resultados definen el 30% para los cuales la cultura mexicano-española tiene un mayor peso?
 
+qnorm(0.3,media,desviacion)
+
+"Debe tener 2.5 puntos puntos aprox. los que definen ese 30% con mayor peso de la cultura mexicano-española."
 # :::::::::::::::::::::::::::::::::::::::::::::::::::: FIN REPASO ::::::::::::::::::::::::::::::::::::::::::::::::::::

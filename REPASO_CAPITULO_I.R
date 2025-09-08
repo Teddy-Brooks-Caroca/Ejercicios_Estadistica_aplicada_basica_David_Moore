@@ -800,10 +800,35 @@ Observación especialmente sorprendente: El outlier extremadamente bajo de 1973 
 # respetan a la gente mayor, por tanto, es probable que los presidentes de EE UU sean más jóvenes que hace unos años".
 
 # (a) Dibuja un gráfico temporal con la edad de los presidentes de EE UU que tienes en la tabla 1.7. 
-#     En el eje de las abscisas sitúalos desde el primero, que corresponde a Washington, hasta el que ocupa el lugar número 42, 
-#     que corresponde a Clinton.
+# En el eje de las abscisas sitúalos desde el primero, que corresponde a Washington, hasta el que ocupa el lugar número 42, 
+# que corresponde a Clinton.
+
+ejercicio_1_84 <- read.csv("ejercicio_1_32_presidentes.csv")
+
+head(ejercicio_1_84)
+
+str(ejercicio_1_84)
+
+nombres_presidentes <- 1:length(ejercicio_1_84$Presidente)
+
+plot(nombres_presidentes,
+     ejercicio_1_84$Edad,
+     main = "Edades de los presidentes",
+     xlab = "Presidentes",
+     ylab = "Edades",
+     type = "o",
+     xaxt = "n")
+axis(1, at = nombres_presidentes, labels = ejercicio_1_84$Presidente, las = 2,cex.axis = 0.7)
+grid()
 # (b) ¿Se observa alguna tendencia a lo largo del tiempo?
+
+"Al parecer la edad de los presidentes en EE.UU se ha rejuvencido, aunque algunos de los casos pueden ser considerados
+como OA. Lo cierto es que hasta J.Q Adams la variación en la edad era mínima"
+
 # (c) ¿A quién da la razón los datos, a Julia o a Juan?
+
+"Le doy la razón a Juan, pero debemos considrar que las edades mas extremas pueden considerarse como OA, haciendo que la dispersión
+sea mayor que en los primeros tiempos del EEUU republicano."
 
 # **************************************************
 # PREGUNTA 1.85 - Coste de la capacidad de los ordenadores
@@ -823,7 +848,31 @@ Observación especialmente sorprendente: El outlier extremadamente bajo de 1973 
 # Estos costes se han ajustado de acuerdo con la inflación de cada año para facilitar su comparación.
 
 # (a) Dibuja un diagrama temporal con estos datos.
+
+coste_ordenadores <- data.frame(
+  Annio = c(1992,1993,1994,1995,1996),
+  Coste = c(5.07,2.40,1.14,0.53,0.36)
+)
+
+print(coste_ordenadores)
+
+write.csv(coste_ordenadores,"ejercicio_1_85_computadores")
+
+plot(coste_ordenadores$Annio,
+     coste_ordenadores$Coste,
+     main = "Coste de la capacidad de los ordenadores",
+     xlab = "Año",
+     ylab = "Costo (en euros)",
+     type = "b",
+     col = "red",
+     pch = 16,
+     lwd = 2)
+grid(col = "gray80", lty = 2)
+
 # (b) Señala si observas alguna tendencia.
+
+"Existe un rendencia a la baja, lo que afirma la hipotesis de que el costo se ha abaratado
+aun cuando se hayan hehcos ajuste a la inflación de cada año."
 
 # **************************************************
 # PREGUNTA 1.86 - Grandes robles y pequeñas bellotas
@@ -833,12 +882,103 @@ Observación especialmente sorprendente: El outlier extremadamente bajo de 1973 
 # Estamos interesados en la distribución del tamaño de las bellotas de los robles. He aquí datos sobre el volumen de bellotas 
 # (en centímetros cúbicos) de estas 39 especies de roble:
 
-# Atlántico: 1,4 3,4 9,1 1,6 10,5 2,5 0,9 4,1 5,9 17,1 6,8 1,8 0,3 0,9 0,8 2,0 1,1 1,6 2,6 0,4 0,6 1,8 4,8 1,1 3,0 1,1 1,1 2,0
-# California: 6,0 7,1 3,6 8,1 3,6 1,8 0,4 1,1 1,2 5,5 1,0
+# Atlántico: 1.4, 3.4, 9.1, 1.6, 10.5, 2.5, 0.9, 6.8, 1.8, 0.3, 0.9, 0.8, 2.0, 
+#            1.1, 0.6, 1.8, 4.8, 1.1, 3.0, 1.1, 1.1, 3.6, 8.1, 3.6, 1.8, 0.4, 
+#            1.1, 1.2
+# California: 4.1, 5.9, 17.1,1.6, 2.6, 0.4,2.0,6.0,7.1,5.5, 1.0
 
 # (a) Dibuja un histograma con los 39 volúmenes de bellota. Describe la distribución. Incluye un resumen numérico adecuado.
+
+bellotas_atlantico <- c(1.4, 3.4, 9.1, 1.6, 10.5, 2.5, 0.9, 6.8, 1.8, 0.3, 0.9, 0.8, 2.0, 
+                        1.1, 0.6, 1.8, 4.8, 1.1, 3.0, 1.1, 1.1, 3.6, 8.1, 3.6, 1.8, 0.4, 
+                        1.1, 1.2)
+
+bellotas_california <- c(4.1, 5.9, 17.1, 1.6, 2.6, 0.4, 2.0, 6.0, 7.1, 5.5, 1.0)
+
+bellotas_todas <- c(bellotas_atlantico, bellotas_california)
+
+print(bellotas_todas)
+
+write.csv(bellotas_todas,"ejercicio_1_86_bellotas.csv")
+
+hist(bellotas_todas,
+     main = "Distribución del volumen de bellotas (39 especies)",
+     xlab = "Volumen (cm³)",
+     ylab = "Frecuencia",
+     col = "lightgreen",
+     border = "darkgreen",
+     breaks = 10,  
+     xlim = c(0, 18))
+
+summary(bellotas_todas)
+
+boxplot(bellotas_todas,
+        main = "Boxplot del volumen de bellotas",
+        ylab = "Volumen (cm³)",
+        col = "lightblue",
+        horizontal = TRUE)
+
+"
+TOTAL GENERAL:
+
+Min.    1st Qu.  Median    Mean    3rd Qu.    Max.
+-----------------------------------------------------
+0.300   1.100    1.800     3.326   4.450      17.100 
+"
+
 # (b) Compara las distribuciones de las regiones atlántica y californiana con un gráfico y con resúmenes numéricos. 
-#     ¿Qué has hallado?
+# ¿Qué has hallado?
+
+par(mfrow = c(1, 2))
+
+hist(bellotas_atlantico,
+     main = "Bellotas - Costa Atlántico",
+     xlab = "Volumen (cm³)",
+     ylab = "Frecuencia",
+     col = "lightblue",
+     border = "darkblue",
+     xlim = c(0, 18),
+     ylim = c(0, 15))
+
+hist(bellotas_california,
+     main = "Bellotas - California",
+     xlab = "Volumen (cm³)",
+     ylab = "Frecuencia",
+     col = "lightcoral",
+     border = "darkred",
+     xlim = c(0, 18),
+     ylim = c(0, 15))
+
+par(mfrow = c(1, 1))
+
+summary(bellotas_atlantico)
+summary(bellotas_california)
+
+boxplot(bellotas_atlantico,
+        bellotas_california,
+        names = c("Bellotas California", "Bellotas Atlántico"),
+        main = "Distribución del volumen de bellotas",
+        ylab = "Volumen (cm³)",
+        col = c("lightgreen","orange"),
+        border = c("darkgreen","darkorange"))
+"
+Bellotas Atlántico:
+
+Min.    1st Qu.  Median    Mean    3rd Qu.    Max.
+-----------------------------------------------------
+0.300   1.100    1.700     2.729   3.450      10.500 
+
+Bellotas Pacífico:
+   
+Min.    1st Qu.  Median    Mean    3rd Qu.    Max.
+----------------------------------------------------
+0.400   1.800    4.100     4.845   5.950      17.100
+
+Las bellotas de California son significativamente más grandes y variables que las 
+del Atlántico. La media en California (4.85 cm³) casi duplica la del Atlántico (2.73 cm³), 
+y presenta mayor dispersión con valores extremos más pronunciados. Esta diferencia 
+sugiere adaptaciones ecológicas distintas entre las especies de roble de ambas costas, 
+posiblemente influenciadas por factores ambientales o evolutivos regionales."
 
 # **************************************************
 # PREGUNTA 1.87 - Datos sobre Estados europeos

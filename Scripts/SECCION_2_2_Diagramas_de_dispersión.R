@@ -399,15 +399,36 @@ variables aumentan juntas de manera consistente en la mayoría de los estados."
 # Suiza           5,8                  115
 
 # (a) Dibuja un diagrama de dispersión que muestre cómo el consumo nacional
-#     de vino ayuda a explicar las muertes por ataques al corazón.
+# de vino ayuda a explicar las muertes por ataques al corazón.
+
+ejercicio_2_11 <- read.csv("ejercicio_2_11_alcohol.csv")
+
+head(ejercicio_2_11)
+
+str(ejercicio_2_11)
+
+plot(ejercicio_2_11$Consumo_alcohol,
+     ejercicio_2_11$Tasa_muertes_corazon,
+     main = "El vino, ¿es bueno para tu corazón?",
+     xlab = "Consumo de alcohol (en litros de alcohol)",
+     ylab = "Tasa de muertes (por cada 100.000 habitantes)",
+     pch = 16,
+     cex = 1.5)
+grid()
 
 # (b) Describe la forma de la relación. ¿Existe una relación lineal? ¿Es una rela
-#     ción fuerte?
+# ción fuerte?
 
-# (c) La dirección de la asociación, ¿es positiva o negativa? Explica de forma lla
-#     na qué dice la relación sobre el consumo de vino y los ataques al corazón. Estos
-#     datos, ¿proporcionan una clara evidencia de que tomar vino causa una reducción
-#     de las muertes por ataques al corazón? ¿Por qué?
+"Hay una relación lineal y fuerte entre las variables counsumo de alcohol y tasa de muertes
+por ataques de corazón"
+
+# (c) La dirección de la asociación, ¿es positiva o negativa? Explica de forma llana 
+# qué dice la relación sobre el consumo de vino y los ataques al corazón. Estos datos, 
+#¿proporcionan una clara evidencia de que tomar vino causa una reducciónde las muertes 
+# por ataques al corazón? ¿Por qué?
+
+"La relación entre las variables es negativa, lo que significa que el alto consumo de alcohol no influye
+en la tasa de muertes por ataques al corazón"
 
 # **************************************************
 # PREGUNTA 2.12 - El profesor Moore y la natación
@@ -424,6 +445,35 @@ variables aumentan juntas de manera consistente en la mayoría de los estados."
 #              136 148 148 132 124 132 139
 
 # (a) Dibuja un diagrama de dispersión. (¿Cuál es la variable explicativa?)
+
+ejercicio_2_12 <- read.csv("ejercicio_2_12_tiempos.csv",sep = ";")
+
+head(ejercicio_2_12)
+
+plot(ejercicio_2_12$Minutos,
+     ejercicio_2_12$Pulsaciones,
+     main = "El profesor Moore y la natación",
+     xlab = "Tiempo registrado (en minutos)",
+     ylab = "Ritmo cardíaco (en pulsaciones por minuto)",
+     pch = 16,
+     cex = 1.5)
+grid()
+
+"En este caso la variable explicativa en el tiempo registrado, ya que lo que se busca es verla cantidad
+de pulsaciones por minutos de los 23 registros"
+
 # (b) La asociación entre estas variables, ¿es positiva o negativa? Explica por
-#     qué crees que la relación va en este sentido.
+# qué crees que la relación va en este sentido.
+
+"Cuando el tiempo que tarda Moore en nadar aumenta, el número de pulsaciones tiende a disminuir.
+Es decir, la relación es negativa: a mayor tiempo (más lento nada), menor ritmo cardíaco.
+Si nada más despacio (más minutos en completar la distancia), su esfuerzo es menor, 
+por lo tanto su corazón late más lento al finalizar."
+
 # (c) Describe la forma y la fuerza de la relación.
+
+"Forma: la nube de puntos parece bastante alineada de forma aproximadamente 
+lineal (aunque con cierta dispersión).
+
+Fuerza: la relación es moderada a fuerte. No es una correlación perfecta, 
+pero sí clara: los puntos siguen una tendencia descendente bastante definida."

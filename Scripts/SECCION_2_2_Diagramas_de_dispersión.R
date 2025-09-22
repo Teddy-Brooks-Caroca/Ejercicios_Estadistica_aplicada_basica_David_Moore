@@ -477,3 +477,373 @@ lineal (aunque con cierta dispersión).
 
 Fuerza: la relación es moderada a fuerte. No es una correlación perfecta, 
 pero sí clara: los puntos siguen una tendencia descendente bastante definida."
+
+# **************************************************
+# PREGUNTA 2.13 - ¿Qué densidad de siembra es excesiva?
+# **************************************************
+
+# ¿Cuál debe ser la densidad de siembra del maíz para que un agricultor obtenga 
+# el máximo rendimiento? Para determinar la densidad de siembra óptima, se hace 
+# un experimento que consiste en sembrar plantas de maíz a distintas densidades 
+# de siembra en parcelas de fertilidad similar. Los rendimientos obtenidos son 
+# los siguientes:
+
+# Densidad de siembra (plantas por hectárea)  Rendimiento (toneladas por hectárea)
+# --------------------------------------------------------------------------------
+# 30.000                                        10,1  7,6  7,9  9,6
+# 40.000                                        11,2  8,1  9,1  10,1
+# 50.000                                        11,1  8,7  9,4  10,1
+# 60.000                                        9,1  9,3  10,5
+# 70.000                                        8,0  10,1
+
+# (a) ¿Cuál es la variable explicativa: el rendimiento o la densidad de siembra?
+
+"En este caso la densidad de la siembra es la variable explicativa"
+
+# (b) Dibuja un diagrama de dispersión con los datos del rendimiento y de la
+# densidad de siembra.
+
+resultados_rendimientos <- data.frame(
+  Densidad_siembra = c(rep(30000, 4), rep(40000, 4), rep(50000, 4), rep(60000, 3), rep(70000, 2)),
+  Rendimiento = c(10.1, 7.6, 7.9, 9.6, 11.2, 8.1, 9.1, 10.1, 11.1, 8.7, 9.4, 10.1, 9.1, 9.3, 10.5, 8.0, 10.1)
+)
+
+print(resultados_rendimientos)
+
+plot(resultados_rendimientos$Densidad_siembra,
+     resultados_rendimientos$Rendimiento,
+     main = "¿Qué densidad de siembra es excesiva?",
+     xlab = "Densidad de la siembra (plantas por hectárea)",
+     ylab = "Rendimiento (toneladas por hectárea)",
+     pch = 16, 
+     col = "grey")
+grid()
+
+# (c) Describe el aspecto general de la relación. ¿Es una relación lineal? ¿Existe
+# una asociación positiva, negativa o ninguna de las dos?
+
+"La relación entre la densidad de siembra y el rendimiento no es lineal, 
+sino curvilínea: el rendimiento aumenta a medida que la densidad pasa de 30.000 a 50.000 
+plantas por hectárea, alcanza su punto máximo alrededor de 50.000, y luego disminuye 
+cuando la densidad se incrementa más allá de ese valor; por lo tanto, no puede describirse 
+como una asociación exclusivamente positiva ni negativa."
+
+# (d) Calcula los rendimientos medios de cada una de las densidades de siembra. 
+# Dibuja un diagrama de dispersión que relacione estas medias con la densidad
+# de siembra. Une las medias con segmentos para facilitar la interpretación del
+# diagrama. ¿Qué densidad de siembra recomendarías a un agricultor que quisiera
+# sembrar maíz en un campo de fertilidad similar a la del experimento?
+
+resultados_rendimientos$Promedio <- ave(resultados_rendimientos$Rendimiento,
+                                        resultados_rendimientos$Densidad_siembra,
+                                        FUN = mean)
+
+print(resultados_rendimientos)
+
+write.csv(resultados_rendimientos, "ejercicio_2_13_siembra.csv", row.names = FALSE)
+
+plot(resultados_rendimientos$Densidad_siembra,
+     resultados_rendimientos$Promedio,
+     main = "¿Qué densidad de siembra es excesiva?",
+     xlab = "Densidad de la siembra (plantas por hectárea)",
+     ylab = "Promedio de rendimiento",
+     pch = 16, 
+     col = "blue")
+grid()
+
+"Recomendaría aquel que tiene una densidad de 50000 plantas por hectárea"
+
+
+# **************************************************
+# PREGUNTA 2.14 - Salario de profesores
+# **************************************************
+
+# La tabla 2.1 muestra datos sobre la educación en EE UU. Es posible que los 
+# Estados con un nivel educativo menor paguen menos a sus profesores. Esto se 
+# podría explicar por el hecho de que son más pobres.
+
+# Estado*  Región**  Población(1.000)  SAT_Lengua  SAT_Matemáticas  %alumnos_presentados  %sin_estudios_secundaria  Salario_profesores($1.000)
+# -------------------------------------------------------------------------------------------------------------------------------------------------
+# AL       ESC       4.273              565         558              8                      33.1                      31.3
+# AK       PAC       607                521         513              47                     13.4                      49.6
+# AZ       MTN       4.428              525         521              28                     21.3                      32.5
+# AR       WSC       2.510              566         550              6                      33.7                      29.3
+# CA       PAC       31.878             495         511              45                     23.8                      43.1
+# CO       MTN       3.823              536         538              30                     15.6                      35.4
+# CT       NE        3.274              507         504              79                     20.8                      50.3
+# DE       SA        725                508         495              66                     22.5                      40.5
+# DC       SA        543                489         473              50                     26.9                      43.7
+# FL       SA        14.400             498         496              48                     25.6                      33.3
+# GA       SA        7.353              484         477              63                     29.1                      34.1
+# HI       PAC       1.184              485         510              54                     19.9                      35.8
+# ID       MTN       1.189              543         536              15                     20.3                      30.9
+# IL       ENC       11.847             564         575              14                     23.8                      40.9
+# IN       ENC       5.841              494         494              57                     24.4                      37.7
+# IA       WNC       2.852              590         600              5                      19.9                      32.4
+# KS       WNC       2.572              579         571              9                      18.7                      35.1
+# KY       ESC       3.884              549         544              12                     35.4                      33.1
+# LA       WSC       4.351              559         550              9                      31.7                      26.8
+# ME       NE        1.243              504         498              68                     21.2                      32.9
+# MD       SA        5.072              507         504              64                     21.6                      41.2
+# MA       NE        6.092              507         504              80                     20.0                      42.9
+# MI       ENC       9.594              557         565              11                     23.2                      44.8
+# MN       WNC       4.658              582         593              9                      17.6                      36.9
+# MS       ESC       2.716              569         557              4                      35.7                      27.7
+# MO       WNC       5.359              570         569              9                      26.1                      33.3
+# MT       MTN       879                546         547              21                     19.0                      29.4
+# NE       WNC       1.652              567         568              9                      18.2                      31.5
+# NV       MTN       1.603              508         507              31                     21.2                      36.2
+# NH       NE        1.162              520         514              70                     17.8                      35.8
+# NJ       MA        7.988              498         505              69                     23.3                      47.9
+# NM       MTN       1.713              554         548              12                     24.9                      29.6
+# NY       MA        18.185             497         499              73                     25.2                      48.1
+# NC       SA        7.323              490         486              59                     30.0                      30.4
+# ND       WNC       644                596         599              5                      23.3                      27.0
+# OH       ENC       11.173             536         535              24                     24.3                      37.8
+# OK       WSC       3.301              566         557              8                      25.4                      28.4
+# OR       PAC       3.204              523         521              50                     18.5                      39.6
+# PA       MA        12.056             498         492              71                     25.3                      46.1
+# RI       NE        990                501         491              69                     28.0                      42.2
+# SC       SA        3.699              480         474              57                     31.7                      31.6
+# SD       WNC       732                574         566              5                      22.9                      26.3
+# TN       ESC       5.320              563         552              14                     32.9                      33.1
+# TX       WSC       19.128             495         500              48                     27.9                      32.0
+# UT       MTN       2.000              583         575              4                      14.9                      30.6
+# VT       NE        589                506         500              70                     19.2                      36.3
+# VA       SA        6.675              507         496              68                     24.8                      35.0
+# WA       PAC       5.533              519         519              47                     16.2                      38.0
+# WV       SA        1.826              526         506              17                     34.0                      32.2
+# WI       ENC       5.160              577         586              8                      21.4                      38.2
+# WY       MTN       481                544         544              11                     17.0                      31.6
+
+# * Estados de EE.UU.
+# ** Regiones: ESC (Este Centro Sur), PAC (Pacífico), MTN (Montaña), WSC (Oeste Centro Sur), 
+#    NE (Noreste), SA (Sur Atlántico), ENC (Este Centro Norte), WNC (Oeste Centro Norte), MA (Mid-Atlantic)
+
+# (a) Dibuja un diagrama de dispersión que relacione la media de los salarios
+# de los profesores y el porcentaje de residentes que no tienen una carrera univer
+# sitaria. Considera esta última variable como explicativa.
+
+ejercicio_2_14 <- read.csv("ejercicio_2_14_educacion.csv")
+
+str(ejercicio_2_14)
+
+View(ejercicio_2_14)
+
+plot(ejercicio_2_14$Porcentaje_sin_estudios_secundaria,
+     ejercicio_2_14$Salario_profesores_miles,
+     main = "Salario de profesores",
+     xlab = "Porcentaje sin estudios (población x 100.000)",
+     ylab = "Salario de profesores (US$1000)",
+     pch = 16, 
+     col = "green")
+grid()
+
+# (b) El diagrama muestra una asociación negativa débil entre las dos variables.
+# ¿Por qué decimos que la relación es negativa? ¿Por qué decimos que es débil?
+
+"Decimos que es negativa porque los valores son inferiores a la media, en este caso a medida
+que aumenta el porcentaje de población sin estudios, disminuye el promedio de salario de los profesores.
+
+Decimos que es débil, debido a que la dispersión entre los datos no muestra una relación lineal clara entre
+las variables, por lo que que hay muchos Estados que presentan un aumento en el procentaje de personas sin estudio
+pero dedican una inversión sustancial al salario de profesores
+"
+# (c) En la parte superior izquierda de tu diagrama hay una observación atípica.
+# ¿A qué Estado corresponde?
+
+estados_menor_porcentaje <- ejercicio_2_14[ejercicio_2_14$Porcentaje_sin_estudios_secundaria <= 15 
+                                           & ejercicio_2_14$Salario_profesores_miles >= 45, ]
+
+print(estados_menor_porcentaje[, c("Estado","Porcentaje_sin_estudios_secundaria","Salario_profesores_miles")])
+
+"
+Estado Porcentaje_sin_estudios_secundaria Salario_profesores_miles
+    AK                               13.4                     49.6
+"
+
+# (d) Existe un grupo bastante claro formado por nueve Estados en la parte inferior 
+# derecha del diagrama. Estos Estados tienen muchos residentes que no se
+# graduaron en una escuela secundaria y además los salarios de los profesores son
+# bajos. ¿Qué Estados son? ¿Se sitúan en alguna parte concreta del país?
+
+estados_menor_salario <- ejercicio_2_14[ejercicio_2_14$Porcentaje_sin_estudios_secundaria >=30
+                                        & ejercicio_2_14$Salario_profesores_miles <= 35, ]
+
+print(estados_menor_salario[,c("Estado","Region","Porcentaje_sin_estudios_secundaria","Salario_profesores_miles")])
+
+"   
+   Estado Region Porcentaje_sin_estudios_secundaria Salario_profesores_miles
+1      AL    ESC                               33.1                     31.3
+4      AR    WSC                               33.7                     29.3
+18     KY    ESC                               35.4                     33.1
+19     LA    WSC                               31.7                     26.8
+25     MS    ESC                               35.7                     27.7
+34     NC     SA                               30.0                     30.4
+41     SC     SA                               31.7                     31.6
+43     TN    ESC                               32.9                     33.1
+49     WV     SA                               34.0                     32.2
+
+Muchos de estos Estados se encuentran en el centro del país
+"
+
+# **************************************************
+# PREGUNTA 2.15 - Transformación de datos
+# **************************************************
+
+# Al analizar datos, a veces conviene hacer una transformación de datos que 
+# simplifique el aspecto general de la relación. A continuación se presenta un 
+# ejemplo de cómo transformando la variable respuesta se puede simplificar el 
+# aspecto del diagrama de dispersión. La población europea entre los años 1750 
+# y 1950 creció de la siguiente manera:
+
+# Año          Población (millones)
+# --------------------------------
+# 1750         125
+# 1800         187
+# 1850         274
+# 1900         423
+# 1950         594
+
+# (a) Dibuja el diagrama de dispersión correspondiente a estos datos. Describe
+# brevemente el tipo de crecimiento en el periodo señalado.
+
+crecimiento_poblacion <- data.frame(
+  Año = c(1750,1800,1850,1900,1950),
+  Poblacion = c(125,187,274,423,594)
+)
+
+print(crecimiento_poblacion)
+
+plot(crecimiento_poblacion$Año,
+     crecimiento_poblacion$Poblacion,
+     main = "La población europea entre los años 1750 y 1950",
+     xlab = "Año",
+     ylab = "Población (millones)",
+     pch = 16, 
+     col = "green")
+grid()
+
+"El diagrama presenta una relación lineal positiva fuerte, lo que significa que conforme 
+pasan los años aumenta la cantidad de personas que residen en Europa"
+
+# (b) Calcula los logaritmos de la población de cada uno de los años (puedes
+# utilizar tu calculadora). Dibuja un nuevo diagrama de dispersión con la variable
+# población transformada. ¿Qué tipo de crecimiento observas ahora?
+
+crecimiento_poblacion$log_natural <- log(crecimiento_poblacion$Poblacion)
+
+crecimiento_poblacion$log_base10 <- log10(crecimiento_poblacion$Poblacion)
+
+write.csv(crecimiento_poblacion, "ejercicio_2_15_poblacion.csv", row.names = FALSE)
+
+
+plot(crecimiento_poblacion$Año,
+     crecimiento_poblacion$log_natural,
+     main = "La población europea entre los años 1750 y 1950",
+     xlab = "Año",
+     ylab = "Población (millones)",
+     pch = 19, 
+     col = "blue", 
+     cex = 1.5, 
+     ylim = c(0, 600))
+points(crecimiento_poblacion$Año, crecimiento_poblacion$log_natural * 100, 
+       pch = 17, col = "red", cex = 1.5)
+points(crecimiento_poblacion$Año, crecimiento_poblacion$log_base10 * 150,   
+       pch = 15, col = "darkgreen", cex = 1.5)
+legend("topright", 
+       legend = c("Población Original", "ln(Población) × 100", "log10(Población) × 150"),
+       pch = c(19, 17, 15), 
+       col = c("blue", "red", "darkgreen"),
+       bty = "n",
+       cex = 0.5,          
+       pt.cex = 0.6,       
+       text.width = 20)
+grid()
+
+# **************************************************
+# PREGUNTA 2.16 - Variable categórica explicativa
+# **************************************************
+
+# Un diagrama de dispersión muestra la relación entre dos variables cuantitativas. 
+# Vamos a ver un gráfico similar en el que la variable explicativa será una variable 
+# categórica en vez de una cuantitativa.
+
+# La presencia de plagas (insectos nocivos) en los cultivos se puede determinar
+# con la ayuda de trampas. Una de ellas consiste en una lámina de plástico de dis
+# tintos colores que contiene en su superficie un material pegajoso. ¿Qué colores 
+# atraen más a los insectos? Para responder a esta pregunta un grupo de investiga
+# dores llevó a cabo un experimento que consistió en situar en un campo de avena
+# 24 trampas de las cuales había 6 de color amarillo, 6 blancas, 6 verdes y 6 azules.
+
+# Color de la trampa  Insectos capturados
+# ---------------------------------------
+# Amarillo            45  59  48  46  38  47
+# Blanco              21  12  14  17  13  17
+# Verde               37  32  15  25  39  41
+# Azul                16  11  20  21  14  7
+
+# (a) Dibuja un gráfico que relacione los recuentos de insectos capturados con
+#     el color de la trampa (sitúa el color de las trampas a distancias iguales en el eje
+#     de las abscisas). Calcula las medias de insectos atrapados en cada tipo de trampa,
+#     añádelas al gráfico y únelas con segmentos.
+
+insectos <- data.frame(
+  Color = rep(c("Amarillo", "Blanco", "Verde", "Azul"), each = 6),
+  Capturas = c(
+    45, 59, 48, 46, 38, 47,     
+    21, 12, 14, 17, 13, 17,     
+    37, 32, 15, 25, 39, 41,     
+    16, 11, 20, 21, 14, 7       
+  )
+)
+
+str(insectos)
+
+print(insectos)
+
+insectos$Color <- factor(insectos$Color, levels = c("Amarillo", "Blanco", "Verde", "Azul"))
+
+
+posiciones <- as.numeric(insectos$Color)
+
+media_amarillo <- mean(insectos$Capturas[insectos$Color == "Amarillo"])
+media_blanco   <- mean(insectos$Capturas[insectos$Color == "Blanco"])
+media_verde    <- mean(insectos$Capturas[insectos$Color == "Verde"])
+media_azul     <- mean(insectos$Capturas[insectos$Color == "Azul"])
+
+medias <- c(media_amarillo, media_blanco, media_verde, media_azul)
+
+plot(posiciones, insectos$Capturas,
+     main = "Capturas por color de trampa",
+     xlab = "Color de la trampa", 
+     ylab = "Insectos capturados",
+     xaxt = "n",
+     col = "forestgreen",
+     pch = 16)
+axis(1, at = 1:4, labels = levels(insectos$Color))
+points(1:4, medias, pch = 19, col = "red", cex = 1.5)
+lines(1:4, medias, col = "red", lwd = 2)
+
+write.csv(insectos, "ejercicio_2_16_insectos.csv", row.names = FALSE)
+
+# (b) ¿Qué conclusión puedes obtener de este gráfico sobre la atracción de estos
+# colores sobre los insectos?
+
+"Los insectos muestran una preferencia marcada por trampas de color amarillo, seguidas 
+por las verdes. Esto sugiere que el color de la trampa influye significativamente en la 
+cantidad de insectos capturados."
+
+# (c) ¿Tiene sentido hablar de una asociación positiva o negativa entre el color
+#     de la trampa y el número de insectos capturados?
+
+"No tiene sentido hablar de una asociación positiva o negativa en el sentido clásico de 
+correlación entre dos variables numéricas, porque el color es una variable categórica, 
+no cuantitativa.
+
+Sin embargo, sí podemos decir que hay una relación clara entre el tipo de color y la cantidad 
+de insectos capturados. Esta relación no se mide con pendiente o dirección, sino con diferencias 
+entre grupos."
+
+# :::::::::::::::::::::::::::::::::::::::::::::::::::: FIN SECCIÓN ::::::::::::::::::::::::::::::::::::::::::::::::::::
+

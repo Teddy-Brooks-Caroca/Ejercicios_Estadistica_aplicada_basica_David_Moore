@@ -224,7 +224,7 @@ peso_hombres <- ejercicio_2_07[ejercicio_2_07$Sexo == "H", ]
 
 plot(peso_mujeres$Peso_kg,
      peso_mujeres$Nivel_metabolico,
-     main = "Relación entre peso y nivel metabólico del grupo mujer",
+     main = "Relación entre peso y nivel metabólico",
      xlab = "Peso (kg)",
      ylab = "Nivel Metabolico",
      col = "green",

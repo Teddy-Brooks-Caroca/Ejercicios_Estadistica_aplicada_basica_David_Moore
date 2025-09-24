@@ -427,20 +427,128 @@ Tal como se aprecia la correlación no se ve afectada por unidades de medida esp
 # Una porción de pastel de crema           419                160
 
 # (a) Creemos que el contenido real en calorías de los alimentos, puede ayudar a
-#     explicar las estimaciones de la gente. Teniendo esto presente, dibuja un diagrama
-#     de dispersión con estos datos.
+# explicar las estimaciones de la gente. Teniendo esto presente, dibuja un diagrama
+# de dispersión con estos datos.
+
+calorias_estimadas_y_reales <- data.frame(
+  Alimento = c("225 g de leche entera","142 g de espaguetis con salsa de tomate","142 g de macarrones con queso",
+               "Una rebanada de pan trigo","Una rebanada de pan blanco","57 g de caramelos","Una galleta salada",
+               "Una manzana de tamaño medio","Una patata de tamaño medio","Una porción de pastel de crema"),
+  Calorias_estimadas = c(196,394,350,117,136,364,74,107,160,419),
+  Calorias_reales = c(159,163,269,61,76,260,12,80,88,160)
+)
+
+print(calorias_estimadas_y_reales)
+
+plot(calorias_estimadas_y_reales$Calorias_reales,
+     calorias_estimadas_y_reales$Calorias_estimadas,
+     main = "Estimacion calorica en alimentos",
+     xlab = "Calorias reales",
+     ylab = "Calorias estimadas",
+     col = "blue",
+     pch = 16,
+     cex = 1.2,
+     xlim = c(0, 300),
+     ylim = c(0, 450))
+text(calorias_estimadas_y_reales$Calorias_reales,
+     calorias_estimadas_y_reales$Calorias_estimadas,
+     labels = calorias_estimadas_y_reales$Alimento,
+     pos = 3, cex = 0.7, col = "darkblue")
+grid()
 
 # (b) Calcula la correlación r (utiliza tu calculadora). Explica, basándote en el
-#     diagrama de dispersión, por qué r es razonable.
+# diagrama de dispersión, por qué r es razonable.
+
+r <- cor(calorias_estimadas_y_reales$Calorias_reales,calorias_estimadas_y_reales$Calorias_estimadas)
+
+print(r)
+
+"
+r = 0.8245016
+
+En este caso la correlación es cercana a 1, con lo que podemos hipotetizar que las estiamciones
+hechas por las personas, aunque mayores a las reales, tienden a mostrar una cantidad de acuerdo
+a un alimento en especifico
+"
 
 # (c) Las estimaciones son todas mayores que los valores reales. Este hecho, ¿in
-#     fl uye de alguna manera en la correlación? ¿Cómo cambiaría r si todos los valores
-#     estimados fuesen 100 calorías más altos?
+# fluye de alguna manera en la correlación? ¿Cómo cambiaría r si todos los valores
+# estimados fuesen 100 calorías más altos?
+
+calorias_estimadas_y_reales$Calorias_estimadas_aumentadas <- calorias_estimadas_y_reales$Calorias_estimadas + 100
+
+print(calorias_estimadas_y_reales)
+
+r_aumentada <- cor(calorias_estimadas_y_reales$Calorias_reales,calorias_estimadas_y_reales$Calorias_estimadas_aumentadas)
+
+comparativa_r <- data.frame(
+  Medidas = c("Calorias estimadas", "Calorias estimadas aumentadas"),
+  Valores = c(r,r_aumentada)
+)
+
+print(comparativa_r)
+
+write.csv(calorias_estimadas_y_reales, "ejercicio_2_23_calorias.csv", row.names = FALSE)
+
+"
+                        Medidas   Valores
+1            Calorias estimadas 0.8245016
+2 Calorias estimadas aumentadas 0.8245016
+"
 
 # (d) Las estimaciones son demasiado altas para los espaguetis y los pasteles.
-#     Señala estos puntos en el diagrama de dispersión. Calcula r para los ocho alimen
-#     tos restantes. Explica por qué r cambia en el sentido en que lo hace.
+# Señala estos puntos en el diagrama de dispersión. Calcula r para los ocho alimen
+# tos restantes. Explica por qué r cambia en el sentido en que lo hace.
 
+calorias_filtradas <- calorias_estimadas_y_reales[!(calorias_estimadas_y_reales$Alimento %in% 
+                                                      c("142 g de espaguetis con salsa de tomate",
+                                                        "Una porción de pastel de crema")), ]
+
+puntos_fuera <- calorias_estimadas_y_reales$Alimento %in% 
+  c("142 g de espaguetis con salsa de tomate","Una porción de pastel de crema")
+
+print(calorias_filtradas)
+
+r_filtrada <- cor(calorias_filtradas$Calorias_reales,
+                  calorias_filtradas$Calorias_estimadas)
+
+print(r_filtrada)
+
+comparativa_r <- data.frame(
+  Medidas = c("r original","r filtrado"),
+  Valores = c(r,r_filtrada)
+)
+
+print(comparativa_r)
+
+plot(calorias_estimadas_y_reales$Calorias_reales,
+     calorias_estimadas_y_reales$Calorias_estimadas,
+     main = "Estimacion calorica en alimentos",
+     xlab = "Calorias reales",
+     ylab = "Calorias estimadas",
+     col = "blue",
+     pch = 16,
+     cex = 1.2,
+     xlim = c(0, 300),
+     ylim = c(0, 450))
+text(calorias_estimadas_y_reales$Calorias_reales,
+     calorias_estimadas_y_reales$Calorias_estimadas,
+     labels = calorias_estimadas_y_reales$Alimento,
+     pos = 3, cex = 0.7, col = "darkblue")
+points(calorias_estimadas_y_reales$Calorias_reales[puntos_fuera],
+       calorias_estimadas_y_reales$Calorias_estimadas[puntos_fuera],
+       col = "red", pch = 17, cex = 1.5)
+grid()
+
+"    Medidas   Valores
+1 r original 0.8245016
+2 r filtrado 0.9837412
+
+Esto ocurre porque esos dos valores actúan como outliers: se alejan de la tendencia 
+lineal general.
+Al eliminarlos, las estimaciones de los 8 alimentos restantes siguen mucho mejor 
+la relación lineal, y por eso r aumenta notablemente.
+"
 # **************************************************
 # PREGUNTA 2.24 - Peso del cerebro y coeficiente de inteligencia
 # **************************************************
@@ -466,19 +574,66 @@ Tal como se aprecia la correlación no se ve afectada por unidades de medida esp
 # 930.016    81    935.863    89    948.066    133   893.983    88
 
 # (a) Haz un diagrama de dispersión para mostrar la relación entre el coeficien
-#     te de inteligencia y el recuento de IRM. Utiliza símbolos distintos para hombres
-#     y mujeres. Además, halla la correlación entre ambas variables para los 40 sujetos,
-#     para los hombres y para las mujeres.
+# te de inteligencia y el recuento de IRM. Utiliza símbolos distintos para hombres
+# y mujeres. Además, halla la correlación entre ambas variables para los 40 sujetos,
+# para los hombres y para las mujeres.
+
+ejercicio_2_24 <- read.csv("ejercicio_2_24_cerebro.csv")
+
+View(ejercicio_2_24)
+
+coeficiente_hombres <- ejercicio_2_24[ejercicio_2_24$Genero == "Hombre", ]
+
+coeficiente_mujeres <- ejercicio_2_24[ejercicio_2_24$Genero == "Mujer", ]
+
+
+plot(coeficiente_hombres$CI,
+     coeficiente_hombres$IRM,
+     main = "Comparativa por genero de IRM y CI",
+     xlab = "CI",
+     ylab = "IRM",
+     col = "blue",
+     pch = 16,
+     cex = 1.5,
+     xlim = range(ejercicio_2_24$CI),
+     ylim = range(ejercicio_2_24$IRM))
+points(coeficiente_mujeres$CI,
+       coeficiente_mujeres$IRM,
+       col = "red",
+       pch = 17,
+       cex = 1.5)
+grid()
 
 # (b) En general, los hombres son más corpulentos que las mujeres, por tanto
-#     sus cerebros suelen ser más grandes. ¿Cómo se muestra este efecto en tu dia
-#     grama? Halla la media del recuento de IRM para hombres y para mujeres para
-#     comprobar si existe diferencia.
+# sus cerebros suelen ser más grandes. ¿Cómo se muestra este efecto en tu dia
+# grama? Halla la media del recuento de IRM para hombres y para mujeres para
+# comprobar si existe diferencia.
 
+media_IRM_hombres <- mean(coeficiente_hombres$IRM)
+media_IRM_mujeres <- mean(coeficiente_mujeres$IRM)
+
+comparativa_media_IRM <- data.frame(
+  Grupo = c("Hombres", "Mujeres"),
+  Media_IRM = c(media_IRM_hombres,media_IRM_mujeres)
+)
+
+print(comparativa_media_IRM)
+
+"
+    Grupo Media_IRM
+1 Hombres  954855.4
+2 Mujeres  862654.6
+"
 # (c) Tus resultados en (b) sugieren que para analizar la relación entre el coefi
-#     ciente de inteligencia y el peso del cerebro, es mejor separar hombres y mujeres.
-#     Utiliza tus resultados en (a) para comentar la naturaleza y la fuerza de esta rela
-#     ción para hombres y mujeres de forma separada.
+# ciente de inteligencia y el peso del cerebro, es mejor separar hombres y mujeres.
+# Utiliza tus resultados en (a) para comentar la naturaleza y la fuerza de esta rela
+# ción para hombres y mujeres de forma separada.
+
+"Al analizar hombres y mujeres por separado, la relación entre peso del cerebro (IRM) 
+y coeficiente intelectual (CI) resulta positiva en ambos grupos, aunque con distinta fuerza: 
+en los hombres la correlación es más clara y consistente, mientras que en las mujeres 
+la asociación es más débil y dispersa. Esto confirma que separar por género es más adecuado, 
+ya que la media de mayor tamaño cerebral en hombres podría sesgar la relación en el análisis conjunto."
 
 # **************************************************
 # PREGUNTA 2.25 - Un cambio en las unidades de medida
@@ -489,16 +644,73 @@ Tal como se aprecia la correlación no se ve afectada por unidades de medida esp
 # y: 0,5 -0,6 -0,5 0,5 0,5 -0,6
 
 # (a) Dibuja un diagrama de dispersión con los datos anteriores en el que la
-#     escala de las ordenadas y la de las abscisas vayan de -6 a 6.
+# escala de las ordenadas y la de las abscisas vayan de -6 a 6.
+
+puntos_coordenadas <- data.frame(
+  x = c(-4,-4,-3,3,4,4),
+  y = c(0.5,-0.6,-0.5,0.5,0.5,-0.6)
+)
+
+print(puntos_coordenadas)
+
+plot(puntos_coordenadas$x,
+     puntos_coordenadas$y,
+     main = "Puntos coordenadas",
+     xlab = "x (ordenadas)",
+     ylab = "y (abscisas)",
+     col = "blue",
+     pch = 16,
+     xlim = c(-6,6),
+     ylim = c(-6,6))
+grid()
 
 # (b) Calcula, a partir de x e y, los valores de las nuevas variables: x* = x/10
-#     e y* = 10y. Dibuja y* en relación con x* en el mismo diagrama de dispersión
-#     utilizando otros símbolos. El aspecto de los dos diagramas es muy diferente.
+# e y* = 10y. Dibuja y* en relación con x* en el mismo diagrama de dispersión
+# utilizando otros símbolos. El aspecto de los dos diagramas es muy diferente.
+
+puntos_coordenadas$x_star <- puntos_coordenadas$x / 10
+puntos_coordenadas$y_star <- puntos_coordenadas$y * 10
+
+plot(puntos_coordenadas$x,
+     puntos_coordenadas$y,
+     main = "Cambio de unidades de medida",
+     xlab = "x / x*",
+     ylab = "y / y*",
+     col = "blue",
+     pch = 16,
+     xlim = c(-6,6),
+     ylim = c(-6,6))
+points(puntos_coordenadas$x_star,
+       puntos_coordenadas$y_star,
+       col = "red",
+       pch = 17,
+       cex = 1.2)
+grid()
 
 # (c) Utiliza una calculadora para hallar la correlación entre x e y. Luego, halla
-#     la correlación entre x* e y*. ¿Cuál es la relación entre las dos correlaciones? Expli
-#     ca por qué este resultado no es sorprendente.
+# la correlación entre x* e y*. ¿Cuál es la relación entre las dos correlaciones? Expli
+# ca por qué este resultado no es sorprendente.
 
+r_original <- cor(puntos_coordenadas$x,puntos_coordenadas$y)
+r_star <- cor(puntos_coordenadas$x_star,puntos_coordenadas$y_star)
+
+relacion_r <- data.frame(
+  Tipo_correlacion = c("r original","r star"),
+  Valores = c(r_original,r_star)
+)
+
+print(relacion_r)
+"
+Tipo_correlacion   Valores
+r original         0.2531007
+r star             0.2531007
+
+La correlación no cambia porque es invariante frente a cambios de escala y de unidades.
+Al dividir x entre 10 o multiplicar y por 10, se modifican las magnitudes de los datos 
+pero no la forma de la relación lineal entre ambas variables.
+La correlación depende únicamente de la dirección y fuerza de la relación lineal, no de 
+la escala de medida. Por eso, no es sorprendente que ambas correlaciones sean idénticas.
+"
 # **************************************************
 # PREGUNTA 2.26 - Docencia e investigación
 # **************************************************
@@ -511,9 +723,34 @@ Tal como se aprecia la correlación no se ve afectada por unidades de medida esp
 # a ser malos profesores y viceversa".
 
 # (a) Explica por qué el titular del periódico no refleja el sentido de las palabras del pro
-#     fesor Cruz. 
+# fesor Cruz. 
+
+"El titular del periódico no refleja correctamente las palabras del profesor Cruz porque:
+Correlación cercana a cero significa que no hay relación entre ambas variables
+El titular interpreta 'correlación cero' como una relación inversa ('buenos investigadores = malos profesores')
+En realidad, correlación cero indica que ser buen investigador no predice si se es buen o mal profesor, y viceversa
+El periódico convierte una ausencia de relación en una relación inversa, lo cual es un error estadístico grave"
+
 # (b) Escribe en un lenguaje sencillo (no utilices la palabra "correlación")
-#     lo que quería decir el profesor Cruz.
+# lo que quería decir el profesor Cruz.
+
+"Lo que realmente quiso decir el profesor Cruz es:
+
+'El hecho de que un profesor sea buen investigador no nos da ninguna pista sobre si 
+será bueno o malo enseñando. De la misma manera, saber que un profesor es muy bueno 
+en clase no nos dice nada sobre su capacidad para hacer investigaciones. Ambas habilidades 
+parecen ser independientes.'
+
+En términos más simples:
+Los buenos investigadores pueden ser buenos profesores, malos profesores, o regulares
+
+Los malos investigadores pueden ser buenos profesores, malos profesores, o regulares
+
+No hay patrón: conocer una habilidad no ayuda a predecir la otra
+
+Analogía útil:
+'Es como saber si a alguien le gusta el fútbol: eso no nos dice si le gustará o no el cine. 
+Puede gustarle ambos, ninguno, o solo uno de los dos. No hay relación entre estos gustos'"
 
 # **************************************************
 # PREGUNTA 2.27 - Diversificación de inversiones
@@ -526,13 +763,23 @@ Tal como se aprecia la correlación no se ve afectada por unidades de medida esp
 # correlación entre los bonos municipales y acciones de pequeñas empresas es 0,21.
 
 # (a) María invierte mucho en bonos municipales y quiere diversificar sus in
-#     versiones añadiendo unas acciones que tengan unos rendimientos que no sigan
-#     la misma tendencia que los rendimientos de sus bonos. Para conseguir su propó
-#     sito, ¿qué tipo de acciones debe escoger María, las acciones de grandes empresas
-#     o acciones de pequeñas empresas? Justifica tu respuesta.
+# versiones añadiendo unas acciones que tengan unos rendimientos que no sigan
+# la misma tendencia que los rendimientos de sus bonos. Para conseguir su propó
+# sito, ¿qué tipo de acciones debe escoger María, las acciones de grandes empresas
+# o acciones de pequeñas empresas? Justifica tu respuesta.
 
-# (b) Si María quiere una inversión que tienda a aumentar cuando los rendi
-#     mientos de sus bonos tiendan a disminuir, ¿qué tipo de correlación debe buscar?
+"María debe escoger acciones de pequeñas empresas porque tienen una correlación más baja (0.21) 
+con los bonos municipales que las acciones de grandes empresas (0.50). Una correlación de 0.21 
+indica que los rendimientos de estas acciones siguen menos la misma tendencia que los bonos, lo 
+que proporciona mejor diversificación al reducir el riesgo de que todas sus inversiones suban o 
+bajen al mismo tiempo."
+
+# (b) Si María quiere una inversión que tienda a aumentar cuando los rendimientos 
+# de sus bonos tiendan a disminuir, ¿qué tipo de correlación debe buscar?
+
+"María debe buscar una correlación negativa (valor entre -1 y 0). Una correlación negativa significa 
+que cuando los rendimientos de sus bonos disminuyan, los rendimientos de la otra inversión tenderán a 
+aumentar, protegiendo así su cartera contra pérdidas generalizadas."
 
 # **************************************************
 # PREGUNTA 2.28 - Velocidad y consumo de gasolina
@@ -543,8 +790,49 @@ Tal como se aprecia la correlación no se ve afectada por unidades de medida esp
 # proporciona datos sobre el consumo del Ford Escort con relación a la velocidad.
 
 # (a) Dibuja un diagrama de dispersión si no lo hiciste en el ejercicio 2.6. 
+
+ejercicio_2_28 <- read.csv("ejercicio_2_06_consumo_coche.csv")
+
+head(ejercicio_2_28)
+
+str(ejercicio_2_28)
+
+plot(ejercicio_2_28$Velocidad_km_h,
+     ejercicio_2_28$Consumo_litros_100km,
+     main = "Consumo modelo Ford Escort",
+     xlab = "Velocidad (km/h)",
+     ylab = "Consumo (litros / 100 km)",
+     col = "red",
+     pch = 16,
+     cex = 1.2)
+grid()
+
 # (b) Calcula la correlación y explica por qué r está cerca de 0 a pesar de la 
-#     fuerte relación entre la velocidad y el consumo.
+# fuerte relación entre la velocidad y el consumo.
+
+r_ford <- cor(ejercicio_2_28$Velocidad_km_h,ejercicio_2_28$Consumo_litros_100km)
+
+print(r_ford)
+
+"
+r = -0.1716216
+
+La correlación r = -0.17 está cerca de cero porque la relación entre velocidad y consumo no es lineal, 
+sino curvilínea (en forma de U). El coeficiente de correlación lineal (r) solo mide relaciones lineales, 
+pero en este caso:
+
+A bajas velocidades (ej: 20-40 km/h) el consumo es alto
+
+A velocidades medias (ej: 60-80 km/h) el consumo es mínimo
+
+A altas velocidades (ej: 100-120 km/h) el consumo vuelve a aumentar
+
+Esta relación curvilínea hace que la línea recta que mejor se ajusta tenga pendiente cercana a cero, 
+dando una correlación lineal baja, a pesar de que existe una relación muy fuerte pero no lineal entre 
+las variables.
+
+En resumen: r mide solo relaciones lineales, pero esta relación es curvilínea, por lo que r no captura 
+la verdadera fuerza de la asociación."
 
 # **************************************************
 # PREGUNTA 2.29 - ¿Dónde está el error?
@@ -555,8 +843,21 @@ Tal como se aprecia la correlación no se ve afectada por unidades de medida esp
 
 # (a) "Hay una correlación alta entre el sexo de los trabajadores y sus ingresos."
 
+"El error está en calcular correlación con una variable categórica (sexo). El coeficiente de correlación (r) 
+solo puede calcularse entre dos variables numéricas continuas. El 'sexo' es una variable categórica (hombre/mujer), 
+no numérica, por lo que no tiene sentido matemático calcular una correlación con los ingresos."
+
 # (b) "Hallamos una correlación alta (r = 1,09) entre las evaluaciones de los
-#     profesores hechas por los estudiantes y las hechas por otros profesores."
+# profesores hechas por los estudiantes y las hechas por otros profesores."
+
+"El error está en que r = 1.09 es imposible. El coeficiente de correlación r siempre debe estar entre -1 y 1 (-1 ≤ r ≤ 1). 
+Un valor de 1.09 está fuera de este rango posible, lo que indica un error en el cálculo o en la interpretación."
 
 # (c) "La correlación hallada entre la densidad de siembra y el rendimiento del
 #     maíz fue de r = 0,23 hectolitros."
+
+"El error está en añadir unidades ('hectolitros') al coeficiente de correlación. La correlación r es un número adimensional 
+que no tiene unidades. Mide la fuerza y dirección de una relación, pero no está expresada en unidades de medida como 
+hectolitros, metros o kilogramos."
+
+# :::::::::::::::::::::::::::::::::::::::::::::::::::: FIN SECCIÓN ::::::::::::::::::::::::::::::::::::::::::::::::::::

@@ -2,7 +2,7 @@
 
 # Capítulo II "Relaciones entre variables"
 
-# SECCIÓN 2.2 "La correlación"
+# SECCIÓN 2.3 "La correlación"
 
 # **************************************************
 # PREGUNTA 2.17 - Clasificación de fósiles (Archaeopteryx)

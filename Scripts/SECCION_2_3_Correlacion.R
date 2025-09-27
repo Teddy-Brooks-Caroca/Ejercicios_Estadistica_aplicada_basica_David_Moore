@@ -854,7 +854,7 @@ no numérica, por lo que no tiene sentido matemático calcular una correlación 
 Un valor de 1.09 está fuera de este rango posible, lo que indica un error en el cálculo o en la interpretación."
 
 # (c) "La correlación hallada entre la densidad de siembra y el rendimiento del
-#     maíz fue de r = 0,23 hectolitros."
+# maíz fue de r = 0,23 hectolitros."
 
 "El error está en añadir unidades ('hectolitros') al coeficiente de correlación. La correlación r es un número adimensional 
 que no tiene unidades. Mide la fuerza y dirección de una relación, pero no está expresada en unidades de medida como 

@@ -110,13 +110,55 @@ print(resultados_mininmo_cuadratica)
 # pH = 5,43 − (0,0053 × semanas)
 
 # (a) Dibuja esta recta. ¿La asociación es positiva o negativa? Explica de una
-#     manera sencilla el significado de esta asociación.
+# manera sencilla el significado de esta asociación.
+
+intercepto <- 5.43
+pendiente <-  -0.0053
+semanas <- 0:150 
+
+pH <- intercepto + pendiente * semanas
+
+plot(semanas, 
+     pH,
+     main = "Evolución del pH de la lluvia en el tiempo",
+     xlab = "Semanas",
+     ylab = "pH",
+     type = "l", 
+     lwd = 2, 
+     col = "blue",
+     ylim = c(4.5, 5.5))
+points(c(0, 150), c(5.43, 5.43 - 0.0053*150), pch = 16, col = "red")
+grid()
+
+"La asociación es negativa, lo que sugiere que conforme pasan las semanas el nivel de ph 
+disminuye, es decir que aumenta la acidez"
 
 # (b) De acuerdo con la recta de regresión, ¿cuál era el pH al comienzo del
-#     estudio (semana = 1)? ¿Y al final (semana = 150)?
+# estudio (semana = 1)? ¿Y al final (semana = 150)?
 
-# (c) ¿Cuál es la pendiente de la recta de regresión? Explica claramente qué in
-#     dica la pendiente respecto del cambio del pH del agua de lluvia en esta zona rural.
+semana_1 <- intercepto - pendiente * 1
+semana_150 <- intercepto - pendiente * 150
+
+comparativa_ph_semana <- data.frame(
+  Semana = c("Semana 1","Semana 150"),
+  pH =c(semana_1,semana_150)
+)
+
+print(comparativa_ph_semana)
+
+"
+  Semana      pH
+  Semana 1    5.4247
+  Semana 150  4.6350
+"
+
+# (c) ¿Cuál es la pendiente de la recta de regresión? Explica claramente qué indica 
+# la pendiente respecto del cambio del pH del agua de lluvia en esta zona rural.
+
+"
+b = -0.0053
+
+el pH disminuye 0,0053 unidades por semana (como media)."
 
 # **************************************************
 # PREGUNTA 2.32 - Manatís en peligro
@@ -129,22 +171,120 @@ print(resultados_mininmo_cuadratica)
 # muertos = −41,4 + (0,125 × lanchas)
 
 # (a) Dibuja un diagrama de dispersión y añádele la recta de regresión. Predice
-#     el número de manatís que matarán las lanchas en un año en que se registraron
-#     716.000 lanchas.
+# el número de manatís que matarán las lanchas en un año en que se registraron
+# 716.000 lanchas.
+
+ejercicio_2_32 <- read.csv("ejercicio_2_04_manaties.csv")
+
+head(ejercicio_2_32)
+
+str(ejercicio_2_32)
+
+intercepto <- -41.4
+pendiente <- 0.125
+lanchas <- 716
+
+mortandad_manaties <- intercepto + pendiente * lanchas
+
+print(mortandad_manaties)
+
+plot(ejercicio_2_32$Licencias_miles,
+     ejercicio_2_32$Manatis_muertos,
+     main = "Relación entre licencias expedidas y manatíes muertos",
+     xlab = "Licencias expedidas (x 1000)",
+     ylab = "Manatíes muertos",
+     col = "blue",
+     pch = 16)
+abline(intercepto,
+       pendiente,
+       col = "red",
+       lwd = 2,
+       lty = "dashed")
+grid()
+
+"En un año en que se autoricen 716000 licencias, puede haber una mortandad de 
+48 manatíes muertos"
 
 # (b) He aquí nuevos datos sobre los manatís muertos durante cuatro años más:
+
 # Año    Licencias expedidas (1.000)   Manatís muertos
 # 1991   716                          53
 # 1992   716                          38
 # 1993   716                          35
 # 1994   735                          49
 
-#     Añade estos puntos al diagrama de dispersión. Durante estos cuatro años,
-#     Florida tomó fuertes medidas para proteger a los manatís. ¿Observas alguna evi
-#     dencia de que estas medidas tuvieron éxito?
+# Añade estos puntos al diagrama de dispersión. Durante estos cuatro años,
+# Florida tomó fuertes medidas para proteger a los manatís. ¿Observas alguna evi
+# dencia de que estas medidas tuvieron éxito?
+
+nuevo_registro <- data.frame(
+  Año = c(1991,1992,1993,1994),
+  Licencias_miles = c(716,716,716,735),
+  Manatis_muertos = c(53,38,35,49)
+)
+
+print(nuevo_registro)
+
+plot(ejercicio_2_32$Licencias_miles,
+     ejercicio_2_32$Manatis_muertos,
+     main = "Relación entre licencias expedidas y manatíes muertos",
+     xlab = "Licencias expedidas (x 1000)",
+     ylab = "Manatíes muertos",
+     col = "blue",
+     pch = 16,
+     xlim = c(420,750),
+     ylim = c(0,60))
+points(nuevo_registro$Licencias_miles,
+       nuevo_registro$Manatis_muertos,
+       col = "green",
+       pch = 15,
+       cex = 1.2)
+abline(intercepto,
+       pendiente,
+       col = "red",
+       lwd = 2,
+       lty = "dashed")
+grid()
+
+"Han tenido un exito mesurado, pues aunque la cantidad de manatis muerto disminuyó, todavía
+se puede apreciar que la cantidad de muertes es proporcional a la cantidad de licencias
+expedidas."
 
 # (c) En el apartado (a) predijiste el número de manatís muertos en un año
-#     con 716.000 lanchas registradas. En realidad, el número de lanchas registradas
-#     se mantuvo en 716.000 durante los siguientes tres años. Compara las medias de
-#     manatís muertos en estos años con tu predicción en (a). ¿Qué nivel de exactitud
-#     has alcanzado?
+# con 716.000 lanchas registradas. En realidad, el número de lanchas registradas
+# se mantuvo en 716.000 durante los siguientes tres años. Compara las medias de
+# manatís muertos en estos años con tu predicción en (a). ¿Qué nivel de exactitud
+# has alcanzado?
+
+datos_completos <- rbind(ejercicio_2_32, nuevo_registro)
+
+View(datos_completos)
+
+licencias_716 <- datos_completos[datos_completos$Licencias_miles == 716, ]
+
+print(licencias_716)
+
+promedio__manatis_716 <- mean(licencias_716$Manatis_muertos)
+
+print(promedio__manatis_716)
+
+comparativa <- data.frame(
+  Medida = c("promedio","predicción"),
+  Valores = c(promedio__manatis_716,mortandad_manaties)
+)
+
+print(comparativa)
+
+"
+ Año  Licencias_miles Manatis_muertos
+ 1991             716              53
+ 1992             716              38
+ 1993             716              35
+
+======================================
+
+Medida     Valores
+promedio        42
+predicción      48
+
+"

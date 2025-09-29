@@ -6,14 +6,20 @@ Este repositorio contiene la resolución de ejercicios del libro **Estadística 
 
 ```
 ├── Archivos/
-│   ├── ejercicio_1_10_fondos.csv
-│   ├── ejercicio_1_12_mortandad.csv
-│   ├── ejercicio_1_13_longitud.csv
-│   └── ...
-├── SECCIÓN_1_2_Gráficos_de_distribuciones.R
-├── SECCIÓN_1_3_Descripción_de_las_distribuciones_con_numeros.R
-└── ...
-```
+│ ├── ejercicio_1_10_fondos.csv
+│ ├── ejercicio_1_12_mortandad.csv
+│ ├── ejercicio_1_13_longitud.csv
+│ └── ...
+├── Scripts/
+│ ├── Capitulo_I_Analisis_de_distribuciones/
+│ │ ├── SECCIÓN_1_2_Gráficos_de_distribuciones.R
+│ │ ├── SECCIÓN_1_3_Descripción_de_las_distribuciones_con_numeros.R
+│ │ └── ...
+│ ├── Capitulo_II_Relaciones_entre_variables/
+│ │ ├── SECCIÓN_2_1_Introducción_a_la_regresión.R
+│ │ ├── SECCIÓN_2_2_Tablas_de_contingencia.R
+│ │ └── ...
+│ └── ...```
 
 ## ▶️ Cómo usarlo
 

@@ -70,7 +70,7 @@ r <- (1 / (n_muestras - 1)) * sum(z_gas * z_grados)
 
 b <- r * (desv_gas / desv_grados)
 
-a <- media_gas - (b*media_grados)
+a <- media_gas - (b * media_grados)
 
 resultados <- data.frame(
   Variable = c("Gas(m3)","Grados - día"),
@@ -288,3 +288,296 @@ promedio        42
 predicción      48
 
 "
+
+# **************************************************
+# PREGUNTA 2.33 - El profesor Moore y la natación
+# **************************************************
+
+# He aquí los tiempos (en minutos) que tarda el profesor Moore en nadar 1.800 metros 
+# y su ritmo cardíaco después de bracear (en pulsaciones por minuto) en 23 sesiones de natación.
+
+# Minutos:   34,12 35,72 34,72 34,05 34,13 35,72 36,17 35,57 35,37 35,57 35,43 
+#            36,05 34,85 34,70 34,75 33,93 34,60 34,00 34,35 35,62 35,68 35,28 35,97
+
+# Pulsaciones: 152 124 140 152 146 128 136 144 148 144 136 124 148 144 140 156 
+#              136 148 148 132 124 132 139
+
+# (a) Un diagrama de dispersión muestra una relación lineal negativa relativa
+# mente fuerte. Utiliza tu calculadora o un programa informático para comprobar
+# que la recta de regresión mínimo-cuadrática es
+# pulsaciones = 479,9 − (9,695 × minutos)
+
+ejercicio_2_33 <- read.csv("ejercicio_2_33_natacion.csv")
+
+str(ejericicio_2_33)
+
+View(ejercicio_2_33)
+
+intercepto = 479.9
+pendiente = -9.695 
+
+correlacion <- cor(ejercicio_2_33$Minutos,ejercicio_2_33$Pulsaciones)
+regresion <- lm(Pulsaciones ~ Minutos, data = ejercicio_2_33)
+
+summary(regresion)
+
+resultados_programa <- data.frame(
+  Medida = c("Correlacion", "Intercepto","Pendiente"),
+  Valor_calculado = c(correlacion,coef(regresion)[1],coef(regresion)[2]),
+  Valor_otorgado = c("No dado",intercepto,pendiente)
+)
+
+print(resultados_programa)
+
+plot(ejercicio_2_33$Minutos, ejercicio_2_33$Pulsaciones,
+     main = "Tiempo de natación vs Ritmo cardíaco",
+     xlab = "Minutos (1800 metros)",
+     ylab = "Pulsaciones por minuto",
+     col = "blue", pch = 16)
+abline(a = 479.9, b = -9.695, col = "red", lwd = 2)
+abline(regresion, col = "green", lty = 2, lwd = 2)
+
+"   
+Medida       Valor_calculado  Valor_otorgado
+Correlacion      -0.7459841          No dado
+Intercepto      479.9341457            479.9
+Pendiente        -9.6949034           -9.695
+"
+
+# (b) Al siguiente día el profesor tardó 34,30 minutos. Predice su ritmo cardíaco.
+# En realidad su pulso fue 152. ¿Cómo de exacta es tu predicción?
+
+
+dia_siguiente <- intercepto + (pendiente * 34.30)
+
+valor_real <- 152
+valor_predicho <- dia_siguiente
+
+error_absoluto <- abs(valor_real - valor_predicho)
+error_relativo <- (error_absoluto / valor_real) * 100
+exactitud <- 100 - error_relativo
+
+comparativa <- data.frame(
+  Medidas = c("Valor real", "Valor predicho", "Error absoluto", "Error relativo", "Exactitud"),
+  Valores = c(valor_real, 
+              round(valor_predicho, 1),
+              round(error_absoluto, 1),
+              paste0(round(error_relativo, 1), "%"),
+              paste0(round(exactitud, 1), "%"))
+)
+
+print(comparativa)
+
+"
+ Medidas        Valores
+ Valor real     152.0
+ Valor predicho 147.4
+ Error absoluto   4.6
+ Error relativo   3.1%
+ Exactitud       96.9%
+"
+
+# (c) Supón que sólo conociéramos que las pulsaciones fueron 152. Ahora quieres 
+# predecir el tiempo que el profesor estuvo nadando. Halla la recta de regresión
+# mínimo-cuadrática apropiada para la ocasión. ¿Cuál es tu predicción? ¿Es muy
+# exacta?
+
+pulsaciones <- 152 
+
+predecir <- (intercepto - pulsaciones) /abs(pendiente)
+
+tiempo_real <- 34.30
+error <- abs(tiempo_real - predecir)
+error_porcentual <- (error / tiempo_real) * 100
+exactitud <- 100 - error_porcentual
+
+comparativa <- data.frame(
+  Medidas = c("Tiempo real", "Tiempo predicho", "Error absoluto", "Exactitud"),
+  Valores = c(paste0(round(tiempo_real, 2), " min"),
+              paste0(round(predecir, 2), " min"),
+              paste0(round(error, 2), " min"),
+              paste0(round(exactitud, 1), "%"))
+)
+
+print(comparativa)
+
+"
+Medidas         Valores
+Tiempo real     34.30 min
+Tiempo predicho 33.82 min
+Error absoluto   0.48 min
+Exactitud       98.6%
+"
+# (d) Explica de forma clara, a alguien que no sepa estadística, por qué las dos
+#     rectas de regresión son distintas.
+
+"Las dos rectas de regresión son diferentes porque cada una está diseñada para hacer 
+una predicción específica: una predice las pulsaciones cuando conoces el tiempo de natación, 
+y la otra predice el tiempo de natación cuando conoces las pulsaciones. Como cada recta se ajusta 
+para minimizar los errores en su propia predicción, terminan siendo líneas distintas, cada 
+una optimizada para su propósito particular."
+
+# **************************************************
+# PREGUNTA 2.34 - Predicción del comportamiento de mercados de valores
+# **************************************************
+
+# Algunas personas creen que el comportamiento de un mercado de valores en enero 
+# permite predecir el comportamiento del mercado durante el resto del año. 
+# Toma como variable explicativa x el porcentaje de cambio en el índice del mercado 
+# de valores en enero y como variable respuesta y la variación del índice a lo largo de todo el año.
+
+# Cálculos a partir de datos del periodo 1960-1997 dan:
+# x̄ = 1,75%    ȳ = 9,07%
+# sx = 5,36%   sy = 15,35%
+# r = 0,596
+
+# (a) ¿Qué porcentaje de la variación observada en los cambios anuales del
+# índice se explica a partir de la relación lineal con el cambio del índice en enero?
+
+r2 <- 0.596 * 0.596
+
+print(paste0(round(r2, 2)*100, "%"))
+
+"El 36% de la variación observada en los cambios anuales del índice se explica por 
+la relación lineal con el cambio en enero."
+
+# (b) ¿Cuál es la ecuación de la recta mínimo-cuadrática para la predicción del
+# cambio en todo el año a partir del cambio en enero?
+
+b <- 0.596 * (15.35 / 5.36)
+
+a <- 9.07 - (b * 1.75)
+
+print(b)
+print(a)
+
+"
+ŷ = 6.08305 + 1.706828 * x
+"
+
+# (c) En enero el cambio medio es x̄ = 1,75%. Utiliza tu recta de regresión para
+# predecir el cambio del índice en un año para el cual en enero sube un 1,75%. ¿Por
+# qué podías haber conocido este resultado (hasta donde te permite el error de re
+# dondeo) sin necesidad de hacer ningún cálculo?
+
+y_sombrero <- a + b * 1.75
+
+print(y_sombrero)
+
+"
+ŷ = 9.07
+
+Por que se supone que el comportamiento de Enero predice el comportamiento de todo el año, 
+por lo tanto la regresión minimo cuadratica es el promedio de la variación del indice 
+a lo largo de todo el año"
+
+# **************************************************
+# PREGUNTA 2.35 - Castores y larvas de coleóptero
+# **************************************************
+
+# Un estudio parece mostrar que los castores pueden ser beneficiosos para una 
+# determinada especie de coleóptero. Los investigadores establecieron 23 parcelas 
+# circulares, cada una de ellas de 4 metros de diámetro, en una zona en la que los 
+# castores provocaban la caída de álamos al alimentarse de su corteza. En cada parcela, 
+# los investigadores determinaron el número de tocones resultantes de los árboles 
+# derribados por los castores y el número de larvas del coleóptero.
+
+# Datos:
+# Tocones: 2 2 1 3 3 4 3 1 2 5 1 3 2 1 2 2 1 1 4 1 2 1 4
+# Larvas:  10 30 12 24 36 40 43 11 27 56 18 40 25 8 21 14 16 6 54 9 13 14 50
+
+# (a) Haz un diagrama de dispersión que muestre cómo el número de toco
+# nes debidos a los castores influye sobre el de larvas. ¿Qué muestra tu diagrama?
+# (Los ecólogos creen que los brotes que surgen de los tocones resultan más apete
+# cibles para las larvas ya que son más tiernos que los de los árboles mayores.)
+
+resultados_parcelas <- data.frame(
+  Tocones = c(2,2,1,3,3,4,3,1,2,5,1,3,2,1,2,2,1,1,4,1,2,1,4),
+  Larvas = c(10,30,12,24,36,40,43,11,27,56,18,40,25,8,21,14,16,6,54,9,13,14,50)
+)
+
+print(resultados_parcelas)
+
+plot(resultados_parcelas$Tocones,
+     resultados_parcelas$Larvas,
+     main = "Castores y larvas de coleóptero",
+     xlab = "Tocones",
+     ylab = "Larvas",
+     col = "blue",
+     pch = 15)
+grid()
+
+"El diagrama muestra una relación lineal positiva entre número de tocones y número de larvas, 
+aunque con dispersión y con más observaciones en valores bajos de tocones (1-3), que es lo típico 
+en distribuciones naturales.
+
+Por lo tanto, el diagrama de dispersión apoya la hipótesis de los ecólogos, mostrando una clara 
+tendencia creciente entre el número de tocones y la abundancia de larvas.
+"
+
+# (b) Halla la recta de regresión mínimo-cuadrática y dibújala en tu diagrama.
+
+media_tocones <- mean(resultados_parcelas$Tocones)
+media_larvas <- mean(resultados_parcelas$Larvas)
+
+desv_tocones <- sd(resultados_parcelas$Tocones)
+desv_larvas <- sd(resultados_parcelas$Larvas)
+
+z_tocones <- (resultados_parcelas$Tocones - media_tocones) / desv_tocones
+z_larvas <- (resultados_parcelas$Larvas - media_larvas) / desv_larvas
+
+n_muestras <- nrow(resultados_parcelas)
+
+r <- (1 / (n_muestras - 1)) * sum(z_tocones * z_larvas)
+
+b <- r * (desv_larvas / desv_tocones)
+
+a <- media_larvas - (b * media_tocones)
+
+resultados <- data.frame(
+  Variable = c("Tocones","Larvas"),
+  Media = c(media_tocones,media_larvas),
+  Desviacion = c(desv_tocones,desv_larvas)
+)  
+
+resultados_mininmo_cuadratica = data.frame(
+  Medida = c("Correlación (r)", "Pendiente (b)","Intercepto (a)"),
+  Valores = c(r,b,a)
+)
+
+print(resultados)
+print(resultados_mininmo_cuadratica)
+
+plot(resultados_parcelas$Tocones,
+     resultados_parcelas$Larvas,
+     main = "Castores y larvas de coleóptero",
+     xlab = "Tocones",
+     ylab = "Larvas",
+     col = "blue",
+     pch = 15)
+abline(a = a, b = b, col = "red", lwd = 2)
+grid()
+
+
+"
+Variable     Media  Desviacion
+Tocones   2.217391    1.204406
+Larvas   25.086957   15.637696
+
+=================================
+
+          Medida      Valores
+ Correlación (r)   0.91604789
+   Pendiente (b)  11.8937330
+  Intercepto (a)  -1.2861035
+"
+
+# (c) ¿Qué porcentaje de la variación observada en el número de larvas se puede
+# explicar por la dependencia lineal con el número de tocones?
+
+r2 = r * r
+
+print(paste0(round(r2, 2)*100, "%"))
+
+" Hay un 84% de la variación observada en el número de larvas se explica por la 
+relación lineal con el número de tocones."

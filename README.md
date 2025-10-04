@@ -19,8 +19,8 @@ Este repositorio contiene la resolución de ejercicios del libro **Estadística 
 │ │ ├── SECCIÓN_2_1_Introducción_a_la_regresión.R
 │ │ ├── SECCIÓN_2_2_Tablas_de_contingencia.R
 │ │ └── ...
-│ └── ...```
-
+│ └── ...
+```
 ## ▶️ Cómo usarlo
 
 1. Clona o descarga este repositorio

@@ -1394,50 +1394,297 @@ Normal         0.50      -0.12
 # PREGUNTA 2.45 - Invertir en y fuera de EE UU
 # **************************************************
 
+# Unos inversores quieren saber qué relación existe entre los rendimientos de las 
+# inversiones en EE UU y las inversiones fuera de EEUU. 
 # La tabla 2.8 proporciona datos sobre los rendimientos totales de los valores 
 # bursátiles en EE UU y fuera de EE UU, durante un periodo de 26 años.
 
-# Años: 1971-1997
-# Rendimientos en EE UU y fuera de EE UU para cada año
+# TABLA 2.8 - Rendimientos anuales en y fuera de EE UU (1971-1997):
+
+# Año   Rendimiento_fuera_EEUU  Rendimiento_en_EEUU
+# -------------------------------------------------
+# 1971   29,6                   14,6
+# 1972   36,3                   18,9
+# 1973   -14,9                  -14,8
+# 1974   -23,2                  -26,4
+# 1975   35,4                   37,2
+# 1976   2,5                    23,6
+# 1977   18,1                   -7,4
+# 1978   32,6                   6,4
+# 1979   4,8                    18,2
+# 1980   22,6                   32,3
+# 1981   -2,3                   -5,0
+# 1982   -1,9                   21,5
+# 1983   23,7                   22,4
+# 1984   7,4                    6,1
+# 1985   56,2                   31,6
+# 1986   69,4                   18,6
+# 1987   24,6                   5,1
+# 1988   28,5                   16,8
+# 1989   10,6                   31,5
+# 1990   -23,0                  -3,1
+# 1991   12,8                   30,4
+# 1992   -12,1                  7,6
+# 1993   32,9                   10,1
+# 1994   6,2                    1,3
+# 1995   11,2                   37,6
+# 1996   6,4                    23,0
+# 1997   2,1                    33,4
 
 # (a) Haz un diagrama de dispersión adecuado para predecir los rendimientos
-#     de los valores bursátiles fuera de EE UU a partir de los rendimientos en EE UU.
+# de los valores bursátiles fuera de EE UU a partir de los rendimientos en EE UU.
+
+ejercicio_2_45 <- read.csv("ejercicio_2_45_rendimientos.csv")
+
+str(ejercicio_2_45)
+
+View(ejercicio_2_45)
+
+plot(ejercicio_2_45$Rendimiento_en_EEUU,
+     ejercicio_2_45$Rendimiento_fuera_EEUU,
+     main = "Rendimientos bursatiles",
+     xlab = "Rendimiento bursatil en EE.UU",
+     ylab = "Rendimiento bursatil fuera de EE.UU",
+     col = "blue",
+     pch = 16)
+grid()
 
 # (b) Halla la correlación y r². Describe con palabras la relación entre los rendi
-#     mientos en y fuera de EE UU. Utiliza r y r² para hacer más precisa tu descripción.
+# mientos en y fuera de EE UU. Utiliza r y r² para hacer más precisa tu descripción.
+
+r <- cor(ejercicio_2_45$Rendimiento_en_EEUU,ejercicio_2_45$Rendimiento_fuera_EEUU)
+
+r2 <- r * r
+
+resultados <- data.frame(
+  Medidas = c("r", "r2"),
+  Resultados = c(r, r2)
+)
+
+print(resultados)
+
+"
+  Medidas Resultados
+1       r  0.4641252
+2      r2  0.2154122
+
+==============================
+
+El coeficiente de correlación entre los rendimientos bursátiles en EE. UU. y fuera de EE. UU. 
+es r = 0.46, lo que indica una relación positiva moderada. En general, cuando el mercado estadounidense 
+presenta rendimientos altos, los mercados fuera de EE. UU. también tienden a tener buenos resultados, 
+aunque la relación no es muy fuerte.
+
+El coeficiente de determinación r² = 0.21 muestra que solo alrededor del 21 % de la variabilidad en 
+los rendimientos fuera de EE. UU. puede explicarse por los rendimientos en EE. UU. Esto sugiere que, 
+aunque existe cierta conexión entre ambos mercados, los rendimientos internacionales están influenciados 
+principalmente por otros factores.
+
+En conclusión, invertir fuera de EE. UU. ofrece una cierta diversificación, ya que los rendimientos no 
+se mueven completamente al unísono con los del mercado estadounidense.
+"
 
 # (c) Halla la recta de regresión mínimo-cuadrática de los rendimientos fuera de
-#     EE UU en función de los rendimientos en EE UU. Traza la recta en el diagrama
-#     de dispersión.
+# EE UU en función de los rendimientos en EE UU. Traza la recta en el diagrama
+# de dispersión.
 
+modelo <- lm(Rendimiento_fuera_EEUU ~ Rendimiento_en_EEUU, data = ejercicio_2_45)
+
+plot(ejercicio_2_45$Rendimiento_en_EEUU,
+     ejercicio_2_45$Rendimiento_fuera_EEUU,
+     main = "Rendimientos bursatiles",
+     xlab = "Rendimiento bursatil en EE.UU",
+     ylab = "Rendimiento bursatil fuera de EE.UU",
+     col = "blue",
+     pch = 16)
+abline(modelo, col = "red", lwd = 2, lty = 2)
+grid()
+
+resultados <- data.frame(
+  Medidas = c("Intercepto", "Pendiente"),
+  Valores = c(coef(modelo)[1],coef(modelo)[2])
+)
+
+print(resultados)
+
+"
+Medidas     Valores
+Intercepto  5.6940022
+Pendiente   0.6200816
+"
 # (d) En 1997, el rendimiento de las acciones en EE UU fue del 33,4%. Utiliza la
-#     recta de regresión para predecir el rendimiento de las acciones fuera de EE UU. El
-#     rendimiento fuera de EE UU fue del 2,1%. ¿Estás seguro de que las predicciones
-#     basadas en la recta de regresión serán suficientemente precisas? ¿Por qué?
+# recta de regresión para predecir el rendimiento de las acciones fuera de EE UU. 
+# El rendimiento fuera de EE UU fue del 2,1%. ¿Estás seguro de que las predicciones
+# basadas en la recta de regresión serán suficientemente precisas? ¿Por qué?
+
+rendimiento_1997 <- 5.6940022 + 0.6200816 * 33.4
+
+print(rendimiento_1997)
+
+"Como el coeficiente de correlación es r = 0.46, la relación entre los rendimientos en EE. UU. y 
+fuera de EE. UU. es positiva pero moderada, lo que significa que los valores tienden a moverse en 
+la misma dirección, aunque con bastante variabilidad. Dado que el coeficiente de determinación r² = 0.21 
+indica que solo el 21 % de la variación fuera de EE. UU. se explica por lo que ocurre en EE. UU., 
+las predicciones obtenidas con la recta de regresión no son muy fiables. En consecuencia, aunque el 
+modelo muestra una tendencia general positiva, no permite predecir con precisión los rendimientos internacionales, 
+como se observa en 1997, donde el valor real (2,1 %) fue muy diferente del estimado (≈ 26,4 %)."
 
 # (e) Señala el punto que tenga el mayor residuo (positivo o negativo). ¿Qué
-#     año es? ¿Parece probable que existan puntos que sean observaciones muy influ
-#     yentes?
+# año es? ¿Parece probable que existan puntos que sean observaciones muy influyentes?
+
+residuos <- residuals(modelo)
+
+indice <- which.max(abs(residuos))
+año_max <- ejercicio_2_45$Año[indice]
+residuo_max <- residuos[indice]
+
+indice_extremo <- which.max(abs(ejercicio_2_45$Rendimiento_en_EEUU))
+año_influyente <- ejercicio_2_45$Año[indice_extremo]
+
+print(paste("Año con mayor residuo:", año_max))
+print(paste("Residuo:", round(residuo_max, 2)))
+print(paste("Posible año influyente (valor extremo en EEUU):", año_influyente))
+
+plot(ejercicio_2_45$Rendimiento_en_EEUU,
+     ejercicio_2_45$Rendimiento_fuera_EEUU,
+     main = "Rendimientos bursátiles",
+     xlab = "Rendimiento bursatil en EE.UU",
+     ylab = "Rendimiento bursatil fuera de EE.UU",
+     col = "blue",
+     pch = 16)
+abline(modelo, col = "red", lwd = 2, lty = 2)
+points(ejercicio_2_45$Rendimiento_en_EEUU[indice],
+       ejercicio_2_45$Rendimiento_fuera_EEUU[indice],
+       col = "red", pch = 16, cex = 1.5)
+text(ejercicio_2_45$Rendimiento_en_EEUU[indice],
+     ejercicio_2_45$Rendimiento_fuera_EEUU[indice],
+     labels = año_max, pos = 3, col = "red")
+grid()
+
+"
+Año con mayor residuo: 1986
+Residuo: 52.17
+Posible año influyente (valor extremo en EEUU): 1995
+"
 
 # **************************************************
-# PREGUNTA 2.46 - Representa gráficamente tus datos, ¡siempre!
+# PREGUNTA 2.46 - Cuatro conjuntos de datos de Anscombe
 # **************************************************
 
 # La tabla 2.9 presenta cuatro conjuntos de datos preparados por el estadístico 
 # Frank Anscombe para ilustrar los peligros de hacer cálculos sin antes representar 
 # los datos.
 
-# Cuatro conjuntos de datos (A, B, C, D) con valores x e y
+# CONJUNTO DE DATOS A:
+x_A <- c(10, 8, 13, 9, 11, 14, 6, 4, 12, 7, 5)
+y_A <- c(8.04, 6.95, 7.58, 8.81, 8.33, 9.96, 7.24, 4.26, 10.84, 4.82, 5.68)
+
+# CONJUNTO DE DATOS B:
+x_B <- c(10, 8, 13, 9, 11, 14, 6, 4, 12, 7, 5)
+y_B <- c(9.14, 8.14, 8.74, 8.77, 9.26, 8.10, 6.13, 3.10, 9.13, 7.26, 4.74)
+
+# CONJUNTO DE DATOS C:
+x_C <- c(10, 8, 13, 9, 11, 14, 6, 4, 12, 7, 5)
+y_C <- c(7.46, 6.77, 12.74, 7.11, 7.81, 8.84, 6.08, 5.39, 8.15, 6.42, 5.73)
+
+# CONJUNTO DE DATOS D:
+x_D <- c(8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 19)
+y_D <- c(6.58, 5.76, 7.71, 8.84, 8.47, 7.04, 5.25, 5.56, 7.91, 6.89, 12.50)
 
 # (a) Sin dibujar un diagrama de dispersión, halla la correlación y la recta de
-#     regresión mínimo-cuadrática para los cuatro grupos de datos. ¿Qué observas?
-#     Utiliza la recta de regresión para predecir y cuando x = 10.
+# regresión mínimo-cuadrática para los cuatro grupos de datos. ¿Qué observas?
+# Utiliza la recta de regresión para predecir y cuando x = 10.
+
+r_A <- cor(x_A,y_A)
+r_B <- cor(x_B,y_B)
+r_C <- cor(x_C,y_C)
+r_D <- cor(x_D,y_D)
+
+r2_A <- r_A * r_A
+r2_B <- r_B * r_B
+r2_C <- r_C * r_C
+R2_D <- r_D * r_D
+
+modelo_A <- lm(y_A ~ x_A)
+recta_A <- coef(modelo_A)[1] + coef(modelo_A)[2] * 10
+
+modelo_B <- lm(y_B ~ x_B)
+recta_B <- coef(modelo_B)[1] + coef(modelo_B)[2] * 10
+
+modelo_C <- lm(y_C ~ x_C)
+recta_C <- coef(modelo_C)[1] + coef(modelo_C)[2] * 10
+
+modelo_D <- lm(y_D ~ x_D)
+recta_D <- coef(modelo_D)[1] + coef(modelo_D)[2] * 10
+
+
+resultados <- data.frame(
+  Medida = c("r","r2"),
+  Conjunto_A = c(r_A,r2_A),
+  Conjunto_B = c(r_B,r2_B),
+  Conjunto_C = c(r_C,r2_C),
+  Conjunto_D = c(r_D,R2_D)
+)
+
+resultados_recta <- data.frame(
+  Medidas = c("Intercepto","Pendiente"," x = 10"),
+  Conjunto_A = c(coef(modelo_A)[1],coef(modelo_A)[2],recta_A),
+  Conjunto_B = c(coef(modelo_B)[1],coef(modelo_B)[2],recta_B),
+  Conjunto_C = c(coef(modelo_C)[1],coef(modelo_C)[2],recta_C),
+  Conjunto_D = c(coef(modelo_D)[1],coef(modelo_D)[2],recta_D)
+)
+
+print(resultados)
+
+print(resultados_recta)
+
+"
+  Medida Conjunto_A Conjunto_B Conjunto_C Conjunto_D
+1      r  0.8164205  0.8162365  0.8162867  0.8165214
+2     r2  0.6665425  0.6662420  0.6663240  0.6667073
+
+==============================================================
+
+     Medidas Conjunto_A Conjunto_B Conjunto_C Conjunto_D
+1 Intercepto  3.0000909   3.000909  3.0024545  3.0017273
+2  Pendiente  0.5000909   0.500000  0.4997273  0.4999091
+3     x = 10  8.0010000   8.000909  7.9997273  8.0008182
+"
 
 # (b) Dibuja un diagrama de dispersión para cada uno de los conjuntos de datos
-#     con las rectas de regresión correspondientes.
+# con las rectas de regresión correspondientes.
+
+par(mfrow = c(2,2))
+
+par(mar = c(3, 3, 2, 1))
+
+plot(x_A,y_A,main = "Conjunto de datos A",
+     xlab = "x", ylab= "y", pch = 16, col = "blue")
+abline(lm(y_A ~ x_A), col = "red")
+grid()
+
+plot(x_B, y_B, main = "Conjunto de Datos B", 
+     xlab = "x", ylab = "y", pch = 19, col = "darkgreen")
+abline(lm(y_B ~ x_B), col = "red")
+grid()
+
+plot(x_C, y_C, main = "Conjunto de Datos C", 
+     xlab = "x", ylab = "y", pch = 19, col = "purple")
+abline(lm(y_C ~ x_C), col = "red")  
+grid()
+
+plot(x_D, y_D, main = "Conjunto de Datos D", 
+     xlab = "x", ylab = "y", pch = 19, col = "orange")
+abline(lm(y_D ~ x_D), col = "red")  
+grid()
+
+par(mfrow = c(1, 1))
+par(mar = c(5, 4, 4, 2) + 0.1)
 
 # (c) ¿En cuál o cuáles de los cuatro casos utilizarías la recta de regresión para
-#     describir la dependencia de y en relación a x? Justifica tu respuesta en cada caso.
+# describir la dependencia de y en relación a x? Justifica tu respuesta en cada caso.
+
+"En los conjuntos A y C pues en ambos la relación es lineal"
 
 # **************************************************
 # PREGUNTA 2.47 - ¿Cuál es mi nota?
@@ -1450,16 +1697,68 @@ Normal         0.50      -0.12
 # final es 75 y la desviación típica, 8.
 
 # (a) ¿Cuál es la pendiente de la recta de regresión mínimo-cuadrática de la
-#     calificación del examen final con relación a la calificación acumulada antes del
-#     examen final de ese curso? ¿Cuál es la ordenada en el origen?
+# calificación del examen final con relación a la calificación acumulada antes del
+# examen final de ese curso? ¿Cuál es la ordenada en el origen?
+
+
+media_calificaciones_acumuladas <- 280
+media_notas_examen <- 75
+
+
+desv_calificaciones_acomumuladas <- 30
+desv_notas_examen <- 8
+
+r <- 0.6
+
+b <- r * (desv_notas_examen / desv_calificaciones_acomumuladas)
+
+a <- media_notas_examen - (b * media_calificaciones_acumuladas)
+
+resultados <- data.frame(
+  Medidas = c("Intercepto (a)","Pendiente (b)"),
+  Valores = c(a,b)
+)
+
+print(resultados)
+
+"
+         Medidas Valores
+1 Intercepto (a)   30.20
+2  Pendiente (b)    0.16
+
+====================================
+
+La ordenada de origen corresponde a las calificaciones acumuladas por los estudiantes
+antes de examinarse
+"
 
 # (b) Utiliza la recta de regresión para predecir la calificación del examen final
-#     de Julia (calificación acumulada = 300).
+# de Julia (calificación acumulada = 300).
 
-# (c) Julia no cree que el método del profesor Marcet para predecir la califica
-#     ción de su examen sea muy bueno. Calcula r² para argumentar que la calificación
-#     real del examen final de Julia podía haber sido mucho más alta (o mucho más
-#     baja) que el valor predicho.
+
+calificacion_acumulada_Julia <- 300
+
+calificacion_predicha_Julia <- a + b * calificacion_acumulada_Julia
+
+print(paste("Calificación predicha para Julia:",calificacion_predicha_Julia))
+
+"Calificación predicha para Julia: 78.2"
+
+# (c) Julia no cree que el método del profesor Marcet para predecir la calificación 
+# de su examen sea muy bueno. Calcula r² para argumentar que la calificación
+# real del examen final de Julia podía haber sido mucho más alta (o mucho más
+# baja) que el valor predicho.
+
+r2 <- r * r
+
+print(paste0(round(r2,2)*100,"%"))
+
+"
+Solo un 36% de la variabilidad  en las notas del examen final se explica por las 
+calificaciones acumuladas.
+Por eso la nota real de Julia podría ser mucho más alta o más baja que los 78.2 
+puntos predichos.
+"
 
 # **************************************************
 # PREGUNTA 2.48 - Predicción sin sentido
@@ -1467,9 +1766,32 @@ Normal         0.50      -0.12
 
 # Utiliza la regresión mínimo-cuadrática con los datos del ejercicio 2.44 para 
 # predecir la altura de Sara a los 40 años (480 meses).
+# La predicción es absurdamente grande. No es razonable utilizar datos con valores 
+# entre 36 y 60 meses para predecir la altura a los 480 meses.
 
-# La predicción es absurdamente grande. No es razonable utilizar datos con
-# valores entre 36 y 60 meses para predecir la altura a los 480 meses.
+crecimiento_Sara <- data.frame(
+  edad = c(36,48,51,54,57,60),
+  altura = c(86,90,91,93,94,95)
+)
+
+regresion <- lm(altura ~ edad, data = crecimiento_Sara)
+
+summary(regresion)
+
+a <- coef(regresion)[1]
+
+b <- coef(regresion)[2]
+
+crecimiento_480_meses <- a + b * 480
+
+print(paste("El crecimiento de Sara en 480 meses sería:", round(crecimiento_480_meses,2),"cms."))
+
+"El crecimiento de Sara en 480 meses sería: 255.95 cms.
+
+===================================================
+
+Los modelos de regresión solo son confiables dentro o cerca del rango de datos usados para crearlos. 
+Fuera de ese rango, las predicciones pierden sentido."
 
 # **************************************************
 # PREGUNTA 2.49 - Invertir en y fuera de EE UU (continuación)
@@ -1478,15 +1800,15 @@ Normal         0.50      -0.12
 # El ejercicio 2.45 examinó la relación entre los rendimientos de los valores 
 # bursátiles en EE UU y fuera de EE UU.
 
-# (a) Halla los cinco números resumen de los rendimientos tanto en EE UU
-#     como fuera de ellos, y dibuja los correspondientes diagramas de caja en un mismo
-#     gráfico para comparar las dos distribuciones.
+# (a) Halla los cinco números resumen de los rendimientos tanto en EE UU como fuera de ellos, 
+# y dibuja los correspondientes diagramas de caja en un mismo gráfico para comparar las dos distribuciones.
 
-# (b) Durante este periodo, ¿los rendimientos fueron mayores en EE UU o fue
-#     ra? Justifica tu respuesta.
+
+# (b) Durante este periodo, ¿los rendimientos fueron mayores en EE UU o fuera? 
+# Justifica tu respuesta.
 
 # (c) En este periodo, ¿los rendimientos fueron más volátiles (más variables) en
-#     o fuera de EE UU? Razona tu respuesta.
+# o fuera de EE UU? Razona tu respuesta.
 
 # **************************************************
 # PREGUNTA 2.50 - Asistencia a clase y calificaciones

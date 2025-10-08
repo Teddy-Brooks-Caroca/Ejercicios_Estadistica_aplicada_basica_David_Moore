@@ -1803,12 +1803,92 @@ Fuera de ese rango, las predicciones pierden sentido."
 # (a) Halla los cinco números resumen de los rendimientos tanto en EE UU como fuera de ellos, 
 # y dibuja los correspondientes diagramas de caja en un mismo gráfico para comparar las dos distribuciones.
 
+ejercicio_2_49 <- read.csv("ejercicio_2_45_rendimientos.csv")
+
+str(ejercicio_2_49)
+
+View(ejercicio_2_49)
+
+summary(ejercicio_2_49$Rendimiento_en_EEUU)
+
+summary(ejercicio_2_49$Rendimiento_fuera_EEUU)
+
+boxplot(ejercicio_2_49$Rendimiento_fuera_EEUU,
+        ejercicio_2_49$Rendimiento_en_EEUU,
+        main = "Rendimiento bursatil",
+        ylab = "Rendimiento",
+        names = c("Rendimiento fuera de EE.UU","Rendimiento en EE.UU"),
+        col = c("lightblue","lightgreen"),
+        border = c("blue","darkgreen"))
+grid()
+
+"
+En EE.UU:
+
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  -26.4     5.6    18.2    14.5    27.0    37.6 
+
+======================================================
+
+Fuera de EE.UU:
+
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ -23.20    2.30   11.20   14.69   29.05   69.40 "
 
 # (b) Durante este periodo, ¿los rendimientos fueron mayores en EE UU o fuera? 
 # Justifica tu respuesta.
 
+medias <- c(mean(ejercicio_2_49$Rendimiento_en_EEUU), 
+            mean(ejercicio_2_49$Rendimiento_fuera_EEUU))
+
+medianas <- c(median(ejercicio_2_49$Rendimiento_en_EEUU), 
+              median(ejercicio_2_49$Rendimiento_fuera_EEUU))
+
+comparacion <- data.frame(
+  Mercado = c("EE.UU.", "Fuera EE.UU."),
+  Media = round(medias, 2),
+  Mediana = round(medianas, 2)
+)
+
+
+print(comparacion)
+
+"
+       Mercado Media Mediana
+1       EE.UU. 14.50    18.2
+2 Fuera EE.UU. 14.69    11.2
+
+=============================================
+
+Los rendimientos fueron ligeramente mayores fuera de EE.UU.
+"
+
 # (c) En este periodo, ¿los rendimientos fueron más volátiles (más variables) en
 # o fuera de EE UU? Razona tu respuesta.
+
+desviaciones <- c(sd(ejercicio_2_49$Rendimiento_en_EEUU), 
+                  sd(ejercicio_2_49$Rendimiento_fuera_EEUU))
+
+rangos <- c(diff(range(ejercicio_2_49$Rendimiento_en_EEUU)), 
+            diff(range(ejercicio_2_49$Rendimiento_fuera_EEUU)))
+
+volatilidad <- data.frame(
+  Mercado = c("EE.UU.", "Fuera EE.UU."),
+  Desviacion = round(desviaciones, 2),
+  Rango = round(rangos, 2)
+)
+
+print(volatilidad)
+
+"
+       Mercado Desviacion Rango
+1       EE.UU.      16.46  64.0
+2 Fuera EE.UU.      21.99  92.6
+
+=============================================
+
+Los rendimientos fueron más volátiles fuera de EE.UU.
+"
 
 # **************************************************
 # PREGUNTA 2.50 - Asistencia a clase y calificaciones
@@ -1823,6 +1903,14 @@ Fuera de ese rango, las predicciones pierden sentido."
 # (a) ¿Cuál es el valor de la correlación entre el porcentaje de asistencia a clase 
 #     y la media de las calificaciones obtenidas?
 
+r_cuadrado <- 0.16
+
+r <- sqrt(r_cuadrado)
+
+print(paste("La correlación es:", r))
+
+"La correlación es: 0.4"
+
 # **************************************************
 # PREGUNTA 2.51 - ¿Suspenderé el examen final?
 # **************************************************
@@ -1832,40 +1920,90 @@ Fuera de ese rango, las predicciones pierden sentido."
 # mínimo-cuadrática para la predicción de la calificación del examen final a partir 
 # de la calificación del examen parcial era ŷ = 46,6 + 0,41x.
 
-# La calificación del examen parcial de María está 10 puntos por encima de
-# la media de los estudiantes analizados.
+# (a) La calificación del examen parcial de María está 10 puntos por encima de
+# la media de los estudiantes analizados. ¿Cuál habría sido tu predicción sobre 
+# el número de puntos por encima de la media del examen final de María?
 
-# (a) ¿Cuál habría sido tu predicción sobre el número de puntos por encima de 
-#     la media del examen final de María?
+desviacion_parcial <- 10
+pendiente <- 0.41
+
+desviacion_predicha_final <- pendiente * desviacion_parcial
+
+print(paste("María estará", desviacion_predicha_final, "puntos por encima de la media en el examen final"))
+
+"María estará 4.1 puntos por encima de la media en el examen final"
 
 # **************************************************
 # PREGUNTA 2.52 - Predicción del número de estudiantes matriculados
 # **************************************************
 
-# A la Facultad de Matemáticas de una gran universidad le gustaría utilizar el 
-# número de estudiantes x recién llegados a la universidad, para predecir el número 
-# de estudiantes y que se matriculará en el curso de Introducción al Análisis 
-# Matemático del semestre de otoño.
+# A la Facultad de Matemáticas de una gran universidad le gustaría utilizar el número 
+# de estudiantes x recién llegados a la universidad, para predecir el número de 
+# estudiantes y que se matriculará en el curso de Introducción al Análisis Matemático 
+# del semestre de otoño.
 
-# Años: 1991-1998
-# Datos de x (estudiantes recién llegados) e y (matriculados en matemáticas)
+# TABLA DE DATOS:
+años <- c(1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998)
+x <- c(4595, 4827, 4427, 4258, 3995, 4330, 4265, 4351)  # Estudiantes recién llegados
+y <- c(7364, 7547, 7099, 6894, 6572, 7156, 7232, 7450)  # Matriculados en matemáticas
 
-# Estadísticas: r = 0,8333, recta de regresión: ŷ = 2.492,69 + 1,0663x
-# Tabla de residuos para cada año
+# Estadísticas proporcionadas:
+# Correlación: r = 0,8333
+# Recta de regresión: ŷ = 2.492,69 + 1,0663x
+
+# Tabla de residuos:
+residuos <- c(-28.44, -92.83, -114.30, -139.09, -180.65, 46.13, 191.44, 317.74)
 
 # (a) Dibuja un diagrama de dispersión con la recta de regresión. Ésta no da
-#     una buena predicción. ¿Qué porcentaje de la variación en las matrículas para el
-#     curso de matemáticas se explica a partir de la relación entre éstas y el recuento de
-#     recién ingresados en la universidad?
+# una buena predicción. ¿Qué porcentaje de la variación en las matrículas para el
+# curso de matemáticas se explica a partir de la relación entre éstas y el recuento de
+# recién ingresados en la universidad?
+
+plot(x, y, main = "Matrículas vs Estudiantes Nuevos",
+     xlab = "Estudiantes recién llegados", ylab = "Matriculados en matemáticas",
+     pch = 16, col = "blue")
+abline(a = 2492.69, b = 1.0663, col = "red", lwd =2)
+text(x, y, labels = años, pos = 3, cex = 0.7)
+
+r <- cor(x,y)
+
+r2 <- r * r
+
+porcentaje_variacion <- r2 * 100
+
+resultados <- data.frame(
+  Medidas  = c("r","r2","% de variación"),
+  Valores = c(r,r2,porcentaje_variacion)
+)
+
+print(resultados)
+
+"        
+         Medidas    Valores
+1              r  0.8332582
+2             r2  0.6943193
+3 % de variación 69.4319292
+"
 
 # (b) Comprueba que los residuos suman cero (o aproximadamente cero si se
 #     tiene en cuenta el error de redondeo).
 
+suma_residuos <- sum(residuos)
+
+print(paste("La suma de los residuos es:",suma_residuos))
+
+"La suma de los residuos es: 3.5527136788005e-15"
+
 # (c) Los diagramas de residuos son a menudo reveladores. Dibuja los residuos
-#     con relación al año. Una de las facultades de la universidad ha cambiado recien
-#     temente su programa docente. Ahora exige a sus estudiantes que tomen un curso
-#     de matemáticas. ¿Cómo muestra el diagrama de residuos este cambio? ¿En qué
-#     años tuvo lugar dicho cambio?
+# con relación al año. Una de las facultades de la universidad ha cambiado recientemente 
+# su programa docente. Ahora exige a sus estudiantes que tomen un curso de matemáticas. 
+# ¿Cómo muestra el diagrama de residuos este cambio? ¿En qué años tuvo lugar dicho cambio?
+
+plot(años, residuos, main = "Residuos vs Año",
+     xlab = "Año", ylab = "Residuo", 
+     pch = 16, col = "red", type = "b")
+abline(h = 0, lty = 2, col = "gray")
+text(años, residuos, labels = round(residuos, 0), pos = 3, cex = 0.7)
 
 # :::::::::::::::::::::::::::::::::::::::::::::::::::: FIN SECCIÓN ::::::::::::::::::::::::::::::::::::::::::::::::::::
 

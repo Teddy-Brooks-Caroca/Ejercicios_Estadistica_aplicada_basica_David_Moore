@@ -1990,9 +1990,9 @@ print(resultados)
 
 suma_residuos <- sum(residuos)
 
-print(paste("La suma de los residuos es:",suma_residuos))
+print(paste("La suma de los residuos es:",round(suma_residuos,10)))
 
-"La suma de los residuos es: 3.5527136788005e-15"
+"La suma de los residuos es: 0"
 
 # (c) Los diagramas de residuos son a menudo reveladores. Dibuja los residuos
 # con relación al año. Una de las facultades de la universidad ha cambiado recientemente 
@@ -2006,4 +2006,3 @@ abline(h = 0, lty = 2, col = "gray")
 text(años, residuos, labels = round(residuos, 0), pos = 3, cex = 0.7)
 
 # :::::::::::::::::::::::::::::::::::::::::::::::::::: FIN SECCIÓN ::::::::::::::::::::::::::::::::::::::::::::::::::::
-

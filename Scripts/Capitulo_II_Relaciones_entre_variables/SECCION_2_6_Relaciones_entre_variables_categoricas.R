@@ -124,3 +124,143 @@ print(distribucion_marginal)
 2 Solo uno de los padres fuma     2239     41.66%
 3  Ninguno de los padres fuma     1356     25.23%
 "
+
+# **************************************************
+# PREGUNTA 2.71 - Análisis de educación por grupo de edad
+# **************************************************
+
+# Utilizando los recuentos de la tabla 2.10:
+
+# (a) Halla el porcentaje de gente de cada grupo de edad que no terminó la secundaria.
+
+datos_educacion <- data.frame(
+  Educacion = c("No completaron secundaria", 
+                "Completaron secundaria",
+                "De 1 a 3 cursos en la universidad", 
+                "4 o más cursos en la universidad",
+                "Total"),
+  Grupo_25_34 = c(5325,14061,11659,10342,41388),
+  Grupo_35_54 = c(9152,24070,19926,19878,73028),
+  Grupo_55_mas = c(16035,18320,9662,8005,52022),
+  Total = c(30512,56451,41247,38225,166438)
+)
+
+print(datos_educacion)
+
+grupo_25_34_tramo1 <- datos_educacion[1,2] / datos_educacion[5,2]
+
+grupo_35_54_tramo1 <- datos_educacion[1,3] / datos_educacion[5,3]
+
+grupo_55_mas_tramo1 <- datos_educacion[1,4] / datos_educacion[5,4]
+
+porcentaje_25_34_tramo1 <- paste0(round(grupo_25_34_tramo1 * 100,2),"%")
+
+porcentaje_35_54_tramo1 <- paste0(round(grupo_35_54_tramo1 * 100,2),"%")
+
+porcentaje_55_mas_tramo1 <- paste0(round(grupo_55_mas_tramo1 * 100,2),"%")
+
+porcentajes_totales <- data.frame(
+  Grupo_etario = c("25 a 34 años","35 a 54 años", "55 a más años"),
+  Porcentaje = c(porcentaje_25_34_tramo1,porcentaje_35_54_tramo1,porcentaje_55_mas_tramo1)
+)
+
+print(porcentajes_totales)
+
+"
+Grupo_etario   Porcentaje
+1 25 a 34 años     12.87%
+2 35 a 54 años     12.53%
+3 55 a más años    30.82%
+"
+
+# (b) Dibuja un diagrama de barras para comparar estos porcentajes.
+
+porcentajes_numericos <- c(grupo_25_34_tramo1 * 100, 
+                           grupo_35_54_tramo1 * 100, 
+                           grupo_55_mas_tramo1 * 100)
+
+nombres_grupos <- c("25 a 34", "35 a 54", "55 a más")
+
+barplot(porcentajes_numericos, 
+        names.arg = nombres_grupos,
+        main = "Porcentaje que no completó secundaria por grupo de edad",
+        xlab = "Grupo de edad", 
+        ylab = "Porcentaje (%)",
+        col = "lightblue",
+        ylim = c(0, 35))
+
+# (c) Explica lo que muestran los datos.
+
+"El 30.82% de las personas de 55+ años no completó la secundaria, una proporción 
+mucho mayor que en los grupos más jóvenes (12.87% en 25-34 años y 12.53% en 35-54 años). 
+Esto muestra una dramática mejoria en el acceso a la educación a través de las generaciones."
+
+# **************************************************
+# PREGUNTA 2.72 - Huevos de serpientes de agua
+# **************************************************
+
+# ¿Cómo influye la temperatura sobre la eclosión de los huevos de serpiente de agua? 
+# Unos investigadores distribuyeron huevos recién puestos a tres temperaturas: 
+# caliente, templada y fría.
+
+# DATOS:
+# Temperatura   Número de huevos   Huevos eclosionados
+# ---------------------------------------------------
+# Fría          27                 16
+# Templada      56                 38
+# Caliente      104                75
+
+# (a) Construye una tabla de contingencia con la temperatura y el resultado de
+# la eclosión (sí o no).
+
+matrix_huevos <- matrix(c(27,16,11,
+                          56,38,18,
+                          104,75,29),
+                        nrow = 3,ncol = 3,
+                        byrow = TRUE)
+rownames(matrix_huevos) = c("Fría","Templada","Caliente")
+colnames(matrix_huevos) = c("Número de huevos","Eclosionados","No eclosionados")
+
+print(matrix_huevos)
+
+"
+         Número de huevos Eclosionados No eclosionados
+Fría                   27           16              11
+Templada               56           38              18
+Caliente              104           75              29
+"
+
+# (b) Calcula el porcentaje de huevos de cada grupo que eclosionó. Los investigadores 
+# opinaban que los huevos no eclosionarían en agua fría. Los datos, ¿apoyan esta opinión?
+
+eclosion_fria <- matrix_huevos[1,2] / matrix_huevos[1, 1]
+
+eclosion_templada <- matrix_huevos[2,2]/ matrix_huevos[2,1]
+
+eclosion_caliente <- matrix_huevos[3,2] / matrix_huevos[3,1]
+
+porcentaje_frio <- paste0(round(eclosion_fria * 100,2),"%")
+
+porcentaje_templado <- paste0(round(eclosion_templada * 100,2),"%")
+
+porcentaje_caliente <- paste0(round(eclosion_caliente * 100,2),"%")
+
+resultados_eclosion <- data.frame(
+  Temperatura = c("Fría","Templada","Caliente"),
+  Porcentaje_eclosion = c(porcentaje_frio,porcentaje_templado,porcentaje_caliente)
+)
+
+print(resultados_eclosion)
+
+"
+  Temperatura Porcentaje_eclosion
+1        Fría              59.26%
+2    Templada              67.86%
+3    Caliente              72.12%
+
+===================================================
+
+Los datos NO apoyan la opinión de los investigadores. Si bien la eclosión es significativamente 
+menor en agua fría (59.26%) comparada con temperaturas más cálidas (67.86% templada, 72.12% caliente), 
+más de la mitad de los huevos SÍ eclosionaron en agua fría. Esto contradice la hipótesis de que los 
+huevos 'no eclosionarían' en agua fría, aunque confirma que la temperatura fría reduce la tasa de eclosión."

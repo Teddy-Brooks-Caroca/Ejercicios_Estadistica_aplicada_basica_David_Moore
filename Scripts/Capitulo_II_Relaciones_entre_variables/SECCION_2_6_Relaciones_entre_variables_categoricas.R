@@ -145,18 +145,16 @@ datos_educacion <- data.frame(
   Total = c(30512,56451,41247,38225,166438)
 )
 
+write.csv(datos_educacion,"ejercicio_2_71_educacion.csv")
+
 print(datos_educacion)
 
 grupo_25_34_tramo1 <- datos_educacion[1,2] / datos_educacion[5,2]
-
 grupo_35_54_tramo1 <- datos_educacion[1,3] / datos_educacion[5,3]
-
 grupo_55_mas_tramo1 <- datos_educacion[1,4] / datos_educacion[5,4]
 
 porcentaje_25_34_tramo1 <- paste0(round(grupo_25_34_tramo1 * 100,2),"%")
-
 porcentaje_35_54_tramo1 <- paste0(round(grupo_35_54_tramo1 * 100,2),"%")
-
 porcentaje_55_mas_tramo1 <- paste0(round(grupo_55_mas_tramo1 * 100,2),"%")
 
 porcentajes_totales <- data.frame(
@@ -264,3 +262,184 @@ Los datos NO apoyan la opinión de los investigadores. Si bien la eclosión es s
 menor en agua fría (59.26%) comparada con temperaturas más cálidas (67.86% templada, 72.12% caliente), 
 más de la mitad de los huevos SÍ eclosionaron en agua fría. Esto contradice la hipótesis de que los 
 huevos 'no eclosionarían' en agua fría, aunque confirma que la temperatura fría reduce la tasa de eclosión."
+
+# **************************************************
+# PREGUNTA 2.73 - Distribución condicional de la edad
+# **************************************************
+
+# Halla la distribución condicional de la edad entre la gente con al menos
+# 4 cursos universitarios. Parte de los recuentos de la tabla 2.10. 
+# (Para hacerlo, fíjate sólo en la fila de "4 o más cursos en la universidad" de la tabla.)
+
+tramo_25_34 <- datos_educacion[4,2] / datos_educacion[4,5]
+tramo_35_54 <- datos_educacion[4,3] / datos_educacion[4,5]
+tramo_55_mas <- datos_educacion[4,4] / datos_educacion[4,5]
+
+porcentaje_25_34_tramo4 <- paste0(round(tramo_25_34 * 100,2),"%")
+porcentaje_35_54_tramo4 <- paste0(round(tramo_35_54 * 100,2),"%")
+porcentaje_55_mas_tramo4 <- paste0(round(tramo_55_mas * 100,2),"%")
+
+porcentajes_totales <- data.frame(
+  Grupo_etario = c("25 a 34 años","35 a 54 años", "55 a más años"),
+  Porcentaje = c(porcentaje_25_34_tramo4,porcentaje_35_54_tramo4,porcentaje_55_mas_tramo4)
+)
+
+print(porcentajes_totales)
+
+"
+   Grupo_etario  Porcentaje
+1  25 a 34 años      27.06%
+2  35 a 54 años         52%
+3 55 a más años      20.94%
+"
+# **************************************************
+# PREGUNTA 2.74 - Planes profesionales de hombres y mujeres
+# **************************************************
+
+# Un estudio sobre los planes profesionales de mujeres y hombres jóvenes envió 
+# cuestionarios a los 722 alumnos de una clase de último curso de Administración 
+# de Empresas de la University of Illinois.
+
+# TABLA DE DATOS:
+# Especialidad      Mujeres   Hombres
+# ----------------------------------
+# Contabilidad      68        56
+# Administración    91        40
+# Economía          5         61
+# Finanzas          6         59
+
+# (a) Halla la distribución de la especialidad condicionada al sexo de los estudiantes. 
+# A partir de tus resultados describe las diferencias entre hombres y mujer con un gráfico 
+# y con palabras.
+
+tabla_especialidad <- data.frame(
+  Especialidad = c("Contabilidad","Administración","Economía","Finanzas"),
+  Mujeres = c(68,91,5,6),
+  Hombres = c(56,40,61,59)
+)
+
+print(tabla_especialidad)
+
+total_contabilidad <- tabla_especialidad[1,2] + tabla_especialidad[1,3]
+total_administracion <- tabla_especialidad[2,2] + tabla_especialidad[2,3]
+total_economia <- tabla_especialidad[3,2] + tabla_especialidad[3,3]
+total_finanzas <- tabla_especialidad[4,2] + tabla_especialidad[4,3]
+
+mujeres_contabilidad <- tabla_especialidad[1,2] / total_contabilidad
+mujeres_administracion <- tabla_especialidad[2,2] / total_administracion
+mujeres_economia <- tabla_especialidad[3,2] / total_economia
+mujeres_finanzas <- tabla_especialidad[4,2] / total_finanzas
+
+hombres_contabilidad <- tabla_especialidad[1,3] / total_contabilidad
+hombres_administracion <- tabla_especialidad[2,3] / total_administracion
+hombres_economia <- tabla_especialidad[3,3] / total_economia
+hombres_finanzas <- tabla_especialidad[4,3] / total_finanzas
+
+porcentaje_mujeres_contabilidad <- paste0(round(mujeres_contabilidad * 100,2),"%")
+porcentaje_mujeres_administracion <- paste0(round(mujeres_administracion * 100,2),"%")
+porcentaje_mujeres_economia <- paste0(round(mujeres_economia * 100,2),"%")
+porcentaje_mujeres_finanzas <- paste0(round(mujeres_finanzas * 100,2),"%")
+
+porcentaje_hombres_contabilidad <- paste0(round(hombres_contabilidad * 100,2),"%")
+porcentaje_hombres_administracion <- paste0(round(hombres_administracion * 100,2),"%")
+porcentaje_hombres_economia <- paste0(round(hombres_economia * 100,2),"%")
+porcentaje_hombres_finanzas <- paste0(round(hombres_finanzas * 100,2),"%")
+
+tabla_especialidad_porcentajes <- data.frame(
+  Especialidad = c("Contabilidad","Administración","Economía","Finanzas"),
+  Mujeres = c(porcentaje_mujeres_contabilidad,porcentaje_mujeres_administracion,
+              porcentaje_mujeres_economia,porcentaje_mujeres_finanzas),
+  Hombres = c(porcentaje_hombres_contabilidad,porcentaje_hombres_administracion,
+              porcentaje_hombres_economia,porcentaje_hombres_finanzas)
+)
+
+print(tabla_especialidad_porcentajes)
+
+porcentajes_mujeres <- c(54.84, 69.47, 7.58, 9.23)
+porcentajes_hombres <- c(45.16, 30.53, 92.42, 90.77)
+
+barplot(rbind(porcentajes_mujeres, porcentajes_hombres),
+        beside = TRUE,
+        names.arg = tabla_especialidad$Especialidad,
+        col = c("pink", "lightblue"),
+        main = "Distribución de especialidades por sexo",
+        ylab = "Porcentaje (%)",
+        legend.text = c("Mujeres", "Hombres"))
+
+"
+    Especialidad Mujeres Hombres
+1   Contabilidad  54.84%  45.16%
+2 Administración  69.47%  30.53%
+3       Economía   7.58%  92.42%
+4       Finanzas   9.23%  90.77%
+
+====================================================
+
+Las mujeres predominan en Administración (69.47%) y Contabilidad (54.84%), mientras 
+los hombres son mayoría abrumadora en Economía (92.42%) y Finanzas (90.77%), mostrando 
+una clara segregación por género en las especialidades de negocios.
+"
+
+# (b) ¿Qué porcentaje de estudiantes no respondió el cuestionario? La falta de
+# respuesta debilita los resultados obtenidos.
+
+total_alumnado <- 722
+
+total_respondieron <- total_contabilidad + total_administracion + total_economia + total_finanzas
+
+total_no_respondieron <- total_alumnado - total_respondieron
+
+porcentaje_respondio <- paste0(round((total_respondieron / total_alumnado) * 100,2),"%")
+
+porcentaje_no_respondio <- paste0(round((total_no_respondieron / total_alumnado) * 100,2),"%")
+
+porcentajes <- data.frame(
+  Estudiantes = c("Respondieron", "No respondieron"),
+  Porcentajes = c(porcentaje_respondio,porcentaje_no_respondio)
+)
+
+print(porcentajes)
+
+"
+     Estudiantes  Porcentajes
+1    Respondieron      53.46%
+2 No respondieron      46.54%
+"
+
+# **************************************************
+# PREGUNTA 2.75 - Tablas de contingencia 2x2
+# **************************************************
+
+# He aquí los totales de filas y columnas de una tabla de contingencia con dos
+# filas y dos columnas.
+
+#         Col1   Col2   Total
+# Fila1    a      b      50
+# Fila2    c      d      50
+# Total    60     40     100
+
+# (a) Halla dos diferentes conjuntos de recuentos a, b, c y d que den los mismos totales. 
+# Este ejercicio muestra que la relación entre dos variables no se puede obtener a partir 
+# de las distribuciones individuales de las variables.
+
+# Conjunto 1
+df1 <- data.frame(
+  Fila = c("Fila1", "Fila2", "Total"),
+  Col1 = c(30, 30, 60),
+  Col2 = c(20, 20, 40),
+  Total = c(50, 50, 100)
+)
+
+# Conjunto 2  
+df2 <- data.frame(
+  Fila = c("Fila1", "Fila2", "Total"),
+  Col1 = c(40, 20, 60),
+  Col2 = c(10, 30, 40),
+  Total = c(50, 50, 100)
+)
+
+print("CONJUNTO 1:")
+print(df1)
+print("CONJUNTO 2:")
+print(df2)  
+

@@ -443,3 +443,123 @@ print(df1)
 print("CONJUNTO 2:")
 print(df2)  
 
+# **************************************************
+# PREGUNTA 2.76 - Retrasos en los aeropuertos
+# **************************************************
+
+# He aquí el número de vuelos que llegaron a la hora prevista y el número de vuelos 
+# que llegaron con retraso de dos compañías aéreas en cinco aeropuertos de EE UU en 
+# un determinado mes. A menudo,los medios de comunicación dan a conocer los porcentajes 
+# de vuelos,de las distintas compañías, que llegan a la hora. El aeropuerto de procedencia 
+# es una variable latente que puede hacer que los datos que dan los medios de comunicación sean
+# engañosos.
+
+# TABLA DE DATOS:
+# Aeropuerto      Alaska Airlines       America West
+#                 A hora   Retraso     A hora   Retraso
+# -----------------------------------------------------
+# Los Angeles     497      62          694      117
+# Phoenix         221      12          4840     415
+# San Diego       212      20          383      65
+# San Francisco   503      102         320      129
+# Seattle         1841     305         201      61
+
+# (a) ¿Qué porcentaje de vuelos de Alaska Airlines llegan con retraso? ¿Qué
+# porcentaje de vuelos de America West llegan con retraso? Estos son los datos
+# que, en general, dan a conocer los medios de comunicación.
+
+tabla_vuelos <- data.frame(
+  Aeropuerto = c("Los Angeles","Phoenix","San Diego","San Francisco","Seattle"),
+  AA_a_la_hora = c(497,221,212,503,1841),
+  AA_retraso = c(62,12,20,102,305),
+  AW_a_la_hora = c(694,4840,383,320,201),
+  AW_retraso = c(117,415,65,129,61)
+)
+
+print(tabla_vuelos)
+
+total_retrasados_AA <- sum(tabla_vuelos$AA_retraso) 
+total_retrasados_AW <- sum(tabla_vuelos$AW_retraso) 
+
+total_vuelos_AA <- sum(tabla_vuelos$AA_a_la_hora) + total_retrasados_AA
+total_vuelos_AW <- sum(tabla_vuelos$AW_a_la_hora) + total_retrasados_AW
+
+porcentaje_retraso_AA <- (total_retrasados_AA / total_vuelos_AA) * 100
+porcentaje_retraso_AW <- (total_retrasados_AW / total_vuelos_AW) * 100
+
+porcentajes_retrasos <- data.frame(
+  Linea_aerea = c("Alaska Airlines","America West"),
+  Porcentaje_retraso = c(paste0(round(porcentaje_retraso_AA, 2), "%"),
+                         paste0(round(porcentaje_retraso_AW, 2), "%"))
+)
+
+print(porcentajes_retrasos)
+
+"
+      Linea_aerea Porcentaje_retraso
+1 Alaska Airlines             13.27%
+2    America West             10.89%
+"
+
+# (b) Ahora considera los datos de cada aeropuerto por separado, ¿qué porcen
+# taje de vuelos de Alaska Airlines llegan con retraso? ¿Y de America West?
+
+porcentaje_AA_por_aeropuerto <- (tabla_vuelos$AA_retraso / (tabla_vuelos$AA_a_la_hora + tabla_vuelos$AA_retraso)) * 100
+porcentaje_AW_por_aeropuerto <- (tabla_vuelos$AW_retraso / (tabla_vuelos$AW_a_la_hora + tabla_vuelos$AW_retraso)) * 100
+
+resultados_por_aeropuerto <- data.frame(
+  Aeropuerto = tabla_vuelos$Aeropuerto,
+  AA_retraso = paste0(round(porcentaje_AA_por_aeropuerto, 2), "%"),
+  AW_retraso = paste0(round(porcentaje_AW_por_aeropuerto, 2), "%")
+)
+
+print(resultados_por_aeropuerto)
+
+"
+     Aeropuerto AA_retraso AW_retraso
+1   Los Angeles     11.09%     14.43%
+2       Phoenix      5.15%       7.9%
+3     San Diego      8.62%     14.51%
+4 San Francisco     16.86%     28.73%
+5       Seattle     14.21%     23.28%
+"
+
+# (c) Considerando los aeropuertos por separado, America West es la peor com
+# pañía. Sin embargo, considerando todos los aeropuertos conjuntamente es la me
+# jor. Parece una contradicción. Explica cuidadosamente, basándote en los datos,
+# cómo se puede explicar. (Los climas de Phoenix y Seattle pueden explicar este
+# ejemplo de paradoja de Simpson.)
+
+"America West concentra sus operaciones en Phoenix (5,255 vuelos), donde las condiciones 
+climáticas son favorables y los retrasos son menores. En cambio, Alaska Airlines opera 
+principalmente desde Seattle (2,146 vuelos), donde el clima es más adverso y causa más retrasos. 
+Aunque Alaska tiene mejor desempeño en cada aeropuerto individual, el hecho de que America West 
+opere predominantemente en aeropuertos 'fáciles' hace que su promedio general sea mejor."
+
+# **************************************************
+# PREGUNTA 2.77 - Raza y condena a muerte
+# **************************************************
+
+# El hecho de que un acusado de asesinato sea condenado o no a muerte parece 
+# estar influenciado por la raza de la víctima. Tenemos datos de 326 casos en 
+# los que el acusado fue declarado culpable de asesinato:
+
+# TABLA DE DATOS:
+#                 Acusado blanco                      Acusado negro
+#                 Pena muerte                         Pena muerte  
+#
+#                  Si      No                          Si     No
+# ----------------------------------------------------------------
+# Víctima blanca: 19      132          Víctima blanca: 11    52
+# Víctima negra:  0       9            Víctima negra:  6     97
+
+# (a) Utiliza estos datos para construir una tabla de contingencia que relacione
+#     la raza del acusado (blanco o negro) con la pena de muerte (sí o no).
+
+# (b) Constata que se cumple la paradoja de Simpson: en conjunto, un mayor
+#     porcentaje de acusados blancos son condenados a pena de muerte; en cambio,
+#     considerando de manera independiente a las víctimas blancas y a las negras, el
+#     porcentaje de acusados negros condenados a muerte es mayor que el de blancos.
+
+# (c) Utiliza los datos para explicar, en un lenguaje que pueda entender un juez,
+#     por qué se da la paradoja.

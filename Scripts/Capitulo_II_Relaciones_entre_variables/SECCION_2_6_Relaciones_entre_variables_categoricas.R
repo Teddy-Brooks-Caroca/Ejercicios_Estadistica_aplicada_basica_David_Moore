@@ -554,12 +554,209 @@ opere predominantemente en aeropuertos 'fáciles' hace que su promedio general s
 # Víctima negra:  0       9            Víctima negra:  6     97
 
 # (a) Utiliza estos datos para construir una tabla de contingencia que relacione
-#     la raza del acusado (blanco o negro) con la pena de muerte (sí o no).
+# la raza del acusado (blanco o negro) con la pena de muerte (sí o no).
 
+datos_acusados <- data.frame(
+  Acusado = c(rep("Blanco", 4), rep("Negro", 4)),
+  Victima = rep(c("Blanca", "Blanca", "Negra", "Negra"), 2),
+  Pena = rep(c("Si", "No", "Si", "No"), 2),
+  Conteo = c(19, 132, 0, 9, 11, 52, 6, 97)
+)
+
+tabla_contingencia <- with(datos_acusados, 
+                           tapply(Conteo, list(Acusado, Pena), sum)
+)
+
+print(tabla_contingencia)
+
+"
+        No Si
+Blanco 141 19
+Negro  149 17
+"
 # (b) Constata que se cumple la paradoja de Simpson: en conjunto, un mayor
-#     porcentaje de acusados blancos son condenados a pena de muerte; en cambio,
-#     considerando de manera independiente a las víctimas blancas y a las negras, el
-#     porcentaje de acusados negros condenados a muerte es mayor que el de blancos.
+# porcentaje de acusados blancos son condenados a pena de muerte; en cambio,
+# considerando de manera independiente a las víctimas blancas y a las negras, el
+# porcentaje de acusados negros condenados a muerte es mayor que el de blancos.
+
+# --- Porcentaje total de pena de muerte ---
+total_por_acusado <- rowSums(tabla_contingencia)
+porcentaje_total <- tabla_contingencia[, "Si"] / total_por_acusado * 100
+
+# --- Porcentaje según raza de víctima ---
+# Creamos una tabla 3D (Acusado x Victima x Pena)
+tabla_victima <- with(datos_acusados, tapply(Conteo, list(Acusado, Victima, Pena), sum))
+
+# Víctima blanca
+porc_victima_blanca <- tabla_victima[, "Blanca", "Si"] / 
+  (tabla_victima[, "Blanca", "Si"] + tabla_victima[, "Blanca", "No"]) * 100
+
+# Víctima negra
+porc_victima_negra <- tabla_victima[, "Negra", "Si"] / 
+  (tabla_victima[, "Negra", "Si"] + tabla_victima[, "Negra", "No"]) * 100
+
+# --- Unimos todos los porcentajes en un solo data frame ---
+resumen <- data.frame(
+  Analisis = c("Total", "Víctima blanca", "Víctima negra"),
+  Blanco = round(c(porcentaje_total["Blanco"], porc_victima_blanca["Blanco"], porc_victima_negra["Blanco"]), 1),
+  Negro  = round(c(porcentaje_total["Negro"],  porc_victima_blanca["Negro"],  porc_victima_negra["Negro"]), 1)
+)
+
+print(resumen)
+
+"
+        Analisis Blanco Negro
+1          Total   11.9  10.2
+2 Víctima blanca   12.6  17.5
+3  Víctima negra    0.0   5.8
+"
 
 # (c) Utiliza los datos para explicar, en un lenguaje que pueda entender un juez,
-#     por qué se da la paradoja.
+# por qué se da la paradoja.
+
+"Aunque en total parece que los acusados blancos reciben más condenas a muerte, al separar 
+los casos según la raza de la víctima se observa lo contrario: los acusados negros son más 
+condenados en ambos grupos. Esto ocurre porque la mayoría de los casos con víctimas blancas, 
+donde la pena es más probable, involucran a acusados blancos, lo que distorsiona la comparación 
+global."
+
+# **************************************************
+# PREGUNTA 2.78 - Análisis general de estudiantes universitarios
+# **************************************************
+
+# Los ejercicios 2.78 a 2.82 se basan en la tabla 2.11. Esta tabla de contingencia 
+# proporciona datos sobre los estudiantes matriculados en el otoño de 1995, tanto 
+# en universidades estadounidenses que ofrecen sólo primer ciclo, como en universidades 
+# que ofrecen primer y segundo ciclo.
+
+# (a) ¿Cuántos estudiantes están matriculados en primer o en segundo ciclo?
+# (b) ¿Qué porcentaje de estudiantes de entre 18 y 24 años se matricularon?
+# (c) Halla los porcentajes de los estudiantes con edades entre 18 y 24 años
+#     que están matriculados en las opciones que aparecen en la tabla 2.11. Dibuja un
+#     diagrama de barras para comparar estos porcentajes.
+# (d) El grupo de estudiantes con edades entre 18 y 24 años es el grupo de
+#     edad tradicional para estudiantes universitarios. Resume brevemente lo que has
+#     aprendido a partir de los datos sobre el predominio de este tipo de estudiantes
+#     en los distintos estudios universitarios.
+
+# **************************************************
+# PREGUNTA 2.79 - Preguntas específicas sobre estudiantes
+# **************************************************
+
+# (a) Una asociación de alumnos de primer ciclo pregunta: "¿Qué porcentaje
+#     de estudiantes de primer ciclo a tiempo parcial, tiene entre 25 y 39 años?"
+# (b) Un banco que proporciona préstamos a adultos para estudios pregunta:
+#     "¿Qué porcentaje de estudiantes que tienen entre 25 y 39 años están matriculados
+#     en primer ciclo?"
+
+# **************************************************
+# PREGUNTA 2.80 - Distribuciones de edad
+# **************************************************
+
+# (a) Halla la distribución marginal de la edad entre todos los estudiantes; pri
+#     mero, en forma de recuentos y luego en forma de porcentajes. Dibuja un diagrama
+#     de barras con estos porcentajes.
+# (b) Halla la distribución condicional de la edad (en porcentajes) entre los
+#     estudiantes matriculados a tiempo parcial en primer ciclo.
+# (c) Describe brevemente las diferencias más importantes entre las dos distri
+#     buciones de edad.
+# (d) La suma de todos los valores de la columna "Primer ciclo. Tiempo par
+#     cial" no es la misma que el total que aparece en la tabla. ¿Por qué?
+
+# **************************************************
+# PREGUNTA 2.81 - Estudiantes mayores (40+ años)
+# **************************************************
+
+# Llama a los estudiantes de 40 o más años "estudiantes mayores". Compara
+# la presencia de estos estudiantes en los 4 tipos de matriculación, de forma numé
+# rica y con un gráfico. Resume tus hallazgos.
+
+# **************************************************
+# PREGUNTA 2.82 - Análisis adicional de la tabla
+# **************************************************
+
+# Pensando un poco puedes obtener más información de la tabla 2.11 que
+# las distribuciones marginales y las distribuciones condicionales. En general, la
+# mayoría de estudiantes universitarios tienen entre 18 y 24 años.
+
+# (a) ¿Qué porcentaje de universitarios se encuentran en este grupo de edad?
+# (b) ¿Qué porcentaje de estudiantes de primer ciclo se hallan en ese grupo?
+# (c) ¿Y de estudiantes a tiempo parcial?
+
+# **************************************************
+# PREGUNTA 2.83 - Muertes por armas de fuego en EE UU
+# **************************************************
+
+# Después de los accidentes de tráfico, las muertes por armas de fuego constituyen 
+# la segunda causa de mortalidad no debida a enfermedades en EE UU.
+
+# TABLA DE DATOS:
+# Tipo de arma    Homicidios   Suicidios
+# --------------------------------------
+# Pistola         468          124
+# Escopeta        28           22
+# Rifle           15           24
+# Desconocido     13           5
+# Total           524          175
+
+# (a) Compara con un diagrama de barras el tipo de armas utilizadas en suicidios 
+#     y homicidios. ¿Qué diferencia existe entre las armas utilizadas para cazar 
+#     (escopetas y rifles) y las pistolas?
+
+# **************************************************
+# PREGUNTA 2.84 - No-respuesta en una encuesta
+# **************************************************
+
+# Una escuela de empresariales realizó una encuesta sobre las empresas de su 
+# entorno geográfico.
+
+# TABLA DE DATOS:
+# Tamaño empresa   Respuesta   No-respuesta   Total
+# ------------------------------------------------
+# Pequeñas         125         75             200
+# Medianas         81          119            200
+# Grandes          40          160            200
+
+# (a) ¿Cuál fue el porcentaje global de no-respuesta?
+# (b) Describe la relación que existe entre las no-respuestas y el tamaño de la
+#     empresa. (Utiliza los porcentajes para que tu descripción sea precisa.)
+# (c) Haz un diagrama de barras para comparar los porcentajes de no-respuesta
+#     en los tres tipos de empresas.
+
+# **************************************************
+# PREGUNTA 2.85 - Ayuda a adictos a la cocaína
+# **************************************************
+
+# Estudio sobre la efectividad de tratamientos para adictos a la cocaína:
+
+# TABLA DE DATOS:
+# Tratamiento    Reincidencia Sí   Reincidencia No
+# -----------------------------------------------
+# Desipramina    10                14
+# Litio          18                6
+# Placebo        20                4
+
+# (a) Compara la efectividad de cada uno de los tratamientos para prevenir la
+#     reincidencia en el hábito. Utiliza porcentajes y dibuja un diagrama de barras.
+# (b) ¿Crees que este estudio proporciona una evidencia sólida de que la desi
+#     pramina causa realmente una reducción de la reincidencia?
+
+# **************************************************
+# PREGUNTA 2.86 - Edad y estado civil de las mujeres
+# **************************************************
+
+# Tabla de contingencia que describe la edad y el estado civil de las mujeres
+# adultas estadounidenses en 1995 (valores en miles de mujeres).
+
+# (a) Calcula la suma de los valores de la columna "Casada". ¿Por qué difiere
+#     esta suma del valor que aparece en la columna de totales?
+# (b) Halla la distribución marginal del estado civil de las mujeres adultas (uti
+#     liza porcentajes). Dibuja un diagrama de barras para mostrar la distribución.
+# (c) Compara las distribuciones condicionales del estado civil de las mujeres
+#     con edades entre 18 y 24 años, y de las mujeres entre 40 y 64. Describe brevemente
+#     las principales diferencias entre estos dos grupos de mujeres apoyándote en los
+#     valores porcentuales.
+# (d) Imagínate que quieres publicar una revista dirigida a mujeres solteras.
+#     Halla la distribución condicional de las edades entre las mujeres solteras. Mues
+#     tra esta distribución mediante un diagrama de barras. ¿A qué grupo o grupos de
+#     edad se debería dirigir tu revista?

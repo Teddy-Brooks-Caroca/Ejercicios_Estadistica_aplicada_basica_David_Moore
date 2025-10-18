@@ -629,26 +629,158 @@ global."
 # en universidades estadounidenses que ofrecen sólo primer ciclo, como en universidades 
 # que ofrecen primer y segundo ciclo.
 
+# ---------------------------------------------------------------
+# Edad          | Primer ciclo | Primer ciclo | Segundo ciclo | Segundo ciclo |
+#                T. completo  | T. parcial   | T. completo   | T. parcial    |
+# ---------------------------------------------------------------
+# Menor de 18   |      41      |     125      |       75      |       45      |
+# Entre 18 a 24 |     1378     |    1198      |      4607     |      588      |
+# Entre 25 a 39 |     428      |    1427      |      1212     |     1321      |
+# Mayor de 40   |     119      |     723      |      225      |      605      |
+# Total         |     1966     |    3472      |      6119     |     2559      |
+
 # (a) ¿Cuántos estudiantes están matriculados en primer o en segundo ciclo?
+
+matriculados_primer_ciclo <- 1966 + 3472
+matriculados_segundo_ciclo <- 6119 + 2559
+
+totalidad_matriculados <- data.frame(
+  Ciclo = c("Primer ciclo", "Segundo ciclo"),
+  Matriculados = c(matriculados_primer_ciclo,matriculados_segundo_ciclo)
+)
+
+print(totalidad_patriculados)
+
+"
+          Ciclo Matriculados
+1  Primer ciclo         5438
+2 Segundo ciclo         8678
+"
 # (b) ¿Qué porcentaje de estudiantes de entre 18 y 24 años se matricularon?
+
+total_18_24 <- 1378 + 1198 + 4607 + 588
+total_matriculados <- matriculados_primer_ciclo + matriculados_segundo_ciclo
+
+porcentaje <- (total_18_24 / total_matriculados) * 100
+
+resultados_18_24 <- data.frame(
+  Resumen = c("Totalidad de matriculados","Totalidad de 18 a 24 años","Porcentaje del grupo"),
+  Valores = c(total_matriculados,total_18_24,paste0(round(porcentaje,2),"%"))
+)
+
+print(resultados_18_24)
+
+"
+                   Resumen  Valores
+1 Totalidad de matriculados   14116
+2 Totalidad de 18 a 24 años    7771
+3      Porcentaje del grupo  55.05%
+"
 # (c) Halla los porcentajes de los estudiantes con edades entre 18 y 24 años
-#     que están matriculados en las opciones que aparecen en la tabla 2.11. Dibuja un
-#     diagrama de barras para comparar estos porcentajes.
-# (d) El grupo de estudiantes con edades entre 18 y 24 años es el grupo de
-#     edad tradicional para estudiantes universitarios. Resume brevemente lo que has
-#     aprendido a partir de los datos sobre el predominio de este tipo de estudiantes
-#     en los distintos estudios universitarios.
+# que están matriculados en las opciones que aparecen en la tabla 2.11. Dibuja un
+# diagrama de barras para comparar estos porcentajes.
+
+primer_ciclo_completo <- (1378 / total_18_24) * 100
+primer_ciclo_parcial <- (1198 / total_18_24) * 100
+segundo_ciclo_completo <- (4607 / total_18_24) * 100
+segundo_ciclo_parcial <- (588 / total_18_24) * 100
+universidad_completo <- (1686 / total_18_24) * 100
+universidad_parcial <- (2092 / total_18_24) * 100
+
+porcentajes_18_24 <- data.frame(
+  Nivel_educativo = c("Primer ciclo completo", "Primer ciclo parcial",
+                      "Segundo ciclo completo", "Segundo ciclo parcial",
+                      "Universidad completo","Universidad parcial"),
+  Porcentaje = c(primer_ciclo_completo, primer_ciclo_parcial,
+                 segundo_ciclo_completo, segundo_ciclo_parcial,
+                 universidad_completo,universidad_parcial)
+)
+
+print(porcentajes_18_24)
+
+barplot(porcentajes_18_24$Porcentaje,
+        names.arg = porcentajes_18_24$Nivel_educativo,
+        main = "Estudiantes 18-24 años por nivel educativo",
+        ylab = "Porcentaje (%)",
+        col = "lightblue",
+        ylim = c(0, 65),
+        las = 2)
+text(x = 1:6, y = porcentajes_18_24$Porcentaje + 1,
+     labels = paste0(round(porcentajes_18_24$Porcentaje, 1), "%"))
+
+"
+         Nivel_educativo Porcentaje
+1  Primer ciclo completo  17.732596
+2   Primer ciclo parcial  15.416291
+3 Segundo ciclo completo  59.284519
+4  Segundo ciclo parcial   7.566594
+5   Universidad completo  21.696049
+6    Universidad parcial  26.920602
+"
+
+# (d) El grupo de estudiantes con edades entre 18 y 24 años es el grupo de edad tradicional 
+# para estudiantes universitarios. Resume brevemente lo que has aprendido a partir de los 
+# datos sobre el predominio de este tipo de estudiantes en los distintos estudios universitarios.
+
+"El análisis revela que, aunque el grupo de 18-24 años representa el 55% del total de matriculados, 
+su distribución por tipos de estudio es muy desigual:
+  
+- Predominan abrumadoramente en segundo ciclo completo (59.3%) - el formato universitario tradicional
+
+- Tienen baja presencia en segundo ciclo parcial (7.6%) - estudios más compatibles con trabajo
+
+- Participación moderada en primer ciclo (33.1% combinado) - estudios técnicos/cortos
+
+- Los formatos parciales (trabajo-estudio) son minoritarios en este grupo etario
+
+Conclusión: Los estudiantes tradicionales (18-24 años) se concentran en el modelo educativo clásico 
+de dedicación exclusiva, mientras que los formatos flexibles son más utilizados por estudiantes mayores 
+que combinan trabajo y estudio."
 
 # **************************************************
 # PREGUNTA 2.79 - Preguntas específicas sobre estudiantes
 # **************************************************
 
 # (a) Una asociación de alumnos de primer ciclo pregunta: "¿Qué porcentaje
-#     de estudiantes de primer ciclo a tiempo parcial, tiene entre 25 y 39 años?"
-# (b) Un banco que proporciona préstamos a adultos para estudios pregunta:
-#     "¿Qué porcentaje de estudiantes que tienen entre 25 y 39 años están matriculados
-#     en primer ciclo?"
+# de estudiantes de primer ciclo a tiempo parcial, tiene entre 25 y 39 años?"
 
+total_25_39 <- 428 + 1427 + 1212 + 1321
+
+primer_ciclo_parcial <- (1427 / total_25_39) * 100
+
+resultados_25_39 <- data.frame(
+  Resumen = c("Totalidad de 25 a 39 años","Primer ciclo parcial","Porcentaje del grupo"),
+  Valores = c(total_25_39,1427,paste0(round(primer_ciclo_parcial,2),"%"))
+)
+
+print(resultados_25_39)
+
+"
+                    Resumen Valores
+1 Totalidad de 25 a 39 años    4388
+2      Primer ciclo parcial    1427
+3      Porcentaje del grupo  32.52%
+"
+# (b) Un banco que proporciona préstamos a adultos para estudios pregunta:
+# "¿Qué porcentaje de estudiantes que tienen entre 25 y 39 años están matriculados
+# en primer ciclo?"
+
+total_primer_ciclo_25_39 <- 428 + 1427
+
+porcentaje_primer_ciclo_25_39 <- (total_primer_ciclo_25_39 / total_25_39) * 100
+
+resultados_primer_ciclo_25_39 <- data.frame(
+  Medida = c("Total de alumnado","Porcentaje"),
+  Valores = c(total_primer_ciclo_25_39,paste0(round(porcentaje_primer_ciclo_25_39,2),"%"))
+)
+
+print(resultados_primer_ciclo_25_39)
+
+"
+             Medida Valores
+1 Total de alumnado    1855
+2        Porcentaje  42.27%
+"
 # **************************************************
 # PREGUNTA 2.80 - Distribuciones de edad
 # **************************************************

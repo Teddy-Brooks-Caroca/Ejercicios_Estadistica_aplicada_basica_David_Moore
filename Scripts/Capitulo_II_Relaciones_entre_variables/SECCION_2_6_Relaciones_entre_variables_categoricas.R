@@ -579,23 +579,18 @@ Negro  149 17
 # considerando de manera independiente a las víctimas blancas y a las negras, el
 # porcentaje de acusados negros condenados a muerte es mayor que el de blancos.
 
-# --- Porcentaje total de pena de muerte ---
+
 total_por_acusado <- rowSums(tabla_contingencia)
 porcentaje_total <- tabla_contingencia[, "Si"] / total_por_acusado * 100
 
-# --- Porcentaje según raza de víctima ---
-# Creamos una tabla 3D (Acusado x Victima x Pena)
 tabla_victima <- with(datos_acusados, tapply(Conteo, list(Acusado, Victima, Pena), sum))
 
-# Víctima blanca
 porc_victima_blanca <- tabla_victima[, "Blanca", "Si"] / 
   (tabla_victima[, "Blanca", "Si"] + tabla_victima[, "Blanca", "No"]) * 100
 
-# Víctima negra
 porc_victima_negra <- tabla_victima[, "Negra", "Si"] / 
   (tabla_victima[, "Negra", "Si"] + tabla_victima[, "Negra", "No"]) * 100
 
-# --- Unimos todos los porcentajes en un solo data frame ---
 resumen <- data.frame(
   Analisis = c("Total", "Víctima blanca", "Víctima negra"),
   Blanco = round(c(porcentaje_total["Blanco"], porc_victima_blanca["Blanco"], porc_victima_negra["Blanco"]), 1),
@@ -649,7 +644,7 @@ totalidad_matriculados <- data.frame(
   Matriculados = c(matriculados_primer_ciclo,matriculados_segundo_ciclo)
 )
 
-print(totalidad_patriculados)
+print(totalidad_matriculados)
 
 "
           Ciclo Matriculados
@@ -684,16 +679,13 @@ primer_ciclo_completo <- (1378 / total_18_24) * 100
 primer_ciclo_parcial <- (1198 / total_18_24) * 100
 segundo_ciclo_completo <- (4607 / total_18_24) * 100
 segundo_ciclo_parcial <- (588 / total_18_24) * 100
-universidad_completo <- (1686 / total_18_24) * 100
-universidad_parcial <- (2092 / total_18_24) * 100
+
 
 porcentajes_18_24 <- data.frame(
   Nivel_educativo = c("Primer ciclo completo", "Primer ciclo parcial",
-                      "Segundo ciclo completo", "Segundo ciclo parcial",
-                      "Universidad completo","Universidad parcial"),
+                      "Segundo ciclo completo", "Segundo ciclo parcial"),
   Porcentaje = c(primer_ciclo_completo, primer_ciclo_parcial,
-                 segundo_ciclo_completo, segundo_ciclo_parcial,
-                 universidad_completo,universidad_parcial)
+                 segundo_ciclo_completo, segundo_ciclo_parcial)
 )
 
 print(porcentajes_18_24)
@@ -703,10 +695,11 @@ barplot(porcentajes_18_24$Porcentaje,
         main = "Estudiantes 18-24 años por nivel educativo",
         ylab = "Porcentaje (%)",
         col = "lightblue",
-        ylim = c(0, 65),
+        ylim = c(0, max_ylim),
         las = 2)
-text(x = 1:6, y = porcentajes_18_24$Porcentaje + 1,
+text(x = 1:4, y = porcentajes_18_24$Porcentaje + 1,
      labels = paste0(round(porcentajes_18_24$Porcentaje, 1), "%"))
+grid()
 
 "
          Nivel_educativo Porcentaje
@@ -744,76 +737,215 @@ que combinan trabajo y estudio."
 # (a) Una asociación de alumnos de primer ciclo pregunta: "¿Qué porcentaje
 # de estudiantes de primer ciclo a tiempo parcial, tiene entre 25 y 39 años?"
 
-total_25_39 <- 428 + 1427 + 1212 + 1321
+total_primer_ciclo_tiempo_parcial <- 3472 
 
-primer_ciclo_parcial <- (1427 / total_25_39) * 100
+primer_ciclo_parcial <- (1427 / total_primer_ciclo_tiempo_parcial) * 100
 
 resultados_25_39 <- data.frame(
-  Resumen = c("Totalidad de 25 a 39 años","Primer ciclo parcial","Porcentaje del grupo"),
-  Valores = c(total_25_39,1427,paste0(round(primer_ciclo_parcial,2),"%"))
+  Resumen = c("Totalidad tiempo parcial","Primer ciclo parcial de 25 a 39 años","Porcentaje del grupo"),
+  Valores = c(3472,1427,paste0(round(primer_ciclo_parcial,2),"%"))
 )
 
 print(resultados_25_39)
 
 "
-                    Resumen Valores
-1 Totalidad de 25 a 39 años    4388
-2      Primer ciclo parcial    1427
-3      Porcentaje del grupo  32.52%
+                               Resumen Valores
+1             Totalidad tiempo parcial    3472
+2 Primer ciclo parcial de 25 a 39 años    1427
+3                 Porcentaje del grupo   41.1%
 "
 # (b) Un banco que proporciona préstamos a adultos para estudios pregunta:
-# "¿Qué porcentaje de estudiantes que tienen entre 25 y 39 años están matriculados
+# ¿Qué porcentaje de estudiantes que tienen entre 25 y 39 años están matriculados
 # en primer ciclo?"
 
 total_primer_ciclo_25_39 <- 428 + 1427
 
-porcentaje_primer_ciclo_25_39 <- (total_primer_ciclo_25_39 / total_25_39) * 100
+total_primer_ciclo <- 1966 + 3472
+
+porcentaje_primer_ciclo_25_39_restringuido <- (total_primer_ciclo_25_39 / total_25_39) * 100
+porcentaje_primer_ciclo_25_39_ampliado <- (total_primer_ciclo_25_39 / total_primer_ciclo) * 100
+porcentaje_primer_ciclo_25_39_super_ampliado <- (total_primer_ciclo_25_39 / total_matriculados) * 100
 
 resultados_primer_ciclo_25_39 <- data.frame(
-  Medida = c("Total de alumnado","Porcentaje"),
-  Valores = c(total_primer_ciclo_25_39,paste0(round(porcentaje_primer_ciclo_25_39,2),"%"))
+  Medida = c("Alumnado 25 a 39 años del primer ciclo",
+             "Porcentaje en relación al grupo etario",
+             "Porcentaje en relación al primer ciclo",
+             "Porcentaje en relación a la población total"),
+  Valores = c(total_primer_ciclo_25_39,
+              paste0(round(porcentaje_primer_ciclo_25_39_restringuido,2),"%"),
+              paste0(round(porcentaje_primer_ciclo_25_39_ampliado,2),"%"),
+              paste0(round(porcentaje_primer_ciclo_25_39_super_ampliado,2),"%"))
 )
 
 print(resultados_primer_ciclo_25_39)
 
 "
-             Medida Valores
-1 Total de alumnado    1855
-2        Porcentaje  42.27%
+                                         Medida Valores
+1        Alumnado 25 a 39 años del primer ciclo    1855
+2        Porcentaje en relación al grupo etario  42.27%
+3        Porcentaje en relación al primer ciclo  34.11%
+4   Porcentaje en relación a la población total  13.14%
 "
 # **************************************************
 # PREGUNTA 2.80 - Distribuciones de edad
 # **************************************************
 
-# (a) Halla la distribución marginal de la edad entre todos los estudiantes; pri
-#     mero, en forma de recuentos y luego en forma de porcentajes. Dibuja un diagrama
-#     de barras con estos porcentajes.
+# (a) Halla la distribución marginal de la edad entre todos los estudiantes; primero, 
+# en forma de recuentos y luego en forma de porcentajes. Dibuja un diagrama de barras 
+# con estos porcentajes.
+
+total_menor_18 <-  41 + 125 + 75 + 45
+total_25_39 <-  428 +  1427 + 1212 +1321
+total_mayor_40 <- 119 + 723 + 225 + 605 
+
+total_alumnos <- total_menor_18 + total_18_24 + total_25_39 + total_mayor_40
+
+porcentaje_menor_18 <- round((total_menor_18 / total_alumnos) * 100,2)
+porcentaje_18_24 <- round((total_18_24 / total_alumnos) * 100,2)
+porcentaje_25_34 <- round((total_25_39 / total_alumnos) * 100,2)
+porcentaje_mayor_40 <- round((total_mayor_40 / total_alumnos) * 100,2)
+
+recuentos_marginales <- data.frame(
+  Grupo = c("Menor de 18 años","Entre 18 a 24 años","Entre 25 a 39 años","Mayor a 40 años"),
+  Recuentos = c(total_menor_18,total_18_24,total_25_39,total_mayor_40),
+  Porcentajes = c(porcentaje_menor_18,porcentaje_18_24,porcentaje_25_34,porcentaje_mayor_40)
+)
+
+print(recuentos_marginales)
+
+barplot(recuentos_marginales$Porcentajes,
+        names.arg = recuentos_marginales$Grupo,
+        main = "Distribución marginal etaria de los estudiantes",
+        ylab = "Porcentaje (%)",
+        col = "lightblue",
+        ylim = c(0, 60))
+grid()
+
+"
+               Grupo Recuentos Porcentajes
+1   Menor de 18 años       286        2.03
+2 Entre 18 a 24 años      7771       55.05
+3 Entre 25 a 39 años      4388       31.08
+4    Mayor a 40 años      1672       11.84
+"
 # (b) Halla la distribución condicional de la edad (en porcentajes) entre los
-#     estudiantes matriculados a tiempo parcial en primer ciclo.
-# (c) Describe brevemente las diferencias más importantes entre las dos distri
-#     buciones de edad.
-# (d) La suma de todos los valores de la columna "Primer ciclo. Tiempo par
-#     cial" no es la misma que el total que aparece en la tabla. ¿Por qué?
+# estudiantes matriculados a tiempo parcial en primer ciclo.
+
+por_menor_18_primer_pacial <- 125 / 3472
+por_19_24_primer_pacial <- 1198 / 3472
+por_25_39_primer_pacial <- 1427 / 3472
+por_mayor_40_primer_pacial <- 723 / 3472
+
+porcentajes <- data.frame(
+  Menor_a_18 = paste0(round(por_menor_18_primer_pacial * 100,2),"%"),
+  De_19_a_24 = paste0(round(por_19_24_primer_pacial * 100,2),"%"),
+  De_25_a_39 = paste0(round(por_25_39_primer_pacial * 100,2),"%"),
+  Mayor_a_40 = paste0(round(por_mayor_40_primer_pacial * 100,2),"%")
+)
+
+print(porcentajes)
+
+"
+  Menor_a_18 De_19_a_24 De_25_a_39 Mayor_a_40
+1       3.6%      34.5%      41.1%     20.82%
+"
+
+# (c) Describe brevemente las diferencias más importantes entre las dos distribuciones 
+# de edad.
+
+"La distribución marginal muestra que la mayoría de estudiantes son de 18–24 años (55%). 
+Pero la distribución condicional para primer ciclo parcial revela un sesgo hacia estudiantes 
+mayores: 41.1% son 25–39 y 20.8% >40. Es decir, las modalidades parciales atraen proporcionalmente 
+más a adultos."
+
+# (d) La suma de todos los valores de la columna "Primer ciclo. Tiempo parcial" 
+# no es la misma que el total que aparece en la tabla. ¿Por qué?
+
+"Se observa una discrepancia de 1 unidad entre la suma de las celdas de la columna Primer ciclo. 
+Tiempo parcial (3473) y el total reportado en la tabla (3472). Esta diferencia mínima puede atribuirse 
+a errores de redondeo o ajuste manual en los datos originales, sin impacto significativo en los porcentajes 
+o las conclusiones del análisis."
 
 # **************************************************
 # PREGUNTA 2.81 - Estudiantes mayores (40+ años)
 # **************************************************
 
 # Llama a los estudiantes de 40 o más años "estudiantes mayores". Compara
-# la presencia de estos estudiantes en los 4 tipos de matriculación, de forma numé
-# rica y con un gráfico. Resume tus hallazgos.
+# la presencia de estos estudiantes en los 4 tipos de matriculación, de forma numérica 
+# y con un gráfico. Resume tus hallazgos.
+
+est_40_tramo1 <- paste0(round(119 / total_mayor_40 * 100,2),"%")
+est_40_tramo2 <- paste0(round(723 / total_mayor_40 * 100,2),"%")
+est_40_tramo3 <- paste0(round(225 / total_mayor_40 * 100,2),"%")
+est_40_tramo4 <- paste0(round(605 / total_mayor_40 * 100,2),"%")
+
+por_general_tramo1 <- paste0(round(1966 / total_matriculados * 100,2),"%")
+por_general_tramo2 <- paste0(round(3472 / total_matriculados * 100,2),"%")
+por_general_tramo3 <- paste0(round(6119 / total_matriculados * 100,2),"%")
+por_general_tramo4 <- paste0(round(2559 / total_matriculados * 100,2),"%")
+
+resultados_estudiantes_40 <- data.frame(
+  Tipo_matricula = c("Primer ciclo completo","Primer ciclo parcial",
+                     "Segundo ciclo completo","Segundo ciclo parcial"),
+  Recuento_mas_40 = c(119,723,225,605),
+  Porcentajes_grupo = c(est_40_tramo1,est_40_tramo2,est_40_tramo3,est_40_tramo4),
+  Porcentajes_general = c(por_general_tramo1,por_general_tramo2,por_general_tramo3,por_general_tramo4)
+)
+
+print(resultados_estudiantes_40)
+
+"
+          Tipo_matricula Recuento_mas_40 Porcentajes_grupo Porcentajes_general
+1  Primer ciclo completo             119             7.12%              13.93%
+2   Primer ciclo parcial             723            43.24%               24.6%
+3 Segundo ciclo completo             225            13.46%              43.35%
+4  Segundo ciclo parcial             605            36.18%              18.13%
+
+=====================================================
+
+Los estudiantes mayores (40 años o más) representan una proporción importante dentro de las modalidades 
+a tiempo parcial, especialmente en el primer ciclo parcial (43,2%) y en el segundo ciclo parcial (36,2%).
+En cambio, su presencia en las modalidades a tiempo completo es mucho menor (7,1% en primer ciclo completo 
+y 13,5% en segundo ciclo completo).
+
+Comparando con la distribución general del alumnado (13,9%, 24,6%, 43,3% y 18,1%), se observa que los estudiantes 
+mayores están fuertemente sobrerrepresentados en las modalidades parciales y subrepresentados en las completas.
+"
 
 # **************************************************
 # PREGUNTA 2.82 - Análisis adicional de la tabla
 # **************************************************
 
 # Pensando un poco puedes obtener más información de la tabla 2.11 que
-# las distribuciones marginales y las distribuciones condicionales. En general, la
-# mayoría de estudiantes universitarios tienen entre 18 y 24 años.
+# las distribuciones marginales y las distribuciones condicionales. En general, 
+# la mayoría de estudiantes universitarios tienen entre 18 y 24 años.
 
 # (a) ¿Qué porcentaje de universitarios se encuentran en este grupo de edad?
+
+por_18 <- round(total_18_24 / total_alumnos * 100,2)
+print(por_18)
+
+"Es 55.05%"
+
 # (b) ¿Qué porcentaje de estudiantes de primer ciclo se hallan en ese grupo?
+
+total_primer_ciclo <-1966 + 3472
+
+por_18_primer_ciclo <- ((1378 + 1198) / total_primer_ciclo) * 100
+
+print(por_18_primer_ciclo)
+
+" Es 47.37%"
+
 # (c) ¿Y de estudiantes a tiempo parcial?
+
+total_parcial <-2559 + 3472
+
+por_18_parcial_ciclo <- ((588 + 1198) / total_parcial) * 100 
+
+print(por_18_parcial_ciclo)
+
+"Es 29.61%"
 
 # **************************************************
 # PREGUNTA 2.83 - Muertes por armas de fuego en EE UU

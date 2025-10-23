@@ -963,9 +963,54 @@ print(por_18_parcial_ciclo)
 # Desconocido     13           5
 # Total           524          175
 
-# (a) Compara con un diagrama de barras el tipo de armas utilizadas en suicidios 
-#     y homicidios. ¿Qué diferencia existe entre las armas utilizadas para cazar 
-#     (escopetas y rifles) y las pistolas?
+# Compara con un diagrama de barras el tipo de armas utilizadas en suicidios 
+# y homicidios. ¿Qué diferencia existe entre las armas utilizadas para cazar 
+# (escopetas y rifles) y las pistolas?
+
+matrix_armas <- matrix(c(468,124,
+                         28,22,
+                         15,24,
+                         13,5),
+                       nrow = 4, ncol = 2,
+                       byrow = TRUE)
+rownames(matrix_armas) = c("Pistola","Escopeta","Rifle","Desconocido")
+colnames(matrix_armas) = c("Homicidios","Suicidios")
+
+print(matrix_armas)
+
+barplot(matrix_armas,
+        beside = TRUE,
+        col = c("red", "blue", "green", "gray"),
+        main = "Mortalidad por armas de fuego en EE.UU.",
+        xlab = "Tipo de muerte",
+        ylab = "Número de casos",
+        ylim = c(0, 500),
+        legend.text = rownames(matrix_armas),
+        args.legend = list(x = "topright",
+                           bty = "n",           
+                           cex = 0.7,           
+                           pt.cex = 1.8,        
+                           y.intersp = 0.4))
+grid()
+
+pistolas_homicidios <- matrix_armas[1,1]  
+pistolas_suicidios <- matrix_armas[1,2]   
+
+armas_caza_homicidios <- sum(matrix_armas[2:3,1])  
+armas_caza_suicidios <- sum(matrix_armas[2:3,2])   
+
+total_homicidios <- sum(matrix_armas[,1])  
+total_suicidios <- sum(matrix_armas[,2])   
+
+porc_pistolas_homicidios <- (pistolas_homicidios / total_homicidios) * 100  
+porc_armas_caza_homicidios <- (armas_caza_homicidios / total_homicidios) * 100  
+
+"Las pistolas son abrumadoramente predominantes en muertes por armas de fuego, 
+representando el 89% de los homicidios frente a solo 8% de las armas de caza. 
+Mientras las escopetas y rifles tienen uso similar en suicidios y homicidios, 
+las pistolas muestran una clara preferencia para violencia interpersonal, siendo 11 veces 
+más utilizadas en homicidios que las armas de caza, lo que refleja su diseño para defensa 
+personal versus uso deportivo."
 
 # **************************************************
 # PREGUNTA 2.84 - No-respuesta en una encuesta
@@ -982,10 +1027,91 @@ print(por_18_parcial_ciclo)
 # Grandes          40          160            200
 
 # (a) ¿Cuál fue el porcentaje global de no-respuesta?
+
+matrix_empresas <- matrix(c(125,75,
+                            81,119,
+                            40,160),
+                          nrow = 3,ncol = 2,
+                          byrow = TRUE)
+rownames(matrix_empresas) = c("Pequeñas","Medianas","Grandes")
+colnames(matrix_empresas) = c("Respuesta","No-respuesta")
+
+print(matrix_empresas)
+
+total_no_respuesta <- sum(matrix_empresas[1:3,2])
+
+total_empresas <- sum(matrix_empresas)
+
+porc_no_respuesta <- (total_no_respuesta / total_empresas) * 100
+
+resultados_no_respuesta <- data.frame(
+  Anotaciones = c("Total de empresas","Total No respuesta","Porcentaje No respuesta"),
+  Valores = c(total_empresas,total_no_respuesta,paste0(round(porc_no_respuesta,2),"%"))
+)
+
+print(resultados_no_respuesta)
+
+"
+              Anotaciones Valores
+1       Total de empresas     600
+2      Total No respuesta     354
+3 Porcentaje No respuesta     59%
+"
+
 # (b) Describe la relación que existe entre las no-respuestas y el tamaño de la
-#     empresa. (Utiliza los porcentajes para que tu descripción sea precisa.)
+# empresa. (Utiliza los porcentajes para que tu descripción sea precisa.)
+
+total_pequenas <- sum(matrix_empresas[1,1:2])
+total_medianas <- sum(matrix_empresas[2,1:2])
+total_grande <- sum(matrix_empresas[3,1:2])
+
+pequena_no_respuesta <- (matrix_empresas[1,2] / total_pequenas)
+mediana_no_respuesta <- (matrix_empresas[2,2] / total_medianas)
+grande_no_respuesta <- (matrix_empresas[3,2] / total_grande)
+
+porcentajes_empresas <- data.frame(
+  Tamannio = c("Pequeña","Mediana","Grande"),
+  Porcentaje_no_respuesta = c(pequena_no_respuesta,mediana_no_respuesta,grande_no_respuesta)
+)
+
+print(porcentajes_empresas)
+
+"
+  Tamannio Porcentaje_no_respuesta
+1  Pequeña                   0.375
+2  Mediana                   0.595
+3   Grande                   0.800
+
+==================================================
+
+Existe una relación positiva fuerte entre el tamaño de la empresa y la tasa de no-respuesta:
+
+Empresas pequeñas: 37.5% no respondieron
+
+Empresas medianas: 59.5% no respondieron
+
+Empresas grandes: 80.0% no respondieron
+
+La tasa de no-respuesta se más que duplica desde las empresas más pequeñas hasta las más grandes, 
+sugiriendo que las empresas más grandes son menos propensas a participar en este tipo de encuestas.
+"
+
 # (c) Haz un diagrama de barras para comparar los porcentajes de no-respuesta
 #     en los tres tipos de empresas.
+
+barplot(porcentajes_empresas$Porcentaje_no_respuesta * 100,
+        names.arg = porcentajes_empresas$Tamannio,
+        main = "Tasa de no-respuesta por tamaño de empresa",
+        ylab = "Porcentaje de no-respuesta (%)",
+        xlab = "Tamaño de la empresa",
+        col = c("lightblue", "lightgreen", "lightcoral"),
+        ylim = c(0, 100))
+text(x = 1:3, 
+     y = porcentajes_empresas$Porcentaje_no_respuesta * 100 + 5,
+     labels = paste0(round(porcentajes_empresas$Porcentaje_no_respuesta * 100, 1), "%"),
+     col = "darkblue",
+     font = 2)
+grid()
 
 # **************************************************
 # PREGUNTA 2.85 - Ayuda a adictos a la cocaína
@@ -1001,26 +1127,369 @@ print(por_18_parcial_ciclo)
 # Placebo        20                4
 
 # (a) Compara la efectividad de cada uno de los tratamientos para prevenir la
-#     reincidencia en el hábito. Utiliza porcentajes y dibuja un diagrama de barras.
-# (b) ¿Crees que este estudio proporciona una evidencia sólida de que la desi
-#     pramina causa realmente una reducción de la reincidencia?
+# reincidencia en el hábito. Utiliza porcentajes y dibuja un diagrama de barras.
+
+matrix_tratamiento <- matrix(c(10,14,
+                               18,6,
+                               20,4),
+                             nrow = 3, ncol = 2,
+                             byrow = TRUE)
+rownames(matrix_tratamiento) = c("Desipramina","Litio","Placebo")
+colnames(matrix_tratamiento) = c("Reincidencia SI","Reincidencia NO")
+
+print(matrix_tratamiento)
+
+total_desipramina <- sum(matrix_tratamiento[1,1:2])
+total_litio <- sum(matrix_tratamiento[2,1:2])
+total_placebo <- sum(matrix_tratamiento[3,1:2])
+
+porc_desipramina_no <- (matrix_tratamiento[1,2] / total_desipramina) * 100
+porc_litio_no <- (matrix_tratamiento[2,2] / total_litio) * 100
+porc_placebo_no <- (matrix_tratamiento[3,2] / total_placebo) * 100
+
+porcentajes_reincidencia_no <- data.frame(
+  Tratamiento = c("Desipramina","Litio","Placebo"),
+  Porcentajes = c(porc_desipramina_no,porc_litio_no,porc_placebo_no)
+)
+
+print(porcentajes_reincidencia_no)
+
+barplot(c(porc_desipramina_no, porc_litio_no, porc_placebo_no),
+        names.arg = c("Desipramina", "Litio", "Placebo"),
+        main = "Efectividad de tratamientos\n(% sin reincidencia)",
+        ylab = "Porcentaje de éxito (%)",
+        col = c("green", "yellow", "red"),
+        ylim = c(0, 70))
+grid()
+
+"
+  Tratamiento Porcentajes
+1 Desipramina    58.33333
+2       Litio    25.00000
+3     Placebo    16.66667
+"
+# (b) ¿Crees que este estudio proporciona una evidencia sólida de que la desipramina 
+# causa realmente una reducción de la reincidencia?
+
+"No necesariamente - aunque la desipramina muestra mejor resultado (58.3% vs 16.7% del placebo), 
+el estudio por sí solo no prueba causalidad. Podría haber variables de confusión como:
+
+Asignación no aleatoria a tratamientos
+
+Características basales diferentes entre grupos
+
+Efecto placebo diferenciado
+
+Se necesitaría un ensayo aleatorizado controlado para establecer causalidad."
 
 # **************************************************
 # PREGUNTA 2.86 - Edad y estado civil de las mujeres
 # **************************************************
 
-# Tabla de contingencia que describe la edad y el estado civil de las mujeres
-# adultas estadounidenses en 1995 (valores en miles de mujeres).
+# La siguiente tabla de contingencia describe la edad y el estado civil 
+# de las mujeres adultas estadounidenses en 1995. Los valores de la tabla 
+# se expresan en miles de mujeres.
+
+# TABLA DE DATOS:
+# ---------------------------------------------------------------
+# Edad(años)   | Soltera   | Casada    | Viuda    | Divorciada | Total     |
+# ---------------------------------------------------------------
+# 18a24        | 9.289     | 3.046     | 19       | 260        | 12.613   |
+# 25a39        | 6.948     | 21.437    | 206      | 3.408      | 32.000   |
+# 40a64        | 2.307     | 26.679    | 2.219    | 5.508      | 36.713   |
+# ≥65          | 768       | 7.767     | 8.636    | 1.091      | 18.264   |
+# Total        | 19.312    | 58.931    | 11.080   | 10.266     | 99.588   |
 
 # (a) Calcula la suma de los valores de la columna "Casada". ¿Por qué difiere
-#     esta suma del valor que aparece en la columna de totales?
-# (b) Halla la distribución marginal del estado civil de las mujeres adultas (uti
-#     liza porcentajes). Dibuja un diagrama de barras para mostrar la distribución.
+# esta suma del valor que aparece en la columna de totales?
+
+matrix_mujeres <- matrix(c(
+  9289, 3046, 19, 260, 12613,
+  6948, 21437, 206, 3408, 32000,
+  2307, 26679, 2219, 5508, 36713,
+  768, 7767, 8636, 1091, 18264,
+  19312, 58931, 11080, 10266, 99588), 
+  nrow = 5, ncol = 5, byrow = TRUE)
+
+rownames(matrix_mujeres) <- c("18 a 24", "25 a 39", "40 a 64", "≥ 65", "Total")
+colnames(matrix_mujeres) <- c("Soltera", "Casada", "Viuda", "Divorciada", "Total")
+
+print(matrix_mujeres)
+
+total_casadas <- sum(matrix_mujeres[1:4,2])
+
+print(total_casadas)
+
+comparativa_casadas <- data.frame(
+  Tipo = c("Valor otorgado","Valor calculado"),
+  Resultado = c(matrix_mujeres[5,2],total_casadas)
+)
+
+print(comparativa_casadas)
+
+"
+             Tipo Resultado
+1  Valor otorgado     58931
+2 Valor calculado     58929
+
+===============================================
+
+Se puede deber a un error de redondeo
+"
+
+# (b) Halla la distribución marginal del estado civil de las mujeres adultas (utiliza porcentajes). 
+# Dibuja un diagrama de barras para mostrar la distribución.
+
+pct_estado_civil <- round(matrix_mujeres["Total",1:4]/ matrix_mujeres[5,5] * 100,2)
+
+print(pct_estado_civil)
+
+barplot(pct_estado_civil,
+        main = "Distribución marginal del estado civil (1995)",
+        ylab = "Porcentaje (%)",
+        col = c("lightblue", "lightgreen", "lightpink", "lightgray"),
+        ylim = c(0, 70))
+grid()
+
+"
+Soltera  Casada   Viuda  Divorciada 
+  19.39   59.17   11.13       10.31 
+"
+
 # (c) Compara las distribuciones condicionales del estado civil de las mujeres
-#     con edades entre 18 y 24 años, y de las mujeres entre 40 y 64. Describe brevemente
-#     las principales diferencias entre estos dos grupos de mujeres apoyándote en los
-#     valores porcentuales.
+# con edades entre 18 y 24 años, y de las mujeres entre 40 y 64. Describe brevemente
+# las principales diferencias entre estos dos grupos de mujeres apoyándote en los
+# valores porcentuales.
+
+matrix_4x4 <- matrix_mujeres[1:4,1:4]
+
+pct_por_edad <- round(prop.table(matrix_4x4, margin = 1) * 100, 2)
+
+pct_por_edad[c("18 a 24", "40 a 64"), ]
+
+"
+        Soltera Casada Viuda Divorciada
+18 a 24   73.64  24.15  0.15       2.06
+40 a 64    6.28  72.67  6.04      15.00
+
+================================================
+
+Entre las mujeres de 18 a 24 años, la gran mayoría son solteras (≈74%), mientras que una 
+proporción menor está casada (≈24%) y solo un porcentaje mínimo se encuentra viuda o divorciada 
+(menos del 3%).
+Esto refleja una etapa vital temprana, donde el matrimonio y la disolución de uniones aún son 
+poco frecuentes.
+
+En cambio, entre las mujeres de 40 a 64 años, la distribución cambia significativamente: el grupo 
+predominante es el de casadas (≈73%), seguido por un aumento considerable de las divorciadas (≈15%) 
+y viudas (≈6%), mientras que las solteras representan solo una pequeña fracción (≈6%).
+Esto indica que, con el paso de la edad, la mayoría de las mujeres han estado o están casadas, y crecen 
+los casos de separación o viudez.
+"
 # (d) Imagínate que quieres publicar una revista dirigida a mujeres solteras.
-#     Halla la distribución condicional de las edades entre las mujeres solteras. Mues
-#     tra esta distribución mediante un diagrama de barras. ¿A qué grupo o grupos de
-#     edad se debería dirigir tu revista?
+# Halla la distribución condicional de las edades entre las mujeres solteras. Muestra 
+# esta distribución mediante un diagrama de barras. ¿A qué grupo o grupos de edad se 
+# debería dirigir tu revista?
+
+pct_solteras <- round(matrix_mujeres[1:4,1]/ matrix_mujeres[5,1] * 100,2)
+
+print(pct_solteras)
+
+barplot(pct_solteras,
+        main = "Distribución de solteras por grupo etario",
+        ylab = "Porcentaje (%)",
+        col = c("lightblue", "lightgreen", "lightpink", "lightgray"),
+        ylim = c(0, 50))
+grid()
+        
+"
+18 a 24  25 a 39  40 a 64  ≥ 65 
+  48.10    35.98    11.95  3.98
+  
+===========================================
+
+La mayor proporción de mujeres solteras se ubica en las edades 18–24 (48.1%) y 25–39 (36.0%). 
+Una revista dirigida a solteras debería centrarse principalmente en el rango 18–39 años, con 
+énfasis en 18–24.
+"
+
+# **************************************************
+# PREGUNTA 2.87 - ¿Discriminación?
+# **************************************************
+
+# Un Instituto Superior de Empresariales imparte dos titulaciones: 
+# una de Dirección de Empresas y otra de Derecho. Los aspirantes a cursar
+# estudios en dicho centro deben superar una prueba de admisión.
+
+# TABLAS DE CONTINGENCIA POR TITULACIÓN:
+# ---------------------------------------------------------------
+# Dirección de Empresas | Admitido | No admitido | Total       |
+# ---------------------------------------------------------------
+# Hombre                | 480      | 120         | 600         |
+# Mujer                 | 180      | 20          | 200         |
+# Total                 | 660      | 140         | 800         |
+# ---------------------------------------------------------------
+#
+# Derecho               | Admitido | No admitido | Total       |
+# ---------------------------------------------------------------
+# Hombre                | 10       | 90          | 100         |
+# Mujer                 | 100      | 200         | 300         |
+# Total                 | 110      | 290         | 400         |
+# ---------------------------------------------------------------
+
+# (a) Construye una tabla de contingencia con el sexo y el resultado de la prueba
+#     de admisión para las dos titulaciones conjuntamente, sumando los recuentos de
+#     cada tabla.
+
+matrix_dir_empresas <- matrix(c(480,120,
+                                180,20),
+                              nrow = 2, ncol = 2,
+                              byrow = TRUE)
+colnames(matrix_dir_empresas) = c("Admitido","No admitido")
+rownames(matrix_dir_empresas) = c("Hombre","Mujer")
+
+matrix_derecho <- matrix(c(10,90,
+                           100,200),
+                         nrow = 2, ncol = 2,
+                         byrow = TRUE)
+colnames(matrix_derecho) = c("Admitido","No admitido")
+rownames(matrix_derecho) = c("Hombre","Mujer")
+
+matrix_empresas_derecho = matrix_dir_empresas + matrix_derecho
+
+print(matrix_empresas_derecho)
+
+"
+       Admitido No admitido
+Hombre      490         210
+Mujer       280         220
+"
+# (b) A partir de la tabla anterior, calcula el porcentaje de hombres y de mujeres
+# admitidos. El porcentaje de hombres admitidos es superior al de mujeres.
+
+pct_admitidos <- round(prop.table(matrix_empresas_derecho, margin = 1) * 100, 2)
+
+pct_sexo_admitidos <- data.frame(Sexo = rownames(pct_admitidos),
+                                 Porcentaje_Admitidos = paste0(pct_admitidos[,"Admitido"], "%"))
+
+print(pct_sexo_admitidos)
+
+"
+    Sexo Porcentaje_Admitidos
+1 Hombre                  70%
+2  Mujer                  56%
+"
+
+# (c) Calcula de forma independiente el porcentaje de mujeres y de hombres
+# admitidos según se trate de aspirantes a Dirección de Empresas o a Derecho.
+# En ambas titulaciones la proporción de mujeres admitidas es superior a la de
+# hombres.
+
+pct_admitidos_empresas <- round(matrix_dir_empresas[,"Admitido"]/ rowSums(matrix_dir_empresas) * 100,2)
+pct_admitidos_derecho <- round(matrix_derecho[,"Admitido"]/ rowSums(matrix_derecho) * 100,2)
+
+df_pct_admitidos <- data.frame(
+  Sexo = rownames(matrix_dir_empresas),
+  Empresas = paste0(pct_admitidos_empresas, "%"),
+  Derecho = paste0(pct_admitidos_derecho, "%")
+)
+
+print(df_pct_admitidos)
+
+"    
+    Sexo Empresas Derecho
+1 Hombre      80%     10%
+2  Mujer      90%  33.33%
+"
+
+# (d) Se cumple la paradoja de Simpson: en cada una de las dos titulaciones el
+# porcentaje de mujeres admitidas es superior al de hombres. Sin embargo, consi-
+# derando a todos los alumnos conjuntamente, el porcentaje de hombres admitidos
+# es superior al de mujeres. Explica esta paradoja en un lenguaje sencillo, para que
+# lo pueda entender una persona que no tenga una especial formación estadística.
+
+"
+Aunque en cada carrera individualmente la proporción de mujeres admitidas es más alta 
+que la de hombres, cuando miramos a todos los estudiantes juntos, resulta que más hombres 
+son admitidos en porcentaje. Esto puede parecer contradictorio, pero se debe a cómo se distribuyen 
+los estudiantes entre las carreras:
+
+Por ejemplo, si la mayoría de las mujeres postula a una carrera muy competitiva (con pocas admisiones)
+y la mayoría de los hombres postula a una carrera menos competitiva (con más admisiones), entonces, al 
+combinar los datos de ambas carreras, los hombres terminan con un porcentaje global de admisión mayor.
+
+Es decir, la composición del grupo importa: los porcentajes dentro de subgrupos (cada carrera) no siempre
+coinciden con el porcentaje del grupo total.
+
+En palabras simples: mirar solo los totales puede engañar, porque la proporción de admisión depende tanto 
+de quién postula a qué carrera como del resultado en cada carrera."
+
+# **************************************************
+# PREGUNTA 2.88 - Obesidad y salud
+# **************************************************
+
+# Estudios recientes han puesto de manifiesto que los primeros trabajos sobre 
+# obesidad subestimaron los riesgos para la salud asociados con el sobrepeso. 
+# El error se debía a no tener en cuenta determinadas variables latentes.
+# Con esta variable latente, ilustra de forma simplificada la paradoja de Simpson.
+# Es decir, construye dos tablas de contingencia, una para fumadores y otra para 
+# no fumadores, con las variables sobrepeso (Sí o No) y muerte temprana (Sí o No). 
+# De manera que:
+# • Tanto los fumadores como los no fumadores con sobrepeso tiendan a morir 
+#   antes que los que no tienen sobrepeso.
+# • Pero que cuando se combinen los fumadores y los no fumadores en una
+#   sola tabla de contingencia con las variables sobrepeso y muerte temprana,
+#   las personas sin sobrepeso tiendan a morir más tempranamente.
+
+tabla_fumadores <- matrix(c(30, 70,
+                            20, 80),
+                          nrow = 2, byrow = TRUE)
+rownames(tabla_fumadores) <- c("Sobrepeso", "No sobrepeso")
+colnames(tabla_fumadores) <- c("Muerte Sí", "Muerte No")
+
+tabla_no_fumadores <- matrix(c(10, 90,
+                               5, 95),
+                             nrow = 2, byrow = TRUE)
+rownames(tabla_no_fumadores) <- c("Sobrepeso", "No sobrepeso")
+colnames(tabla_no_fumadores) <- c("Muerte Sí", "Muerte No")
+
+tabla_fumadores
+tabla_no_fumadores
+
+pct_fumadores <- round(prop.table(tabla_fumadores, 1) * 100, 1)
+pct_no_fumadores <- round(prop.table(tabla_no_fumadores, 1) * 100, 1)
+
+pct_fumadores
+pct_no_fumadores
+
+tabla_combinada <- tabla_fumadores + tabla_no_fumadores
+
+pct_combinada <- round(prop.table(tabla_combinada, 1) * 100, 1)
+
+tabla_combinada
+pct_combinada
+
+par(mfrow=c(1,3)) 
+
+barplot(pct_fumadores, beside = TRUE,
+        main = "Fumadores",
+        ylab = "% Muerte temprana",
+        col = c("red","green"))
+
+barplot(pct_no_fumadores, beside = TRUE,
+        main = "No fumadores",
+        ylab = "% Muerte temprana",
+        col = c("red","green"))
+
+barplot(pct_combinada, beside = TRUE,
+        main = "Combinados",
+        ylab = "% Muerte temprana",
+        col = c("red","green"))
+
+"En los subgrupos (fumadores y no fumadores), las personas con sobrepeso tienen mayor 
+riesgo de muerte temprana que las personas sin sobrepeso. Sin embargo, cuando se combinan 
+ambos grupos, la tabla global puede mostrar lo contrario: las personas sin sobrepeso parecen 
+tener mayor riesgo que las personas con sobrepeso. Esto ejemplifica la paradoja de Simpson, 
+donde una tendencia presente en los subgrupos se invierte al mirar los datos agregados."
+
+# :::::::::::::::::::::::::::::::::::::::::::::::::::: FIN SECCIÓN ::::::::::::::::::::::::::::::::::::::::::::::::::::

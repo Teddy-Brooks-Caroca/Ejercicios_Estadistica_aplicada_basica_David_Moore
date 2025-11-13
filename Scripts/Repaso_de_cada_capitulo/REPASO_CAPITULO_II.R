@@ -540,7 +540,10 @@ de muertes se obtiene usando los casos de la semana anterior."
 
 # Un estudio de la National Science Foundation de EEUU halló que la mediana
 # del salario de ingenieras y científicas estadounidenses recién graduadas era 
-# sólo un 73% de la mediana de sus homólogos varones.
+# sólo un 73% de la mediana de sus homólogos varones.Ahora bien, cuando las recién 
+# graduadas se agrupaban por especialidades, la situación era distinta. Las medianas 
+# de los salarios de las mujeres, expresadas como un porcentaje de las medianas del 
+# salario de los hombres, en 16 campos de estudio eran:
 
 # Porcentajes de salarios de mujeres respecto a hombres por especialidad:
 # 94% 96% 98% 95% 85% 85% 84% 100%
@@ -549,3 +552,136 @@ de muertes se obtiene usando los casos de la semana anterior."
 # ¿Cómo es posible que el salario de las mujeres se encuentre muy por debajo
 # del de los hombres cuando se consideran todas las disciplinas conjuntamente y,
 # en cambio, sea prácticamente el mismo cuando se considera por especialidades?
+
+"Aunque los salarios medianos por especialidad muestran que las mujeres ganan aproximadamente 
+lo mismo (e incluso más) que los hombres dentro de cada campo, el salario global promedio de las 
+mujeres resulta mucho menor (73% del de los hombres). Esto ocurre porque las mujeres están sobrerrepresentadas 
+en las especialidades peor pagadas y subrepresentadas en las mejor pagadas.
+
+En otras palabras, la distribución desigual entre campos con distintos niveles salariales distorsiona la 
+comparación global, dando la impresión de una brecha salarial mayor de la que realmente existe dentro de 
+cada especialidad.
+
+Este fenómeno se conoce como paradoja de Simpson, y refleja cómo una tendencia que se mantiene en varios grupos 
+individuales puede invertirse o desaparecer al combinar los datos."
+
+# **************************************************
+# PREGUNTA 2.96 - Transformación de datos
+# **************************************************
+
+# Los ecólogos recogen datos para estudiar la naturaleza. La tabla 2.12 
+# proporciona datos sobre la media del número de semillas producidas durante 
+# un año por algunas especies comunes de árboles y también sobre el peso 
+# medio (en miligramos) de éstas.
+
+## TABLA 2.12 - Peso y recuento del número de semillas producidas por especies arbóreas:
+# ------------------------------------------------------------------------------------
+# Especies               | Número semillas | Peso semillas (mg)
+# ------------------------------------------------------------------------------------
+# Abedul para papel      | 27239           | 0.6
+# Abedul amarillo        | 12158           | 1.6
+# Picea del Canadá       | 7202            | 2.0
+# Picea de Engelman      | 3671            | 3.3
+# Picea roja del Canadá  | 5051            | 3.4
+# Tulipanero             | 13509           | 9.1
+# Pino ponderosa         | 2667            | 37.7
+# Abeto                  | 5196            | 40.0
+# Arce del azúcar        | 1751            | 48.0
+# Pino                   | 1159            | 216.0
+# Haya americana         | 463             | 247
+# Haya americana         | 1892            | 247
+# Encina                 | 93              | 1851
+# Encina escarlata       | 525             | 1930
+# Roble rojo americano   | 411             | 2475
+# Roble rojo americano   | 253             | 2475
+# Avellano de América    | 40              | 3423
+# Roble blanco del Canadá| 184             | 3669
+# Roble blanco americano | 107             | 4535
+# ------------------------------------------------------------------------------------
+
+# (a) Dibuja un diagrama de dispersión que muestre cómo se puede explicar el
+# número de semillas producidas por un árbol, a partir del peso de éstas. Describe
+# la forma, la dirección y la fuerza de la relación.
+
+ejercicio_2_96 <- read.csv("ejercicio_2_96_arboles.csv")
+
+str(ejercicio_2_96)
+
+View(ejercicio_2_96)
+
+modelo <- lm(Numero_semillas ~ Peso_semillas_mg, data = ejercicio_2_96)
+
+plot(ejercicio_2_96$Peso_semillas_mg,
+     ejercicio_2_96$Numero_semillas,
+     main = "Especies arboreas de EE.UU",
+     xlab = "Peso de la semilla (en mg)",
+     ylab = "Cantidad de semillas",
+     col = "blue",
+     pch = 16)
+text(ejercicio_2_96$Peso_semillas_mg,
+     ejercicio_2_96$Numero_semillas,
+     labels = ejercicio_2_96$Especie,
+     pos = 4,   
+     cex = 0.7) 
+abline(modelo, col = "red", lwd = 2)
+grid()
+
+"El diagrama de dispersión muestra una relación inversa y claramente no lineal entre el peso y el número de semillas. 
+En general, las especies con semillas más ligeras producen muchas más semillas, mientras que aquellas con semillas más 
+pesadas generan pocas. La dirección de la relación es negativa, y su fuerza es alta, aunque la forma de la nube de puntos 
+sugiere que una transformación logarítmica podría describir mejor la tendencia que una recta simple."
+
+# (b) Cuando tratamos con tamaños y pesos, los logaritmos de los datos originales son a 
+# menudo la forma más adecuada de expresar los datos. Utiliza tu calculadora o un programa 
+# informático para calcular los logaritmos de los pesos y recuentos de la tabla 2.12. Dibuja 
+# un nuevo diagrama de dispersión utilizando los datos transformados. Ahora, ¿cuál es la forma, 
+# la dirección y la fuerza de la relación?
+
+ejercicio_2_96$log_peso_semillas <- log(ejercicio_2_96$Peso_semillas_mg)
+ejercicio_2_96$log_cantidad_semillas <- log(ejercicio_2_96$Numero_semillas)
+
+head(ejercicio_2_96[, c("Peso_semillas_mg", "Numero_semillas", "log_peso_semillas", "log_cantidad_semillas")])
+
+par(mfrow = c(1, 2)) 
+
+modelo <- lm(Numero_semillas ~ Peso_semillas_mg, data = ejercicio_2_96)
+
+modelo_log <- lm(log_cantidad_semillas ~ log_peso_semillas, data = ejercicio_2_96)
+
+plot(ejercicio_2_96$Peso_semillas_mg,
+     ejercicio_2_96$Numero_semillas,
+     main = "Especies arboreas de EE.UU",
+     xlab = "Peso de la semilla (en mg)",
+     ylab = "Cantidad de semillas",
+     col = "blue",
+     pch = 16)
+text(ejercicio_2_96$Peso_semillas_mg,
+     ejercicio_2_96$Numero_semillas,
+     labels = ejercicio_2_96$Especie,
+     pos = 4,   
+     cex = 0.7) 
+abline(modelo, col = "red", lwd = 2)
+grid()
+
+plot(ejercicio_2_96$log_peso_semillas,
+     ejercicio_2_96$log_cantidad_semillas,
+     main = "Especies arboreas de EE.UU (escala logarítmica)",
+     xlab = "Peso de la semilla (en mg)",
+     ylab = "Cantidad de semillas",
+     col = "darkgreen",
+     pch = 16)
+text(ejercicio_2_96$log_peso_semillas,
+     ejercicio_2_96$log_cantidad_semillas,
+     labels = ejercicio_2_96$Especie,
+     pos = 4,   
+     cex = 0.7) 
+abline(modelo_log, col = "red", lwd = 2)
+grid()
+
+par(mfrow = c(1, 1))
+
+"Al aplicar los logaritmos al número y peso de las semillas, la relación se vuelve aproximadamente lineal, 
+negativa y fuerte. En la escala original, la dispersión era muy amplia y la relación parecía curvilínea —los 
+árboles con semillas más ligeras producían muchas más unidades, pero de forma no proporcional. Después de la 
+transformación logarítmica, la tendencia se aclara: a medida que aumenta el peso de las semillas, el número 
+de semillas disminuye de forma regular y predecible."

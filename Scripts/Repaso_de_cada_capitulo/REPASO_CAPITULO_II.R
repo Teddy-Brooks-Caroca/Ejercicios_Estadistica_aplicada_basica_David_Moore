@@ -685,3 +685,234 @@ negativa y fuerte. En la escala original, la dispersión era muy amplia y la rel
 árboles con semillas más ligeras producían muchas más unidades, pero de forma no proporcional. Después de la 
 transformación logarítmica, la tendencia se aclara: a medida que aumenta el peso de las semillas, el número 
 de semillas disminuye de forma regular y predecible."
+
+# **************************************************
+# PREGUNTA 2.97 - Hombres y mujeres
+# **************************************************
+
+# La altura media de las mujeres estadounidenses cuando tienen 20 años de edad es 
+# de aproximadamente 164 cm, con una desviación típica de unos 6,35 cm. 
+# La altura media de los hombres de la misma edad es de aproximadamente 174 cm, 
+# con una desviación típica de unos 6,86 cm. Si la correlación entre las alturas 
+# de parejas de hombres y mujeres jóvenes es aproximadamente r = 0,5.
+
+# DATOS:
+# Mujeres: μ_x = 164 cm, σ_x = 6.35 cm
+# Hombres:  μ_y = 174 cm, σ_y = 6.86 cm
+# Correlación: r = 0.5
+
+# (a) ¿Cuál es la pendiente de la recta de regresión de la altura de los hombres
+# con relación a la altura de sus mujeres en las parejas jóvenes?
+
+pendiente <- 0.5 * (6.86 / 6.35)
+
+cat("La pendiente es:", round(pendiente,2),"cm.")
+
+"La pendiente es: 0.54 cm."
+
+# (b) Dibuja un gráfico de esta recta de regresión.
+
+intercepto <- 174 - (pendiente * 164)
+
+x_valores <- seq(140, 190, length.out = 100)
+
+y_valores <- intercepto + pendiente * x_valores #recta de regresión
+
+plot(x_valores, y_valores,
+     type = "l",
+     col = "blue",
+     lwd = 2,
+     xlab = "Altura mujeres (cm)",
+     ylab = "Altura hombres (cm)",
+     main = "Recta de regresión: altura hombres sobre altura mujeres")
+grid()
+
+# (c) Predice la altura de un hombre cuya mujer mide 170 cm de altura.
+
+prediccion_hombre <- intercepto + pendiente * 170
+
+cat("La altura de un hombre cuya mujer mide 170 cm es:", round(prediccion_hombre,2),"cm.")
+
+"La altura de un hombre cuya mujer mide 170 cm es: 177.24 cm."
+
+# **************************************************
+# PREGUNTA 2.98 - Un juego informático
+# **************************************************
+
+# Un sistema multimedia para aprender estadística incluye una prueba para 
+# valorar la destreza de los sujetos en la utilización del ratón (mouse). 
+# El programa informático hace que aparezca, al azar, un círculo en la pantalla. 
+# El sujeto tiene que situarse sobre el círculo y clicar tan rápido como pueda. 
+# Tan pronto como el usuario ha clicado sobre el círculo, aparece uno nuevo.
+
+# La tabla 2.13 proporciona datos sobre los ensayos realizados por un sujeto, 
+# 20 con cada mano. "Distancia" es la distancia desde el centro del círculo al 
+# punto donde se halla el cursor en el momento del clicado, las unidades de 
+# medida dependen del tamaño de la pantalla. "Tiempo" es el tiempo transcurrido 
+# entre el clicado de dos círculos consecutivos, en milisegundos.
+
+# TABLA 2.13 - Tiempos de respuesta en un juego informático:
+# ------------------------------------------------------------------------------------
+# Tiempo | Distancia | Mano      | Tiempo | Distancia | Mano
+# ------------------------------------------------------------------------------------
+# 115   | 190.70    | derecha   | 240   | 190.70    | izquierda
+# 96    | 138.52    | derecha   | 190   | 138.52    | izquierda
+# 110   | 165.08    | derecha   | 170   | 165.08    | izquierda
+# 100   | 126.19    | derecha   | 125   | 126.19    | izquierda
+# 111   | 163.19    | derecha   | 315   | 163.19    | izquierda
+# 101   | 305.66    | derecha   | 240   | 305.66    | izquierda
+# 111   | 176.15    | derecha   | 141   | 176.15    | izquierda
+# 106   | 162.78    | derecha   | 210   | 162.78    | izquierda
+# 96    | 147.87    | derecha   | 200   | 147.87    | izquierda
+# 96    | 271.46    | derecha   | 401   | 271.46    | izquierda
+# 95    | 40.25     | derecha   | 320   | 40.25     | izquierda
+# 96    | 24.76     | derecha   | 113   | 24.76     | izquierda
+# 96    | 104.80    | derecha   | 176   | 104.80    | izquierda
+# 106   | 136.80    | derecha   | 211   | 136.80    | izquierda
+# 100   | 308.60    | derecha   | 238   | 308.60    | izquierda
+# 113   | 279.80    | derecha   | 316   | 279.80    | izquierda
+# 123   | 125.51    | derecha   | 176   | 125.51    | izquierda
+# 111   | 329.80    | derecha   | 173   | 329.80    | izquierda
+# 95    | 51.66     | derecha   | 210   | 51.66     | izquierda
+# 108   | 201.95    | derecha   | 170   | 201.95    | izquierda
+# ------------------------------------------------------------------------------------
+
+# (a) Sospechamos que el tiempo depende de la distancia. Dibuja un diagrama de 
+# dispersión del tiempo con relación a la distancia. Utiliza símbolos distintos
+# para cada mano.
+
+ejercicio_2_98 <- read.csv("ejercicio_2_98_mouse.csv")
+
+str(ejercicio_2_98)
+
+head(ejercicio_2_98)
+
+derecha <- ejercicio_2_98[ejercicio_2_98$Mano == "derecha", ]
+izquierda <- ejercicio_2_98[ejercicio_2_98$Mano == "izquierda", ]
+
+plot(ejercicio_2_98$Tiempo,
+     ejercicio_2_98$Distancia,
+     main = "Juego del ratón",
+     xlab = "Tiempo (en milisegundo)",
+     ylab = "Distancia")
+points(derecha$Tiempo, derecha$Distancia, 
+       pch = 16, col = "blue", cex = 1.2)  
+points(izquierda$Tiempo, izquierda$Distancia, 
+       pch = 17, col = "red", cex = 1.2)
+grid()
+
+# (b) Describe la relación que observas. ¿Puedes afirmar que el sujeto es diestro?
+
+"Se puede afirmar que el sujeto es diestro, ya que la relacion entre la distancia y tiempo es mas pequeña con
+la mañana derecha que con la mano izquierda"
+
+# (c) Halla la recta de regresión del tiempo con relación a la distancia para las
+# dos manos de forma independiente. Dibuja estas rectas en tu diagrama. De las dos
+# regresiones, ¿cuál es mejor para predecir el tiempo a partir de la distancia? Da
+# medidas numéricas que describan la precisión de las dos regresiones.
+
+#MANO DERECHA
+media_derecha_tiempo <- mean(derecha$Tiempo)
+media_derecha_distacia <- mean(derecha$Distancia)
+
+desv_derecha_tiempo <- sd(derecha$Tiempo)
+desv_derecha_distancia <- sd(derecha$Distancia)
+
+r_derecha <- cor(derecha$Tiempo,derecha$Distancia)
+
+pendiente_derecha <- r_derecha * (desv_derecha_tiempo / desv_derecha_distancia)
+
+intercepto_derecha <- media_derecha_tiempo - (pendiente_derecha * media_derecha_distacia)
+
+#MANO IZQUIERDA
+media_izquierda_tiempo <- mean(izquierda$Tiempo)
+media_izquierda_distacia <- mean(izquierda$Distancia)
+
+desv_izquierda_tiempo <- sd(izquierda$Tiempo)
+desv_izquierda_distancia <- sd(izquierda$Distancia)
+
+r_izquierda <- cor(izquierda$Tiempo,izquierda$Distancia)
+
+pendiente_izquierda <- r_izquierda * (desv_izquierda_tiempo / desv_izquierda_distancia)
+
+intercepto_izquierda <- media_izquierda_tiempo - (pendiente_izquierda * media_izquierda_distacia)
+
+resultados <- data.frame(
+  mano = c("derecha", "izquierda"),
+  media_tiempo = c(media_derecha_tiempo, media_izquierda_tiempo),
+  media_distancia = c(media_derecha_distacia, media_izquierda_distacia),
+  desv_tiempo = c(desv_derecha_tiempo, desv_izquierda_tiempo),
+  desv_distancia = c(desv_derecha_distancia, desv_izquierda_distancia),
+  r = c(r_derecha, r_izquierda),
+  pendiente = c(pendiente_derecha, pendiente_izquierda),
+  intercepto = c(intercepto_derecha, intercepto_izquierda)
+)
+
+print(resultados)
+
+plot(ejercicio_2_98$Tiempo,
+     ejercicio_2_98$Distancia,
+     main = "Juego del ratón",
+     xlab = "Tiempo (en milisegundo)",
+     ylab = "Distancia")
+points(derecha$Tiempo, derecha$Distancia, 
+       pch = 16, col = "blue", cex = 1.2)  
+points(izquierda$Tiempo, izquierda$Distancia, 
+       pch = 17, col = "red", cex = 1.2)
+abline(intercepto_derecha,pendiente_derecha,col = "darkblue",lwd = 2,lty = "dashed")
+abline(intercepto_izquierda,pendiente_izquierda,col ="darkred",lwd = 2, lty = "dashed")
+grid()
+
+"
+       mano media_tiempo media_distancia desv_tiempo desv_distancia         r  pendiente intercepto
+1   derecha       104.25        172.5765    8.245413       88.74672 0.3047128 0.02831071   99.36424
+2 izquierda       216.75        172.5765   73.014689       88.74672 0.3183573 0.26192243  171.54834
+
+========================================================================
+
+La regresión de la mano izquierda es ligeramente mejor porque su correlación con la distancia es un poco 
+más alta que la de la mano derecha, lo que indica que la distancia explica un poco mejor el tiempo en esa mano; 
+sin embargo, en ambos casos la relación es débil, por lo que ninguna recta predice muy bien los tiempos.
+"
+
+# (d) Debido al aprendizaje, es posible que el sujeto lo haga mejor en los últimos ensayos. 
+# También es posible que lo haga peor debido a la fatiga. Dibuja un diagrama de residuos en 
+# el que los residuos aparezcan ordenados de acuerdo al orden de realización de los ensayos 
+# (de arriba abajo en la tabla 2.12). ¿Existe algún efecto sistemático en el orden de realización 
+# de las pruebas?
+
+
+derecha$Prediccion <- intercepto_derecha + pendiente_derecha * derecha$Distancia
+derecha$Residuos <- derecha$Tiempo - derecha$Prediccion
+
+izquierda$Prediccion <- intercepto_izquierda + pendiente_izquierda * izquierda$Distancia
+izquierda$Residuos <- izquierda$Tiempo - izquierda$Prediccion
+
+derecha$Orden <- 1:20
+izquierda$Orden <- 1:20
+
+residuos_combinados <- rbind(
+  data.frame(Mano = "Derecha", Orden = derecha$Orden, Residuos = derecha$Residuos),
+  data.frame(Mano = "Izquierda", Orden = izquierda$Orden, Residuos = izquierda$Residuos)
+)
+
+plot(residuos_combinados$Orden, residuos_combinados$Residuos,
+     main = "Residuos vs Orden de Ensayos",
+     xlab = "Orden del Ensayo",
+     ylab = "Residuos",
+     ylim = c(-50, 150),
+     col = ifelse(residuos_combinados$Mano == "Derecha", "blue", "red"),
+     pch = ifelse(residuos_combinados$Mano == "Derecha", 16, 17)
+     )
+abline(h = 0, col = "gray", lty = 2)
+abline(lm(Residuos ~ Orden, data = residuos_combinados[residuos_combinados$Mano == "Derecha",]), 
+       col = "blue", lty = 2)
+abline(lm(Residuos ~ Orden, data = residuos_combinados[residuos_combinados$Mano == "Izquierda",]), 
+       col = "red", lty = 2)
+grid()
+
+"No existe un efecto sistemático evidente relacionado con el orden de realización de las pruebas, 
+ya que los residuos no muestran una tendencia clara de aumento o disminución a lo largo de los ensayos 
+para ninguna de las dos manos, lo que indica que factores como el aprendizaje o la fatiga no influyeron
+significativamente en el desempeño del sujeto durante la prueba."
+

@@ -916,3 +916,313 @@ ya que los residuos no muestran una tendencia clara de aumento o disminución a 
 para ninguna de las dos manos, lo que indica que factores como el aprendizaje o la fatiga no influyeron
 significativamente en el desempeño del sujeto durante la prueba."
 
+# **************************************************
+# PREGUNTA 2.99 - Calificaciones SAT en EE UU
+# **************************************************
+
+# La tabla 2.1 proporciona datos sobre la educación en los Estados de EE UU.
+# Utiliza un programa estadístico para examinar la relación entre las calificaciones
+# de Matemáticas y de Lengua en la prueba SAT de la manera siguiente:
+
+# (a) Quieres predecir la calificación de Matemáticas en la prueba SAT de un Estado 
+# a partir de su calificación de Lengua. Con este fin, halla la recta de regresión
+# mínimo-cuadrática. Sabes que la calificación media de Lengua de un determinado 
+# Estado al año siguiente fue 455. Utiliza tu recta de regresión para predecir su
+# calificación media de Matemáticas.
+
+ejercicio_2_99 <- read.csv("ejercicio_2_14_educacion.csv")
+
+str(ejercicio_2_99)
+
+media_sat_lengua <- mean(ejercicio_2_99$SAT_Lengua)
+media_sat_mate <- mean(ejercicio_2_99$SAT_Matematicas)
+
+desv_sat_lengua <- sd(ejercicio_2_99$SAT_Lengua)
+desv_sat_mate <- sd(ejercicio_2_99$SAT_Matematicas)
+
+r <- cor(ejercicio_2_99$SAT_Lengua,ejercicio_2_99$SAT_Matematicas)
+
+pendiente <- r * (desv_sat_mate / desv_sat_lengua)
+
+intercepto <- media_sat_mate - (pendiente * media_sat_lengua)
+
+prediccion_455 <- intercepto + (pendiente * 455)
+
+resultados <- data.frame(
+  Medidas = c("media_sat_lengua","media_sat_mate","desv_sat_lengua","desv_sat_mate",
+              "r","pendiente","intercepto","prediccion_455"),
+  Valores = c(media_sat_lengua,media_sat_mate,desv_sat_lengua,desv_sat_mate,
+              r,pendiente,intercepto,prediccion_455)
+)
+
+resultados$Valores <- round(resultados$Valores, 2)
+
+print(resultados)
+
+"
+           Medidas Valores
+1 media_sat_lengua  531.90
+2   media_sat_mate  529.27
+3  desv_sat_lengua   33.76
+4    desv_sat_mate   34.83
+5                r    0.97
+6        pendiente    1.00
+7       intercepto   -3.28
+8   prediccion_455  452.28
+"
+
+# (b) Representa los residuos de tu regresión con relación a la calificación de
+# Lengua en la prueba SAT (un programa estadístico lo puede hacer). Hay un Estado 
+# que constituye una observación atípica, ¿cuál es? ¿Tiene dicho Estado una calificación 
+# media de Matemáticas más alta o más baja que la que se hubiera predicho a partir 
+# de su calificación media de Lengua?
+
+ejercicio_2_99$Prediccion_SAT_Matematicas <- intercepto + pendiente * ejercicio_2_99$SAT_Lengua
+ejercicio_2_99$Residuo_SAT_Matematicas <- ejercicio_2_99$SAT_Matematicas - ejercicio_2_99$Prediccion_SAT_Matematicas
+
+indice_outlier <- which.max(abs(ejercicio_2_99$Residuo_SAT_Matematicas))
+
+estado_outlier <- ejercicio_2_99$Estado[indice_outlier]
+
+plot(ejercicio_2_99$SAT_Lengua,
+     ejercicio_2_99$Residuo_SAT_Matematicas,
+     main = "Desempeño SAT Lengua en relación a Matemáticas",
+     xlab = "Puntajes SAT Lengua",
+     ylab = "Residuo SAT Lengua",
+     col = "blue",
+     pch = 16)
+abline(h = 0, col = "darkgreen", lty = 2)
+points(ejercicio_2_99$SAT_Lengua[indice_outlier],
+       ejercicio_2_99$Residuo_SAT_Matematicas[indice_outlier],
+       pch = 16, col = "red", cex = 1.5)
+text(ejercicio_2_99$SAT_Lengua[indice_outlier],
+     ejercicio_2_99$Residuo_SAT_Matematicas[indice_outlier],
+     labels = ejercicio_2_99$Estado[indice_outlier],  
+     pos = 4,  
+     col = "red")
+grid()
+
+comparacion_outlier <- data.frame(
+  Estado = ejercicio_2_99$Estado[indice_outlier],
+  Lengua_Real = ejercicio_2_99$SAT_Lengua[indice_outlier],
+  Matematicas_Real = ejercicio_2_99$SAT_Matematicas[indice_outlier],
+  Matematicas_Predicho = ejercicio_2_99$Prediccion_SAT_Matematicas[indice_outlier],
+  Residuo = ejercicio_2_99$Residuo_SAT_Matematicas[indice_outlier]
+)
+
+print(comparacion_outlier)
+
+"
+  Estado Lengua_Real Matematicas_Real Matematicas_Predicho  Residuo
+1     HI         485              510              482.315 27.68496
+
+==========================================================================
+
+El estado de Hawái (HI) constituye la observación atípica, con un residuo positivo de 27.68 puntos. 
+Esto significa que Hawái tiene una calificación media de Matemáticas (510 puntos) significativamente 
+más alta que la que se hubiera predicho a partir de su calificación de Lengua (482.32 puntos)."
+
+# **************************************************
+# PREGUNTA 2.100 - Aspirina y ataques al corazón
+# **************************************************
+
+# ¿Tomar aspirinas regularmente ayuda a prevenir los ataques al corazón? 
+# Un estudio (Physicians’ Health Study) intentó averiguarlo, tomando como 
+# sujetos a 22.071 médicos sanos que tenían al menos 40 años. La mitad de 
+# los sujetos, seleccionados al azar, tomó una aspirina un día sí y otro no. 
+# La otra mitad tomó un placebo, una píldora falsa que tenía el mismo aspecto 
+# y sabor que una aspirina.
+
+# TABLA DE RESULTADOS:
+# ---------------------------------------------------------------
+# Evento               | Grupo aspirina | Grupo placebo | Total
+# ---------------------------------------------------------------
+# Ataques mortales     | 10             | 26            | 36
+# Otros ataques corazón| 129            | 213           | 342
+# Embolias             | 119            | 98            | 217
+# Total pacientes      | 11.037         | 11.034        | 22.071
+# ---------------------------------------------------------------
+
+# ¿Qué indican los datos sobre la relación que existe entre tomar aspirinas, y
+# los ataques al corazón y las embolias? Utiliza porcentajes para hacer más precisos
+# tus razonamientos. ¿Crees que el estudio proporciona suficiente evidencia de que
+# las aspirinas reducen los ataques al corazón (relación causa-efecto)?
+
+matrix_aspirina <- matrix(c(10,26,36,
+                            129,213,342,
+                            119,98,217,
+                            11037,11034,22071),
+                          nrow = 4, ncol = 3,
+                          byrow = TRUE)
+rownames(matrix_aspirina) = c("Ataques mortales","Otros ataques corazón","Embolias","Total pacientes")
+colnames(matrix_aspirina) = c("Grupo aspirina","Grupo Placebo","Total")
+
+print(matrix_aspirina)
+
+prc_mortal_aspirina <- (matrix_aspirina[1,1] / matrix_aspirina[4,1]) * 100
+prc_otros_aspirina <- (matrix_aspirina[2,1] / matrix_aspirina[4,1]) * 100
+prc_embolia_aspirina <- (matrix_aspirina[3,1] / matrix_aspirina[4,1]) * 100
+
+prc_mortal_placebo <- (matrix_aspirina[1,2] / matrix_aspirina[4,2]) * 100
+prc_otros_placebo <- (matrix_aspirina[2,2] / matrix_aspirina[4,2]) * 100
+prc_embolia_placebo <- (matrix_aspirina[3,2] / matrix_aspirina[4,2]) * 100
+
+
+prc_condicionales <- data.frame(
+  Evento = c("Ataques mortales","Otros ataques corazón","Embolias"),
+  Grupo_aspirina = c(paste0(round(prc_mortal_aspirina,2),"%"),
+                     paste0(round(prc_otros_aspirina,2),"%"),
+                     paste0(round(prc_embolia_aspirina,2),"%")),
+  Grupo_placebo = c(paste0(round(prc_mortal_placebo,2),"%"),
+                    paste0(round(prc_otros_placebo,2),"%"),
+                    paste0(round(prc_embolia_placebo,2),"%"))
+)
+
+print(prc_condicionales)
+
+"
+                 Evento Grupo_aspirina Grupo_placebo
+1      Ataques mortales          0.09%         0.24%
+2 Otros ataques corazón          1.17%         1.93%
+3              Embolias          1.08%         0.89%
+
+===================================================================
+
+Los datos muestran que el grupo que tomó aspirinas presenta porcentajes notablemente menores 
+tanto en ataques mortales como en otros ataques al corazón, lo que indica un efecto protector claro. 
+En cambio, en el caso de las embolias, el porcentaje del grupo aspirina es apenas superior al del 
+grupo placebo, pero la diferencia es pequeña y podría deberse al azar.
+
+Dado que se trata de un estudio experimental con asignación aleatoria y una muestra muy grande, 
+sí podemos afirmar que existe evidencia sólida de un efecto causal: tomar aspirinas reduce el riesgo 
+de ataques al corazón
+"
+
+# **************************************************
+# PREGUNTA 2.101 - Suicidios
+# **************************************************
+
+# He aquí una tabla de contingencia sobre los suicidios ocurridos en 1993, clasificados 
+# según el sexo de la víctima y el método utilizado
+
+# TABLA DE DATOS:
+# ---------------------------------------------------------------
+# Método        | Hombres   | Mujeres   
+# ---------------------------------------------------------------
+# Arma de fuego | 16.381    | 2.559     
+# Veneno        | 3.569     | 2.110     
+# Ahorcamiento  | 3.824     | 803       
+# Otros         | 1.641     | 623       
+# ---------------------------------------------------------------
+
+
+# Basándote en estos datos, escribe un breve informe sobre las diferencias entre los
+# suicidios de hombres y de mujeres. Asegúrate de que utilizas los recuentos y
+# los porcentajes adecuados para justificar tus afirmaciones.
+
+matrix_suicidios <- matrix(c(16381,2559,
+                             3569,2110,
+                             3824,803,
+                             1641,623),
+                           nrow = 4, ncol = 2,
+                           byrow = TRUE)
+colnames(matrix_suicidios) = c("Hombres","Mujeres")
+rownames(matrix_suicidios) = c("Arma de fuego","Veneno","Ahorcamiento","Otros")
+
+print(matrix_suicidios)
+
+total_hombres <- sum(matrix_suicidios[1:4,1])
+
+total_mujeres <- sum(matrix_suicidios[1:4,2])
+
+total_poblacion <- total_hombres + total_mujeres
+
+hombre_arma <- (matrix_suicidios[1,1] / total_hombres) * 100
+hombre_veneno <- (matrix_suicidios[2,1] / total_hombres) * 100
+hombre_ahorcamiento <- (matrix_suicidios[3,1] / total_hombres) * 100
+hombre_otros <- (matrix_suicidios[4,1] / total_hombres) * 100
+
+mujer_arma <- (matrix_suicidios[1,2] / total_mujeres) * 100
+mujer_veneno <- (matrix_suicidios[2,2] / total_mujeres) * 100
+mujer_ahorcamiento <- (matrix_suicidios[3,2] / total_mujeres) * 100
+mujer_otro <- (matrix_suicidios[4,2] / total_mujeres) * 100
+
+prc_condicional_suicidios <- data.frame(
+  Evento = c("Arma de fuego","Veneno","Ahorcamiento","Otros"),
+  Grupo_hombres = c(paste0(round(hombre_arma,2),"%"),
+                    paste0(round(hombre_veneno,2),"%"),
+                    paste0(round(hombre_ahorcamiento,2),"%"),
+                    paste0(round(hombre_otros,2),"%")),
+  Grupo_mujeres = c(paste0(round(mujer_arma,2),"%"),
+                    paste0(round(mujer_veneno,2),"%"),
+                    paste0(round(mujer_ahorcamiento,2),"%"),
+                    paste0(round(mujer_otro,2),"%"))
+  )
+
+print(prc_condicional_suicidios)
+
+"
+         Evento Grupo_hombres Grupo_mujeres
+1 Arma de fuego        64.45%        41.99%
+2        Veneno        14.04%        34.62%
+3  Ahorcamiento        15.05%        13.17%
+4         Otros         6.46%        10.22%
+
+=======================================================
+
+En 1993 se observa una marcada diferencia en los métodos de suicidio según el sexo: aunque en 
+ambos grupos el uso de armas de fuego es el método más frecuente, los hombres lo emplean proporcionalmente 
+mucho más que las mujeres, mientras que ellas recurren al veneno en una proporción considerablemente mayor 
+que los hombres. Estas diferencias muestran patrones claramente diferenciados en la elección del método entre 
+ambos sexos.
+"
+
+# **************************************************
+# PREGUNTA 2.102 - Permanecer vivo y fumar
+# **************************************************
+
+# A mediados de los años setenta, un estudio médico contactó al azar con gente 
+# de un distrito de Inglaterra. He aquí los datos sobre 1.314 mujeres que eran 
+# fumadoras habituales y mujeres que nunca habían fumado. La tabla clasifica a 
+# estas mujeres según su edad en el momento inicial de realización del estudio, 
+# según su situación con relación al tabaco y según si permanecían vivas al cabo 
+# de 20 años.
+
+# TABLAS DE DATOS POR GRUPO DE EDAD:
+# ---------------------------------------------------------------
+# De 18 a 44 años     | Fumadora | No fumadora
+# ---------------------------------------------------------------
+# Fallecidas          | 19       | 13
+# Vivas               | 269      | 327
+# ---------------------------------------------------------------
+#
+# De 45 a 64 años     | Fumadora | No fumadora
+# ---------------------------------------------------------------
+# Fallecidas          | 78       | 52
+# Vivas               | 167      | 147
+# ---------------------------------------------------------------
+#
+# Mayores de 65 años  | Fumadora | No fumadora
+# ---------------------------------------------------------------
+# Fallecidas          | 42       | 165
+# Vivas               | 7        | 28
+# ---------------------------------------------------------------
+
+# (a) A partir de estos datos, construye una sola tabla de contingencia que rela-
+#     cione fumar (sí o no) con fallecer o vivir. ¿Qué porcentaje de fumadoras perma-
+#     neció con vida durante 20 años? ¿Qué porcentaje de no fumadoras sobrevivió?
+#     Parece sorprendente que el porcentaje de mujeres que permaneció con vida fuera
+#     mayor entre las fumadoras.
+
+# (b) La edad de la mujer en el momento inicial de realización del estudio es
+#     una variable latente. Muestra que dentro de cada uno de los tres grupos de edad,
+#     el porcentaje de mujeres que permaneció con vida después de 20 años fue mayor
+#     entre las no fumadoras. Estamos ante otro ejemplo de la Paradoja de Simpson.
+
+# (c) Los autores del estudio dieron la siguiente explicación: “Entre las mujeres
+#     mayores (de 65 o más años al inicio del estudio), pocas eran fumadoras; sin em-
+#     bargo, muchas de ellas murieron durante el tiempo de seguimiento del estudio”.
+#     Compara el porcentaje de fumadoras en cada uno de los tres grupos de edad para
+#     verificar esta explicación.
+
+# :::::::::::::::::::::::::::::::::::::::::::::::::::: FIN SECCIÓN ::::::::::::::::::::::::::::::::::::::::::::::::::::

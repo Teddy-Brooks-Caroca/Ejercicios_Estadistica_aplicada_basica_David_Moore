@@ -1208,21 +1208,156 @@ ambos sexos.
 # Vivas               | 7        | 28
 # ---------------------------------------------------------------
 
-# (a) A partir de estos datos, construye una sola tabla de contingencia que rela-
-#     cione fumar (sí o no) con fallecer o vivir. ¿Qué porcentaje de fumadoras perma-
-#     neció con vida durante 20 años? ¿Qué porcentaje de no fumadoras sobrevivió?
-#     Parece sorprendente que el porcentaje de mujeres que permaneció con vida fuera
-#     mayor entre las fumadoras.
+# (a) A partir de estos datos, construye una sola tabla de contingencia que relacione 
+# fumar (sí o no) con fallecer o vivir. ¿Qué porcentaje de fumadoras permaneció con 
+# vida durante 20 años? ¿Qué porcentaje de no fumadoras sobrevivió? Parece sorprendente 
+# que el porcentaje de mujeres que permaneció con vida fuera mayor entre las fumadoras.
 
-# (b) La edad de la mujer en el momento inicial de realización del estudio es
-#     una variable latente. Muestra que dentro de cada uno de los tres grupos de edad,
-#     el porcentaje de mujeres que permaneció con vida después de 20 años fue mayor
-#     entre las no fumadoras. Estamos ante otro ejemplo de la Paradoja de Simpson.
+matrix_18_44 <- matrix(c(19,13,
+                         269,327),
+                       nrow = 2,ncol = 2,
+                       byrow = TRUE)
+colnames(matrix_18_44) = c("Fumadora","No fumadora")
+rownames(matrix_18_44) = c("Fallecidas","Vivas")
+
+matrix_45_64 <- matrix(c(78,52,
+                         167,147),
+                       nrow = 2,ncol = 2,
+                       byrow = TRUE)
+colnames(matrix_45_64) = c("Fumadora","No fumadora")
+rownames(matrix_45_64) = c("Fallecidas","Vivas")
+
+matrix_65_mas <- matrix(c(42,165,
+                          7,28),
+                        nrow = 2,ncol = 2,
+                        byrow = TRUE)
+colnames(matrix_65_mas) = c("Fumadora","No fumadora")
+rownames(matrix_65_mas) = c("Fallecidas","Vivas")
+
+total_fumadoras_fallecidas <- matrix_18_44[1,1] + matrix_45_64[1,1] + matrix_65_mas[1,1]
+total_fumadoras_vivas <- matrix_18_44[2,1] + matrix_45_64[2,1] + matrix_65_mas[2,1]
+
+total_no_fumadoras_fallecidas <- matrix_18_44[1,2] + matrix_45_64[1,2] + matrix_65_mas[1,2]
+total_no_fumadoras_vivas <- matrix_18_44[2,2] + matrix_45_64[2,2] + matrix_65_mas[2,2]
+
+total_fallecidas <- total_fumadoras_fallecidas + total_no_fumadoras_fallecidas
+total_vivas <- total_fumadoras_vivas + total_no_fumadoras_vivas
+
+total_fumadoras <- total_fumadoras_fallecidas + total_fumadoras_vivas
+total_no_fumadoras <- total_no_fumadoras_fallecidas + total_no_fumadoras_vivas
+total_general <- total_fumadoras + total_no_fumadoras
+
+conteo_general <- data.frame(
+  Condicion = c("Fumadora","No fumadora","Total"),
+  Fallecidas = c(total_fumadoras_fallecidas,total_no_fumadoras_fallecidas,total_fallecidas),
+  Vivas = c(total_fumadoras_vivas,total_no_fumadoras_vivas,total_vivas),
+  Total = c(total_fumadoras,total_no_fumadoras,total_general)
+)
+
+print(conteo_general)
+
+prc_fum_fall <- (total_fumadoras_fallecidas / total_fumadoras) * 100
+prc_fum_vi <- (total_fumadoras_vivas / total_fumadoras) * 100
+
+prc_no_fum_fall <- (total_no_fumadoras_fallecidas / total_no_fumadoras) * 100
+prc_no_fum_vi <- (total_no_fumadoras_vivas / total_no_fumadoras) * 100
+
+prc_general <- data.frame(
+  Condicion = c("Fumadora","No fumadora"),
+  Fallecidas = c(paste0(round(prc_fum_fall,2),"%"),
+                 paste0(round(prc_no_fum_fall,2),"%")),
+  Vivas = c(paste0(round(prc_fum_vi,2),"%"),
+            paste0(round(prc_no_fum_vi,2),"%"))
+)
+
+print(prc_general)
+
+"
+    Condicion Fallecidas Vivas Total
+1    Fumadora        139   443   582
+2 No fumadora        230   502   732
+3       Total        369   945  1314
+
+============================================
+
+    Condicion Fallecidas  Vivas
+1    Fumadora     23.88% 76.12%
+2 No fumadora     31.42% 68.58%
+
+"
+
+# (b) La edad de la mujer en el momento inicial de realización del estudio es una variable latente. 
+# Muestra que dentro de cada uno de los tres grupos de edad,el porcentaje de mujeres que permaneció 
+# con vida después de 20 años fue mayor entre las no fumadoras. Estamos ante otro ejemplo de la Paradoja 
+# de Simpson.
+
+sup_18_44_fum <- (269 / (19 + 269)) * 100
+sup_18_44_no <- (327 / (13 + 327)) * 100
+
+sup_45_64_fum <- (167 / (78 + 167)) * 100
+sup_45_64_no <- (147 / (52 + 147)) * 100
+
+sup_65_fum <- (7 / (42 + 7)) * 100
+sup_65_no <- (28 / (165 + 28)) * 100
+
+df_supervivencia <- data.frame(
+  Grupo = c("18-44","45-64","65+"),
+  Fumadoras = c(round(sup_18_44_fum,2),
+                round(sup_45_64_fum,2),
+                round(sup_65_fum,2)),
+  No_fumadoras = c(round(sup_18_44_no,2),
+                   round(sup_45_64_no,2),
+                   round(sup_65_no,2))
+)
+
+print(df_supervivencia)
+
+"
+  Grupo Fumadoras No_fumadoras
+1 18-44     93.40        96.18
+2 45-64     68.16        73.87
+3   65+     14.29        14.51
+
+==============================================
+
+En los tres grupos de edad el porcentaje de mujeres que permaneció con vida fue mayor 
+entre las no fumadoras (96.18% vs 93.40%; 73.87% vs 68.16%; 14.51% vs 14.29%). Por tanto 
+dentro de cada edad la situación es clara y consistente: no fumar está asociado a mayor 
+supervivencia. Este es el motivo por el que hablamos de la Paradoja de Simpson: el patrón 
+dentro de los estratos (edad) es distinto al patrón agregado."
+
 
 # (c) Los autores del estudio dieron la siguiente explicación: “Entre las mujeres
-#     mayores (de 65 o más años al inicio del estudio), pocas eran fumadoras; sin em-
-#     bargo, muchas de ellas murieron durante el tiempo de seguimiento del estudio”.
-#     Compara el porcentaje de fumadoras en cada uno de los tres grupos de edad para
-#     verificar esta explicación.
+# mayores (de 65 o más años al inicio del estudio), pocas eran fumadoras; sin embargo, 
+# muchas de ellas murieron durante el tiempo de seguimiento del estudio”.Compara el porcentaje 
+# de fumadoras en cada uno de los tres grupos de edad para verificar esta explicación.
 
+prc_fum_18_44 <- ((19 + 269) / (19 + 269 + 13 + 327)) * 100
+prc_fum_45_64 <- ((78 + 167) / (78 + 167 + 52 + 147)) * 100
+prc_fum_65    <- ((42 + 7) / (42 + 7 + 165 + 28)) * 100
+
+df_fumadoras <- data.frame(
+  Grupo = c("18-44","45-64","65+"),
+  Porcentaje_fumadoras = c(round(prc_fum_18_44,2),
+                           round(prc_fum_45_64,2),
+                           round(prc_fum_65,2))
+)
+
+print(df_fumadoras)
+
+"
+  Grupo Porcentaje_fumadoras
+1 18-44                45.86
+2 45-64                55.18
+3   65+                20.25
+
+=========================================
+
+Efectivamente, entre las mujeres mayores (65+) pocas eran fumadoras (≈20.3%), mientras que 
+la proporción de fumadoras es mayor en los grupos más jóvenes y en el de 45–64 (≈45.9% y ≈55.1%). 
+Como las fumadoras están sobrerrepresentadas en los grupos de edad más jóvenes (con alta supervivencia), 
+el agregado muestra que las fumadoras parecen sobrevivir más —aunque dentro de cada edad las no fumadoras 
+sobreviven más. Eso explica la afirmación de los autores y confirma que estamos ante un clásico ejemplo de
+la Paradoja de Simpson.
+"
 # :::::::::::::::::::::::::::::::::::::::::::::::::::: FIN SECCIÓN ::::::::::::::::::::::::::::::::::::::::::::::::::::

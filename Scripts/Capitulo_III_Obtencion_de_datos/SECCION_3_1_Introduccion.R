@@ -1,4 +1,4 @@
- # EJERCICIOS "Estadistica básica aplicada" de David S. Moore (2005)
+# EJERCICIOS "Estadistica básica aplicada" de David S. Moore (2005)
 
 # CAPÍTULO III "Obtención de datos"
 

@@ -170,8 +170,8 @@ fila_139 <- "5558899404707084109843563569344839451719"
 fila_140 <- "1297513258130484514472321819400036002428"
 
 
-pares_139 <- c("55", "58", "89", "94", "04", "70", "70", "84", "10", "98", "43", "56", "35" , "69" , "34" , "48" , "39" , "45" , "17" , "19" )
-pares_140 <- c("12", "97", "51", "32", "58", "13", "04", "84", "51", "44" , "72" , "32" , "18" , "19" , "40" , "00" , "36" , "00" , "24" , "28")
+pares_139 <- c("55","58","89","94","04","70","70","84","10","98","43","56","35","69","34","48","39","45","17","19")
+pares_140 <- c("12","97","51","32","58","13","04","84","51","44","72","32","18","19","40","00","36","00","24","28")
 
 numeros <- as.numeric(pares)
 numeros_140 <- as.numeric(pares_140)
@@ -471,6 +471,343 @@ print(resultados_auditoria)
 10        Bajo (<1.000 €)           1445
 "
 
+# **************************************************
+# PREGUNTA 3.12 - ¿Qué quieren los escolares?
+# **************************************************
 
+# ¿Cuáles son las inquietudes de los escolares? Las niñas y los niños, ¿tienen 
+# inquietudes distintas? En áreas urbanas, suburbanas y rurales, ¿las inquietudes 
+# son distintas? Para conocer las respuestas, unos investigadores preguntaron a 
+# niñas y niños de quinto y sexto:
 
+# ¿Qué es lo que te gusta más de la escuela?
+# A. Sacar buenas notas.
+# B. Los deportes
+# C. Ser el líder de la clase
 
+# Como la mayoría de niños viven en áreas urbanas muy pobladas o áreas
+# suburbanas, una muestra aleatoria simple debe incluir pocos niños de zonas 
+# rurales. Es más, es demasiado caro escoger al azar niños de una región muy extensa
+# —es mejor empezar escogiendo escuelas que niños—.
+
+# Describe un diseño adecuado para este estudio y explica las razones que 
+# te han llevado al mismo.
+
+"
+Se propone un diseño por conglomerados donde las escuelas son las unidades de muestreo inicial. 
+Primero se estratificarían las escuelas según su ubicación geográfica (urbana, suburbana y rural). 
+Luego, dentro de cada estrato, se seleccionarían aleatoriamante varias escuelas (conglomerados). 
+Este método es eficiente en costes, ya que concentra el trabajo de campo en lugares específicos 
+en lugar de tener que desplazarse a hogares dispersos de niños individuales por una región extensa.
+
+Para garantizar representatividad, se usaría una afijación proporcional para decidir cuántas escuelas 
+seleccionar de cada zona. Es decir, se seleccionarían más escuelas de zonas urbanas (donde hay más niños) 
+y menos de las rurales. Dentro de cada escuela seleccionada, se encuestaría a todos los alumnos de quinto 
+y sexto grado, o a un grupo aleatorio de ellos, registrando también su género.
+
+Este diseño permite responder a las preguntas de investigación de manera válida. Al estratificar por zona, 
+se pueden comparar directamente las inquietudes entre áreas urbanas, suburbanas y rurales. Al muestrear dentro 
+de las escuelas y registrar el género, también se pueden analizar las posibles diferencias entre niñas y niños. 
+La aleatorización en cada etapa ayuda a que los resultados sean generalizables.
+"
+
+# **************************************************
+# PREGUNTA 3.13 - Muestras a partir de números telefónicos
+# **************************************************
+
+# El listado de individuos a partir del cual se selecciona una muestra se llama 
+# marco de muestreo. Idealmente, este marco debería incluir a todos los individuos 
+# de la población, pero en la práctica esto suele ser difícil. Un marco que deje 
+# fuera parte de la población es una fuente habitual de falta de cobertura.
+
+# (a) Supón que se selecciona aleatoriamente una muestra de hogares en una
+# población a partir del listín telefónico. ¿Qué hogares se omiten en este marco?
+# ¿Qué tipo de personas viven en estos hogares? Estas personas probablemente
+# estarán insuficientemente representadas en la muestra.
+
+"
+Se omiten todos los hogares que no cuentan con teléfono fijo, así como aquellos que solo 
+utilizan teléfono móvil. También quedan fuera los hogares que han pedido no aparecer en 
+el listín, los que cambiaron de número y aún no están actualizados, y los hogares nuevos 
+que aún no han sido incorporados.
+
+Las personas que suelen vivir en estos hogares son jóvenes, hogares de bajos ingresos, 
+migrantes, arrendatarios recientes y personas con alta movilidad residencial. Por lo tanto, 
+estos grupos quedan insuficientemente representados en la muestra.
+"
+
+# (b) En encuestas telefónicas es habitual utilizar aparatos que marcan aleato-
+# riamente los cuatro últimos dígitos de un número de teléfono después de haber
+# marcado el número del código territorial (los tres primeros dígitos). Utilizando
+# este tipo de aparatos, ¿qué hogares de los que mencionaste en tu respuesta en (a)
+# se incluirán en el marco de muestreo?
+
+"
+Este método permite incluir hogares que no aparecen en el listín, como aquellos que tienen teléfono 
+fijo pero han pedido reserva, los que han cambiado recientemente de número o los que aún no figuran 
+en el directorio. En general, todos los hogares con una línea fija activa en la red pueden ser seleccionados, 
+independientemente de si están en el listín o no.
+
+Sin embargo, sigue excluyendo a los hogares sin teléfono fijo o que solo utilizan teléfono móvil.
+"
+
+# **************************************************
+# PREGUNTA 3.14 - No contesta nadie
+# **************************************************
+
+# Una forma habitual de no-respuesta en encuestas telefónicas es la "llamada 
+# sin respuesta". Es decir, se llama a un número de teléfono pero no contesta 
+# nadie. El Instituto Nacional de Estadística de Italia examinó las no-respuestas 
+# en una encuesta gubernamental con hogares italianos durante los periodos que 
+# van del 1 de enero a Semana Santa y del 1 de julio al 31 de agosto.
+
+# Todas las llamadas se efectuaron entre las 7 y las 10 de la noche. En el primer
+# periodo, no se contestaron el 21,4% de las llamadas, mientras que en el segundo
+# no se contestaron el 41,5% de las llamadas.
+
+# (a) ¿Qué periodo crees que tuvo una proporción más elevada de no-respuestas?
+# ¿Por qué?
+
+"
+El segundo periodo (1 de julio a 31 de agosto) presenta una proporción más alta de no-respuestas 
+porque coincide con los meses de verano en el hemisferio norte, en los que muchas familias se encuentran 
+de vacaciones, pasan más tiempo fuera del hogar y modifican sus rutinas. Esto reduce la probabilidad de 
+que estén en casa entre las 19:00 y las 22:00 para atender la llamada, aumentando el porcentaje de llamadas 
+sin respuesta.
+"
+
+# (b) Explica por qué un índice elevado de no-respuestas hace que los resultados 
+# de una muestra sean menos fiables.
+
+"
+Un índice elevado de no-respuestas disminuye la fiabilidad porque las personas que no contestan 
+suelen diferir sistemáticamente de las que sí responden. Esto introduce sesgo por no-respuesta, 
+ya que ciertos grupos quedan subrepresentados.
+
+Además, al reducirse el número efectivo de observaciones, aumenta la variabilidad de las estimaciones 
+y se pierde precisión. En conjunto, los resultados se vuelven menos representativos y menos confiables 
+para describir a toda la población.
+"
+
+# **************************************************
+# PREGUNTA 3.15 - Contribución a campañas electorales
+# **************************************************
+
+# Aquí tienes dos enunciados de la misma pregunta:
+
+# A. ¿Deberían aprobarse leyes para eliminar toda posibilidad de que determi-
+#    nados grupos de presión donasen enormes cantidades de dinero a los can-
+#    didatos a la Presidencia?
+
+# B. ¿Deberían aprobarse leyes para prohibir que los grupos de presión contri-
+#    buyesen a campañas electorales, o por el contrario, tienen estos grupos de
+#    presión el derecho a contribuir a campañas de los candidatos que apoyan?
+
+# Una de estas preguntas consiguió el 40% a favor de prohibir las contribucio-
+# nes de los grupos de presión a campañas electorales. La otra consiguió el 80% a
+# favor de esta opinión.
+
+# (a) ¿Qué pregunta consiguió el 40% y cuál consiguió el 80%?
+
+"
+La pregunta A obtuvo el 80% ya que está formulada de manera más cargada emocionalmente, 
+mientras que la pregunta B presenta la prohibición como una posible restricción de derechos.
+"
+# (b) Explica por qué los resultados fueron tan distintos.
+
+"
+Los resultados difieren porque las preguntas están formuladas de manera que activan marcos 
+mentales distintos.
+
+La pregunta A utiliza lenguaje emocional y negativo (“enormes cantidades”, “eliminar toda posibilidad”), 
+lo que predispone al encuestado a ver las donaciones como algo abusivo y, por tanto, a apoyar su prohibición.
+
+En cambio, la pregunta B contrapone explícitamente la prohibición a la idea de un derecho (“tienen estos grupos 
+el derecho a contribuir”), lo cual enmarca la misma acción como una cuestión de libertades. Este marco disminuye 
+sustancialmente el apoyo a prohibir la contribución.
+
+En resumen, la diferencia se debe al efecto de la formulación: el modo en que se plantea una pregunta puede 
+orientar la respuesta incluso cuando trata el mismo tema.
+"
+
+# **************************************************
+# PREGUNTA 3.16 - Pregunta a más gente
+# **************************************************
+
+# Justo antes de unas elecciones generales, una empresa de encuestas de opinión 
+# aumenta el tamaño de su muestra semanal desde el tamaño habitual de 1.500 
+# personas hasta 4.000 personas.
+
+# ¿Por qué crees que la empresa hace esto?
+
+"
+La empresa aumenta el tamaño de la muestra para reducir el margen de error y obtener estimaciones más precisas 
+justo antes de las elecciones, cuando incluso pequeñas diferencias pueden ser relevantes para predecir el resultado.
+
+En un contexto electoral cercano a la fecha de votación, las encuestas necesitan ser especialmente exactas y sensibles 
+a variaciones mínimas, por lo que ampliar la muestra mejora la fiabilidad de las predicciones.
+"
+
+# **************************************************
+# PREGUNTA 3.17 - Viviendas públicas y estabilidad familiar
+# **************************************************
+
+# Para estudiar el efecto de vivir en viviendas públicas sobre la estabilidad
+# familiar de hogares con muy pocos ingresos, unos investigadores obtuvieron una
+# lista de todos los solicitantes de vivienda pública durante un determinado año.
+# Algunas solicitudes fueron aceptadas, mientras que otras no. Los investigadores
+# entrevistaron a todos los solicitantes de cada grupo y compararon los resultados.
+
+# (a) ¿Estamos ante un estudio observacional o un experimento? Justifica tu respuesta.
+
+"
+Es un estudio observacional, porque los investigadores no asignan de manera aleatoria quién recibe vivienda pública. 
+La asignación (aceptado o rechazado) ya ocurrió por los criterios del programa de vivienda, no por intervención experimental. 
+Los investigadores solo observan y comparan los grupos tal como se formaron.
+"
+
+# (b) ¿Cuál es la variable explicativa?
+
+"La variable explicativa es si el solicitante recibió vivienda pública o no (aceptado vs. rechazado)"
+
+# (c) ¿Cuál es la variable respuesta?
+
+"La variable respuesta es la estabilidad familiar de los hogares (medida según los criterios del estudio)."
+
+# **************************************************
+# PREGUNTA 3.18 - Longitud de palabras en novelas
+# **************************************************
+
+# A veces, los distintos estilos de redacción pueden distinguirse por la lon-
+# gitud de las palabras utilizadas. Una persona interesada en este hecho quiere
+# estudiar la longitud de las palabras utilizadas en las novelas de Camilo José Ce-
+# la. Para ello, abre al azar una de sus novelas y toma nota de la longitud de las
+# primeras 250 palabras de la página.
+
+# (a) ¿Cuál es la población en este estudio?
+
+"La población está formada por todas las palabras de todas las novelas de Camilo José Cela."
+
+# (b) ¿Cuál es la muestra?
+
+"La muestra está formada por las 250 primeras palabras de la página elegida al azar de una novela de Cela."
+
+# (c) ¿Qué variable se ha medido?
+
+"La variable medida es la longitud de cada palabra, normalmente expresada en número de letras."
+
+# **************************************************
+# PREGUNTA 3.19 - Identifica la población
+# **************************************************
+
+# En cada uno de los siguientes ejemplos de muestreo, identifica la población 
+# tan exactamente como puedas. ¿Qué individuos forman la población? Si la 
+# información que se da está incompleta, completa la descripción de la población 
+# de una manera razonable.
+
+# (a) Una investigadora quiere saber qué factores afectan a la supervivencia
+# y al éxito de pequeñas empresas. La investigadora selecciona una muestra de
+# 150 pequeñas empresas del sector "bares y restaurantes" del listado de las 
+# Páginas Amarillas de la guía telefónica de una gran ciudad.
+
+"
+Individuo: una pequeña empresa del sector bares y restaurantes.
+Población: todas las pequeñas empresas del sector bares y restaurantes de la gran 
+ciudad incluidas en las Páginas Amarillas.
+"
+
+# (b) Un diputado quiere saber si los electores apoyan una propuesta legislativa
+# sobre sanidad. Su equipo le informa de que se han recibido 228 cartas sobre el
+# tema, de las cuales 193 se oponen a la nueva ley.
+
+"
+Individuo: una persona que escribió una carta sobre la propuesta legislativa.
+Población: todas las personas que enviaron cartas al diputado expresando su opinión 
+sobre esa propuesta (no todos los electores).
+"
+
+# (c) Una compañía de seguros quiere averiguar la calidad de sus servicios con
+# relación a las reclamaciones de sus asegurados con pólizas de automóvil. Cada
+# mes la compañía selecciona una muestra aleatoria simple de todas las reclamacio-
+# nes relacionadas con sus seguros de automóvil, con el fin de evaluar la precisión
+# y rapidez de los trámites efectuados.
+
+"
+Individuo: una reclamación presentada por un asegurado con póliza de automóvil.
+Población: todas las reclamaciones vinculadas a pólizas de automóvil presentadas a la compañía 
+(en el periodo que se desea evaluar, típicamente el mes correspondiente).
+"
+
+# **************************************************
+# PREGUNTA 3.20 - La muestra de Ann Landers
+# **************************************************
+
+# En una ocasión la columnista Ann Landers preguntó a sus lectoras si les 
+# gustaría tener el cariño de un hombre pero sin sexo. Respondieron más de 
+# 90.000 mujeres, de las cuales el 72% respondieron afirmativamente.
+
+# Muchas de las cartas que recibió esta periodista comentaban el desagradable 
+# trato que recibían por parte de los hombres.
+
+# (a) Explica por qué esta muestra está sesgada.
+
+"
+La muestra está sesgada porque es una muestra voluntaria: solo respondieron las lectoras que 
+sintieron la motivación de escribir una carta.
+
+Este tipo de muestras tiende a atraer especialmente a personas con experiencias o emociones fuertes 
+relacionadas con el tema. En este caso, muchas mujeres que respondieron mencionaron un trato desagradable 
+de los hombres, lo cual las predispone a ver favorablemente la idea de “cariño sin sexo”.
+
+Por lo tanto, las mujeres que respondieron no representan al conjunto de la población femenina, sino a un 
+grupo particular con más probabilidad de tener experiencias negativas y, por ende, opiniones más extremas.
+"
+# (b) ¿En qué dirección se produce el sesgo? Es decir, ¿este 72% es mayor
+# o menor que la verdadera proporción poblacional?
+
+"
+El 72% es mayor que la verdadera proporción poblacional.
+
+Dado que respondieron principalmente mujeres con experiencias negativas con el trato de los hombres, es 
+más probable que ellas apoyen la idea presentada, lo que hace que el resultado final esté inflado respecto 
+a la realidad del conjunto de mujeres.
+"
+
+# **************************************************
+# PREGUNTA 3.21 - Encuestas basadas en llamadas de televidentes
+# **************************************************
+
+# Un conocido programa deportivo de un canal de televisión español planteó 
+# la siguiente pregunta a los telespectadores: ¿se proporciona demasiada 
+# información relacionada con el fútbol en España? 
+
+# A continuación el presentador del programa dijo:
+# "Si tu respuesta es afirmativa llama al 91 452 17 00 y si tu respuesta es 
+# negativa llama al 91 452 17 01. Recuerda que el coste de la llamada es de 
+# medio euro el primer minuto."
+
+# Explica por qué esta encuesta de opinión casi seguro que está sesgada.
+
+"
+La encuesta está sesgada porque depende de llamadas voluntarias, lo que hace que solo respondan personas con 
+opiniones fuertes sobre el tema (sesgo de autoselección). Además, el costo de la llamada introduce sesgo de cobertura, 
+ya que excluye a quienes no pueden o no quieren pagar por participar. También influye que el público del programa deportivo 
+no representa a la población general. Todo esto provoca que los resultados no reflejen la verdadera opinión del conjunto de 
+telespectadores.
+"
+
+# **************************************************
+# PREGUNTA 3.22 - Conocimiento del presidente del Parlamento Europeo
+# **************************************************
+
+# Un artículo periodístico sobre el conocimiento de los ciudadanos europeos 
+# de las instituciones de la Unión Europea afirma que el 87% de los europeos 
+# no conoce el nombre del presidente del Parlamento Europeo. 
+
+# Al final del artículo, se puede leer: "La encuesta se basa en 1.210 entrevistas 
+# telefónicas realizadas a adultos de todos los países europeos".
+
+# (a) ¿Qué variable mide esta encuesta?
+# (b) ¿Cuál es la población sobre la que se quiere información?
+# (c) ¿Cuál es la muestra?
+# (d) El método de muestreo utilizado, ¿está sesgado?

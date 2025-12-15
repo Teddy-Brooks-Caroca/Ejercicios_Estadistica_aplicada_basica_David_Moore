@@ -173,16 +173,16 @@ fila_140 <- "1297513258130484514472321819400036002428"
 pares_139 <- c("55","58","89","94","04","70","70","84","10","98","43","56","35","69","34","48","39","45","17","19")
 pares_140 <- c("12","97","51","32","58","13","04","84","51","44","72","32","18","19","40","00","36","00","24","28")
 
-numeros <- as.numeric(pares)
+numeros_139 <- as.numeric(pares_139)
 numeros_140 <- as.numeric(pares_140)
 
-numeros_validos <- numeros[numeros >= 1 & numeros <= 28]
+numeros_validos_139 <- numeros_139[numeros_139 >= 1 & numeros_139 <= 28]
 
 numeros_validos_140 <- numeros_140[numeros_140 >= 1 & numeros_140 <= 28]
-numeros_validos_140 <- numeros_validos_140[!numeros_validos_140 %in% numeros_validos]
+numeros_validos_140 <- numeros_validos_140[!numeros_validos_140 %in% numeros_validos_139]
 
 
-todos_numeros <- c(numeros_validos, numeros_validos_140)
+todos_numeros <- c(numeros_validos_139, numeros_validos_140)
 ejecutivos_finales <- ejecutivos[todos_numeros[1:6]]
 
 ejecutivos_seleccionados <- data.frame(
@@ -196,10 +196,10 @@ print(ejecutivos_seleccionados)
   Numero Ejecutivo
 1      4    Bowman
 2     10   Fleming
-3     12      Goel
-4     13     Gomez
-5     18  Mourning
-6     19     Naber
+3     17      Liao
+4     19     Naber
+5     12      Goel
+6     13     Gomez
 "
 
 # **************************************************
@@ -808,6 +808,117 @@ telespectadores.
 # telefónicas realizadas a adultos de todos los países europeos".
 
 # (a) ¿Qué variable mide esta encuesta?
+
+"La variable medida es si la persona conoce o no el nombre del presidente del Parlamento Europeo"
+
 # (b) ¿Cuál es la población sobre la que se quiere información?
+
+"La población está formada por los adultos de los países miembros de la Unión Europea."
+
 # (c) ¿Cuál es la muestra?
+
+"La muestra son las 1.210 personas adultas entrevistadas telefónicamente en países de la Unión Europea."
+
 # (d) El método de muestreo utilizado, ¿está sesgado?
+
+"
+El método de muestreo puede presentar sesgo de cobertura, ya que solo incluye personas con acceso telefónico 
+y disponibles para responder llamadas. Sin embargo, la exclusión de personas no europeas que viven en Europa no 
+constituye un sesgo, porque la población de interés declarada son los adultos europeos. El tamaño de la muestra 
+afecta a la precisión, pero no introduce sesgo por sí mismo.
+"
+
+# **************************************************
+# PREGUNTA 3.23 - Opinión sobre la policía de Miami
+# **************************************************
+
+# El Departamento de Policía de Miami quiere saber cuál es la opinión que 
+# tienen los residentes de Miami de raza negra sobre la policía. Se escoge al 
+# azar una muestra de 300 hogares preferentemente de barrios donde predomina 
+# la población negra. Posteriormente, un policía negro uniformado visita cada 
+# uno de los hogares y entrevista a un adulto de cada uno de ellos.
+
+# (a) ¿Cuál es la población?
+
+"La población esta formada por los residentes de Miami de raza negra"
+
+# (b) ¿Cuál es la muestra?
+
+"La muestra corresponde a los 300 hogares seleccionados, uno en cada uno de los hogares 
+seleccionados en barrios con predominio de población negra."
+
+# (c) ¿Por qué los resultados de la encuesta seguramente estarán sesgados?
+
+"
+Los resultados probablemente estarán sesgados por varias razones. En primer lugar, existe sesgo 
+de cobertura, ya que la muestra se selecciona principalmente en barrios con predominio de población 
+negra, lo que puede excluir a residentes negros que viven en otros tipos de barrios.
+
+En segundo lugar, existe un importante sesgo de entrevistador, ya que las entrevistas son realizadas 
+por un policía uniformado, lo que puede influir en las respuestas y llevar a que los entrevistados oculten 
+opiniones negativas por temor o deseo de dar una respuesta socialmente aceptable.
+
+Finalmente, hay sesgo de selección dentro del hogar, al entrevistarse solo a un adulto sin un procedimiento 
+claro de selección.
+"
+
+# **************************************************
+# PREGUNTA 3.24 - Muestreo de botellas químicas
+# **************************************************
+
+# Un fabricante de productos químicos escoge 3 botellas de cada lote de 25
+# que contiene un determinado reactivo y comprueba su pureza y potencia. Los
+# números de control de las botellas de uno de los lotes son los siguientes:
+
+# A1096 A1097 A1098 A1101 A1108
+# A1112 A1113 A1117 A2109 A2211
+# A2220 B0986 B1011 B1096 B1101
+# B1102 B1103 B1110 B1119 B1137
+# B1189 B1223 B1277 B1286 B1299
+
+# Utiliza la fila 111 de la tabla B para escoger una muestra aleatoria simple de
+# 3 de esas botellas.
+
+botellas <- c("A1096","A1097","A1098","A1101","A1108",
+              "A1112","A1113","A1117","A2109","A2211",
+              "A2220","B0986","B1011","B1096","B1101",
+              "B1102","B1103","B1110","B1119","B1137",
+              "B1189","B1223","B1277","B1286","B1299")
+
+fila_111 <- "8148669487605130929700412712382764939950"
+
+fila_112 <- "5963688804046347119719352730898489845785"
+
+pares_111 <- substring(fila_111,
+                       seq(1, nchar(fila_111), 2),
+                       seq(2, nchar(fila_111), 2))
+
+pares_112 <- substring(fila_112,
+                       seq(1, nchar(fila_112), 2),
+                       seq(2, nchar(fila_112), 2))
+
+numeros_111 <- as.numeric(pares_111)
+
+numeros_112 <- as.numeric(pares_112)
+
+numeros_validos_111 <- unique(numeros_111[numeros_111 >= 1 & numeros_111 <= 25])
+
+numeros_validos_112 <- unique(numeros_112[numeros_112 >= 1 & numeros_112 <= 25 & !numeros_112 %in% numeros_validos_111])
+
+todos_numeros <- c(numeros_validos_111, numeros_validos_112)
+
+botellas_finales <- botellas[todos_numeros[1:3]]
+
+botellas_seleccionados <- data.frame(
+  Numero = todos_numeros[1:3],
+  Muestra = botellas_finales
+)
+
+print(botellas_seleccionados)
+
+"
+  Numero Muestra
+1     12   B0986
+2      4   A1101
+3     11   A2220
+"

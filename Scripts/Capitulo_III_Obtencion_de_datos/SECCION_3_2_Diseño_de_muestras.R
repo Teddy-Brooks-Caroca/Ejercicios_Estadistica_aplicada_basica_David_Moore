@@ -493,8 +493,7 @@ print(resultados_auditoria)
 # Describe un diseño adecuado para este estudio y explica las razones que 
 # te han llevado al mismo.
 
-"
-Se propone un diseño por conglomerados donde las escuelas son las unidades de muestreo inicial. 
+"Se propone un diseño por conglomerados donde las escuelas son las unidades de muestreo inicial. 
 Primero se estratificarían las escuelas según su ubicación geográfica (urbana, suburbana y rural). 
 Luego, dentro de cada estrato, se seleccionarían aleatoriamante varias escuelas (conglomerados). 
 Este método es eficiente en costes, ya que concentra el trabajo de campo en lugares específicos 
@@ -508,8 +507,7 @@ y sexto grado, o a un grupo aleatorio de ellos, registrando también su género.
 Este diseño permite responder a las preguntas de investigación de manera válida. Al estratificar por zona, 
 se pueden comparar directamente las inquietudes entre áreas urbanas, suburbanas y rurales. Al muestrear dentro 
 de las escuelas y registrar el género, también se pueden analizar las posibles diferencias entre niñas y niños. 
-La aleatorización en cada etapa ayuda a que los resultados sean generalizables.
-"
+La aleatorización en cada etapa ayuda a que los resultados sean generalizables."
 
 # **************************************************
 # PREGUNTA 3.13 - Muestras a partir de números telefónicos
@@ -525,16 +523,14 @@ La aleatorización en cada etapa ayuda a que los resultados sean generalizables.
 # ¿Qué tipo de personas viven en estos hogares? Estas personas probablemente
 # estarán insuficientemente representadas en la muestra.
 
-"
-Se omiten todos los hogares que no cuentan con teléfono fijo, así como aquellos que solo 
+"Se omiten todos los hogares que no cuentan con teléfono fijo, así como aquellos que solo 
 utilizan teléfono móvil. También quedan fuera los hogares que han pedido no aparecer en 
 el listín, los que cambiaron de número y aún no están actualizados, y los hogares nuevos 
 que aún no han sido incorporados.
 
 Las personas que suelen vivir en estos hogares son jóvenes, hogares de bajos ingresos, 
 migrantes, arrendatarios recientes y personas con alta movilidad residencial. Por lo tanto, 
-estos grupos quedan insuficientemente representados en la muestra.
-"
+estos grupos quedan insuficientemente representados en la muestra."
 
 # (b) En encuestas telefónicas es habitual utilizar aparatos que marcan aleato-
 # riamente los cuatro últimos dígitos de un número de teléfono después de haber
@@ -542,14 +538,12 @@ estos grupos quedan insuficientemente representados en la muestra.
 # este tipo de aparatos, ¿qué hogares de los que mencionaste en tu respuesta en (a)
 # se incluirán en el marco de muestreo?
 
-"
-Este método permite incluir hogares que no aparecen en el listín, como aquellos que tienen teléfono 
+"Este método permite incluir hogares que no aparecen en el listín, como aquellos que tienen teléfono 
 fijo pero han pedido reserva, los que han cambiado recientemente de número o los que aún no figuran 
 en el directorio. En general, todos los hogares con una línea fija activa en la red pueden ser seleccionados, 
 independientemente de si están en el listín o no.
 
-Sin embargo, sigue excluyendo a los hogares sin teléfono fijo o que solo utilizan teléfono móvil.
-"
+Sin embargo, sigue excluyendo a los hogares sin teléfono fijo o que solo utilizan teléfono móvil."
 
 # **************************************************
 # PREGUNTA 3.14 - No contesta nadie
@@ -568,26 +562,22 @@ Sin embargo, sigue excluyendo a los hogares sin teléfono fijo o que solo utiliz
 # (a) ¿Qué periodo crees que tuvo una proporción más elevada de no-respuestas?
 # ¿Por qué?
 
-"
-El segundo periodo (1 de julio a 31 de agosto) presenta una proporción más alta de no-respuestas 
+"El segundo periodo (1 de julio a 31 de agosto) presenta una proporción más alta de no-respuestas 
 porque coincide con los meses de verano en el hemisferio norte, en los que muchas familias se encuentran 
 de vacaciones, pasan más tiempo fuera del hogar y modifican sus rutinas. Esto reduce la probabilidad de 
 que estén en casa entre las 19:00 y las 22:00 para atender la llamada, aumentando el porcentaje de llamadas 
-sin respuesta.
-"
+sin respuesta."
 
 # (b) Explica por qué un índice elevado de no-respuestas hace que los resultados 
 # de una muestra sean menos fiables.
 
-"
-Un índice elevado de no-respuestas disminuye la fiabilidad porque las personas que no contestan 
+"Un índice elevado de no-respuestas disminuye la fiabilidad porque las personas que no contestan 
 suelen diferir sistemáticamente de las que sí responden. Esto introduce sesgo por no-respuesta, 
 ya que ciertos grupos quedan subrepresentados.
 
 Además, al reducirse el número efectivo de observaciones, aumenta la variabilidad de las estimaciones 
 y se pierde precisión. En conjunto, los resultados se vuelven menos representativos y menos confiables 
-para describir a toda la población.
-"
+para describir a toda la población."
 
 # **************************************************
 # PREGUNTA 3.15 - Contribución a campañas electorales
@@ -615,8 +605,7 @@ mientras que la pregunta B presenta la prohibición como una posible restricció
 "
 # (b) Explica por qué los resultados fueron tan distintos.
 
-"
-Los resultados difieren porque las preguntas están formuladas de manera que activan marcos 
+"Los resultados difieren porque las preguntas están formuladas de manera que activan marcos 
 mentales distintos.
 
 La pregunta A utiliza lenguaje emocional y negativo (“enormes cantidades”, “eliminar toda posibilidad”), 
@@ -627,8 +616,7 @@ el derecho a contribuir”), lo cual enmarca la misma acción como una cuestión
 sustancialmente el apoyo a prohibir la contribución.
 
 En resumen, la diferencia se debe al efecto de la formulación: el modo en que se plantea una pregunta puede 
-orientar la respuesta incluso cuando trata el mismo tema.
-"
+orientar la respuesta incluso cuando trata el mismo tema."
 
 # **************************************************
 # PREGUNTA 3.16 - Pregunta a más gente
@@ -640,13 +628,11 @@ orientar la respuesta incluso cuando trata el mismo tema.
 
 # ¿Por qué crees que la empresa hace esto?
 
-"
-La empresa aumenta el tamaño de la muestra para reducir el margen de error y obtener estimaciones más precisas 
+"La empresa aumenta el tamaño de la muestra para reducir el margen de error y obtener estimaciones más precisas 
 justo antes de las elecciones, cuando incluso pequeñas diferencias pueden ser relevantes para predecir el resultado.
 
 En un contexto electoral cercano a la fecha de votación, las encuestas necesitan ser especialmente exactas y sensibles 
-a variaciones mínimas, por lo que ampliar la muestra mejora la fiabilidad de las predicciones.
-"
+a variaciones mínimas, por lo que ampliar la muestra mejora la fiabilidad de las predicciones."
 
 # **************************************************
 # PREGUNTA 3.17 - Viviendas públicas y estabilidad familiar
@@ -660,11 +646,9 @@ a variaciones mínimas, por lo que ampliar la muestra mejora la fiabilidad de la
 
 # (a) ¿Estamos ante un estudio observacional o un experimento? Justifica tu respuesta.
 
-"
-Es un estudio observacional, porque los investigadores no asignan de manera aleatoria quién recibe vivienda pública. 
+"Es un estudio observacional, porque los investigadores no asignan de manera aleatoria quién recibe vivienda pública. 
 La asignación (aceptado o rechazado) ya ocurrió por los criterios del programa de vivienda, no por intervención experimental. 
-Los investigadores solo observan y comparan los grupos tal como se formaron.
-"
+Los investigadores solo observan y comparan los grupos tal como se formaron."
 
 # (b) ¿Cuál es la variable explicativa?
 
@@ -751,8 +735,7 @@ Población: todas las reclamaciones vinculadas a pólizas de automóvil presenta
 
 # (a) Explica por qué esta muestra está sesgada.
 
-"
-La muestra está sesgada porque es una muestra voluntaria: solo respondieron las lectoras que 
+"La muestra está sesgada porque es una muestra voluntaria: solo respondieron las lectoras que 
 sintieron la motivación de escribir una carta.
 
 Este tipo de muestras tiende a atraer especialmente a personas con experiencias o emociones fuertes 
@@ -760,18 +743,16 @@ relacionadas con el tema. En este caso, muchas mujeres que respondieron menciona
 de los hombres, lo cual las predispone a ver favorablemente la idea de “cariño sin sexo”.
 
 Por lo tanto, las mujeres que respondieron no representan al conjunto de la población femenina, sino a un 
-grupo particular con más probabilidad de tener experiencias negativas y, por ende, opiniones más extremas.
-"
+grupo particular con más probabilidad de tener experiencias negativas y, por ende, opiniones más extremas."
+
 # (b) ¿En qué dirección se produce el sesgo? Es decir, ¿este 72% es mayor
 # o menor que la verdadera proporción poblacional?
 
-"
-El 72% es mayor que la verdadera proporción poblacional.
+"El 72% es mayor que la verdadera proporción poblacional.
 
 Dado que respondieron principalmente mujeres con experiencias negativas con el trato de los hombres, es 
 más probable que ellas apoyen la idea presentada, lo que hace que el resultado final esté inflado respecto 
-a la realidad del conjunto de mujeres.
-"
+a la realidad del conjunto de mujeres."
 
 # **************************************************
 # PREGUNTA 3.21 - Encuestas basadas en llamadas de televidentes
@@ -788,13 +769,11 @@ a la realidad del conjunto de mujeres.
 
 # Explica por qué esta encuesta de opinión casi seguro que está sesgada.
 
-"
-La encuesta está sesgada porque depende de llamadas voluntarias, lo que hace que solo respondan personas con 
+"La encuesta está sesgada porque depende de llamadas voluntarias, lo que hace que solo respondan personas con 
 opiniones fuertes sobre el tema (sesgo de autoselección). Además, el costo de la llamada introduce sesgo de cobertura, 
 ya que excluye a quienes no pueden o no quieren pagar por participar. También influye que el público del programa deportivo 
 no representa a la población general. Todo esto provoca que los resultados no reflejen la verdadera opinión del conjunto de 
-telespectadores.
-"
+telespectadores."
 
 # **************************************************
 # PREGUNTA 3.22 - Conocimiento del presidente del Parlamento Europeo
@@ -821,12 +800,10 @@ telespectadores.
 
 # (d) El método de muestreo utilizado, ¿está sesgado?
 
-"
-El método de muestreo puede presentar sesgo de cobertura, ya que solo incluye personas con acceso telefónico 
+"El método de muestreo puede presentar sesgo de cobertura, ya que solo incluye personas con acceso telefónico 
 y disponibles para responder llamadas. Sin embargo, la exclusión de personas no europeas que viven en Europa no 
 constituye un sesgo, porque la población de interés declarada son los adultos europeos. El tamaño de la muestra 
-afecta a la precisión, pero no introduce sesgo por sí mismo.
-"
+afecta a la precisión, pero no introduce sesgo por sí mismo."
 
 # **************************************************
 # PREGUNTA 3.23 - Opinión sobre la policía de Miami
@@ -849,8 +826,7 @@ seleccionados en barrios con predominio de población negra."
 
 # (c) ¿Por qué los resultados de la encuesta seguramente estarán sesgados?
 
-"
-Los resultados probablemente estarán sesgados por varias razones. En primer lugar, existe sesgo 
+"Los resultados probablemente estarán sesgados por varias razones. En primer lugar, existe sesgo 
 de cobertura, ya que la muestra se selecciona principalmente en barrios con predominio de población 
 negra, lo que puede excluir a residentes negros que viven en otros tipos de barrios.
 
@@ -859,8 +835,7 @@ por un policía uniformado, lo que puede influir en las respuestas y llevar a qu
 opiniones negativas por temor o deseo de dar una respuesta socialmente aceptable.
 
 Finalmente, hay sesgo de selección dentro del hogar, al entrevistarse solo a un adulto sin un procedimiento 
-claro de selección.
-"
+claro de selección."
 
 # **************************************************
 # PREGUNTA 3.24 - Muestreo de botellas químicas
@@ -922,3 +897,87 @@ print(botellas_seleccionados)
 2      4   A1101
 3     11   A2220
 "
+
+# **************************************************
+# PREGUNTA 3.25 - Muestreo de barrios
+# **************************************************
+
+# La figura 3.2 es un mapa ficticio de una zona del censo. Las zonas del censo 
+# son áreas pequeñas y homogéneas con una media de población de 4.000 habitantes. 
+# En el mapa, cada barrio está marcado con un número identificativo. 
+
+# Una muestra aleatoria simple de barrios obtenida de una zona del censo es 
+# a menudo la penúltima etapa de una muestra en etapas múltiples.
+
+# Utiliza la tabla B comenzando en la fila 125 para escoger una muestra aleatoria
+# simple de 5 barrios en esta zona del censo.
+
+install.packages("magick")
+library(magick)
+
+figura_3_2 <- image_read("figura_3_2.png")
+print(figura_3_2)
+
+barrios <- 101:510
+
+fila_125 <- "9674612149378237186818442351196210339244"
+fila_126 <- "9692719931368097419277567887414840941903"
+
+
+triplete_125 <- substring(
+  fila_125,
+  seq(1, nchar(fila_125), 3),
+  seq(3, nchar(fila_125), 3)
+)
+
+triplete_126 <- substring(
+  fila_126,
+  seq(1, nchar(fila_126), 3),
+  seq(3, nchar(fila_126), 3)
+)
+
+
+numeros_125 <- as.numeric(triplete_125)
+numeros_126 <- as.numeric(triplete_126)
+
+numeros_validos_125 <- unique(
+  numeros_125[numeros_125 >= 101 & numeros_125 <= 510]
+)
+
+numeros_validos_126 <- unique(
+  numeros_126[numeros_126 >= 101 & numeros_126 <= 510 &
+                !numeros_126 %in% numeros_validos_125]
+)
+
+todos_numeros <- c(numeros_validos_125, numeros_validos_126)
+
+muestra_barrios <- todos_numeros[!is.na(todos_numeros)][1:5]
+
+cat("Los barrios escogidos son:", muestra_barrios)
+
+"Los barrios escogidos son: 461 214 235 119 271"
+
+# **************************************************
+# PREGUNTA 3.26 - Dígitos aleatorios
+# **************************************************
+
+# De las siguientes afirmaciones sobre una tabla de dígitos aleatorios, 
+# ¿cuáles son ciertas y cuáles son falsas? Justifica brevemente tus respuestas.
+
+# (a) Hay exactamente cuatro ceros en cada fila de 40 dígitos.
+
+"FALSA, En una tabla de dígitos aleatorios, cada dígito (0–9) tiene la misma probabilidad de aparecer, 
+pero no hay garantía de que en una fila concreta aparezca un número exacto de ceros. En promedio habría 
+4 ceros en 40 dígitos, pero el número real puede variar por azar."
+
+# (b) Cada par de dígitos tiene una probabilidad de 1/100 de ser 00.
+
+"VERDADERA, Si los dígitos son independientes y cada uno tiene probabilidad 1/10, entonces la probabilidad 
+de obtener un 0 seguido de otro 0 es: 1/10 x 1/10 = 1/100"
+
+# (c) Los dígitos 0000 nunca pueden aparecer como un grupo, porque este grupo 
+# no es aleatorio.
+
+"FALSA, La secuencia 0000 sí puede aparecer en una tabla de dígitos aleatorios. Aunque es poco frecuente, 
+sigue siendo un resultado posible y aleatorio. Pensar que no puede aparecer es una confusión común entre 
+“aleatorio” y “regular”."

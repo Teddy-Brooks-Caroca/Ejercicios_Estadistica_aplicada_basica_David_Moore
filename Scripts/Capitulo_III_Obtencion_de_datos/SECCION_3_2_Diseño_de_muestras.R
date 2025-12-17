@@ -981,3 +981,229 @@ de obtener un 0 seguido de otro 0 es: 1/10 x 1/10 = 1/100"
 "FALSA, La secuencia 0000 sí puede aparecer en una tabla de dígitos aleatorios. Aunque es poco frecuente, 
 sigue siendo un resultado posible y aleatorio. Pensar que no puede aparecer es una confusión común entre 
 “aleatorio” y “regular”."
+
+# **************************************************
+# PREGUNTA 3.27 - Muestras aleatorias sistemáticas
+# **************************************************
+
+# La última etapa de la Encuesta de Población Activa consiste en escoger 
+# direcciones dentro de pequeñas áreas llamadas bloques. El método utilizado 
+# es el muestreo aleatorio sistemático. Ilustraremos la idea de la muestra 
+# aleatoria sistemática con un ejemplo. 
+
+# Supón que hemos de seleccionar 4 direcciones de 100. Como 100/4 = 25, 
+# podemos imaginarnos la lista formada por cuatro listas de 25 direcciones. 
+# Escoge al azar una de las primeras 25 direcciones utilizando la tabla B. 
+# La muestra aleatoria sistemática contiene esta dirección y las situadas en 
+# la misma posición en la segunda, la tercera y la cuarta lista. Si la tabla 
+# de números aleatorios da 13, por ejemplo, entonces la muestra aleatoria 
+# sistemática consiste en las direcciones etiquetadas como 13, 38, 63 y 88.
+
+# (a) Utiliza la tabla B para seleccionar una muestra aleatoria sistemática de
+# 5 direcciones de una lista de 200. Entra en la tabla por la línea 120.
+
+fila_120 <- "3547655972394216585004266354354374211937"
+
+pares_120 <- substring(
+  fila_120,
+  seq(1, nchar(fila_120), 2),
+  seq(2, nchar(fila_120), 2)
+)
+
+numeros_120 <- as.numeric(pares_120)
+
+m_sistematico <- numeros_120[numeros_120 >= 1 & numeros_120 <= 40][1]
+
+muestra_direcciones <- m_sistematico + 40 * 0:4
+
+cat("Las direcciones escogidas son: ",muestra_direcciones)
+
+"Las direcciones escogidas son:  35 75 115 155 195"
+
+# (b) Al igual que una muestra aleatoria simple, una muestra aleatoria sistemática 
+# hace que todos los individuos tengan las mismas posibilidades de ser escogidos. 
+# Explica por qué esto es cierto. Luego, explica detalladamente por qué una muestra 
+# sistemática no es, sin embargo, una muestra aleatoria simple.
+
+"Una muestra aleatoria sistemática garantiza que todos los individuos tengan la misma probabilidad 
+de ser seleccionados porque el punto de inicio se elige al azar. Sin embargo, no es una muestra aleatoria 
+simple porque no todas las posibles combinaciones de cinco direcciones pueden formar parte de la muestra, 
+ya que los elementos seleccionados están determinados por un intervalo fijo."
+
+# **************************************************
+# PREGUNTA 3.28 - Muestreo estratificado en universidad
+# **************************************************
+
+# El profesorado de una universidad está constituido por 2.000 hombres y
+# 500 mujeres. Una muestra aleatoria estratificada de 50 profesoras y 200 profesores 
+# le da a cada profesor (hombre o mujer) una posibilidad entre diez de ser escogido. 
+# Este diseño muestral da a todos los individuos de la población las mismas posibilidades 
+# de pertenecer a la muestra.
+
+# Esta muestra aleatoria estratificada, ¿es también una muestra aleatoria simple?
+# Justifica tu respuesta.
+
+"Aunque todos los individuos de la población tienen la misma probabilidad de ser seleccionados, la muestra 
+no es aleatoria simple porque el número de hombres y mujeres está fijado de antemano. En una muestra aleatoria 
+simple, todas las muestras posibles de un tamaño dado tienen la misma probabilidad de ser seleccionadas, lo cual 
+no ocurre en este diseño estratificado."
+
+# **************************************************
+# PREGUNTA 3.29 - Muestreo estratificado con atención a minorías
+# **************************************************
+
+# El profesorado de una universidad está constituido por 2.000 hombres y
+# 500 mujeres. Una agencia interesada en la igualdad de oportunidades en el traba-
+# jo quiere conocer la opinión de los profesores sobre la situación en la universidad.
+
+# Con el fin de prestar suficiente atención a la opinión de las mujeres, la agencia
+# decide obtener una muestra aleatoria estratificada compuesta de 200 hombres y
+# 200 mujeres. Se dispone de una lista de profesores ordenados alfabéticamente
+# y otra de profesoras.
+
+# (a) Explica cómo asignarías etiquetas numéricas y cómo utilizarías una tabla de 
+# dígitos aleatorios para escoger la muestra deseada.
+
+"Se asignan etiquetas numéricas independientes a hombres y mujeres. A partir de la tabla de dígitos 
+aleatorios se seleccionan números válidos dentro de cada estrato, descartando los que queden fuera del 
+rango o se repitan, hasta completar 200 hombres y 200 mujeres.
+
+===========================
+
+Estrato 1: hombres (2.000)
+
+Estrato 2: mujeres (500)
+
+Muestra: 200 hombres + 200 mujeres
+
+"
+
+# (b) Situándote en la fila 122 de la tabla B asigna etiquetas numéricas a las cinco 
+# primeras profesoras y a los 5 profesores de la muestra.
+
+linea_122 <- "1387381598950529090873592751868713695761"
+
+linea_123 <- "5458081507271025602755892330634184281868"
+
+#PROFESORAS
+tripletes_122 <- substring(
+  linea_122,
+  seq(1, nchar(linea_122), 3),
+  seq(3, nchar(linea_122), 3)
+)
+
+numeros_profesoras <- as.numeric(tripletes_122)
+
+profesoras_escogidas <- unique(
+  numeros_profesoras[numeros_profesoras >= 1 & numeros_profesoras <= 500]
+)[1:5]
+
+
+#PROFESORES
+cuartetos_122 <- substring(
+  linea_122,
+  seq(1, nchar(linea_122), 4),
+  seq(4, nchar(linea_122), 4)
+)
+
+cuartetos_123 <- substring(
+  linea_123,
+  seq(1, nchar(linea_123), 4),
+  seq(4, nchar(linea_123), 4)
+)
+
+numeros_profesores <- as.numeric(cuartetos_122)
+
+numeros_123 <- as.numeric(cuartetos_123)
+
+profesores_escogidos <- unique(
+  numeros_profesores[numeros_profesores >= 1 & numeros_profesores <= 2000]
+)[1:5]
+
+nuevos_profesores <- numeros_123[
+  numeros_123 >= 1 & numeros_123 <= 2000 &
+    !numeros_123 %in% profesores_escogidos
+]
+
+profesores_escogidos <- c(
+  profesores_escogidos[!is.na(profesores_escogidos)],
+  nuevos_profesores
+)[1:5]
+
+resultados_profesores <- data.frame(
+  Genero = c(rep("Profesora", 5), 
+              rep("Profesor", 5)),
+  Numero = c(profesoras_escogidas, profesores_escogidos)
+)
+
+print(resultados_profesores)
+
+"
+      Genero Numero
+1  Profesora    138
+2  Profesora    159
+3  Profesora     52
+4  Profesora     87
+5  Profesora    359
+6   Profesor   1387
+7   Profesor    529
+8   Profesor    908
+9   Profesor   1369
+10  Profesor    815
+"
+
+# **************************************************
+# PREGUNTA 3.30 - Redactado de preguntas
+# **************************************************
+
+# Haz un comentario sobre cada una de las siguientes cuestiones como posibles 
+# preguntas de una encuesta. ¿Está clara la pregunta? ¿Predispone a una respuesta 
+# determinada?
+
+# (a) ¿Cuál de las siguientes afirmaciones representa mejor tu opinión sobre el
+# control de los inmigrantes ilegales?
+# 1. El Gobierno debería impedir la inmigración ilegal.
+# 2. No se puede impedir el derecho de una persona a emigrar de su país.
+
+"La pregunta no está bien formulada. Aunque parece ofrecer dos opciones opuestas, no cubre todo 
+el abanico de opiniones posibles. Además:
+
+Las dos afirmaciones no son mutuamente excluyentes: una persona podría creer que el gobierno debe 
+regular la inmigración ilegal y, al mismo tiempo, defender el derecho a emigrar.
+
+No permite posiciones intermedias (por ejemplo, regular pero no impedir completamente).
+
+El uso del término “inmigrantes ilegales” puede introducir un sesgo valorativo.
+
+Conclusión: la pregunta no es clara y puede forzar respuestas que no reflejan la opinión real del 
+encuestado."
+
+# (b) Se debería favorecer una moratoria de las armas nucleares, ya que de esta
+# forma se iniciaría un proceso, muy necesario, para detener su fabricación en todo
+# el mundo, lo que reduciría la posibilidad futura de una guerra nuclear. ¿Estás de
+# acuerdo o en desacuerdo?
+
+"La pregunta predispone claramente a una respuesta favorable. Antes de pedir la opinión, presenta una 
+cadena de argumentos positivos (“muy necesario”, “reduciría la posibilidad futura de una guerra nuclear”), 
+lo que constituye una pregunta tendenciosa.
+
+No se presenta ningún argumento alternativo o crítico.
+
+El encuestado puede sentirse presionado a estar de acuerdo para no parecer irracional o irresponsable.
+
+Conclusión: aunque la pregunta es comprensible, no es neutral y puede influir en la respuesta."
+
+# (c) En vista de la incesante degradación medioambiental y del agotamiento
+# de los recursos naturales, ¿favorecerías con incentivos económicos el reciclaje de
+# los bienes de consumo?
+
+"La pregunta es comprensible, pero no es neutral. El enunciado introduce un contexto alarmista 
+(“incesante degradación medioambiental”, “agotamiento de los recursos naturales”) que puede predisponer 
+al encuestado a responder afirmativamente.
+
+Mezcla una afirmación fuerte con la pregunta propiamente tal.
+
+No separa el diagnóstico del problema de la política concreta propuesta.
+
+Conclusión: la pregunta es clara, pero está redactada de forma sesgada, ya que introduce juicios previos 
+que pueden influir en la respuesta."

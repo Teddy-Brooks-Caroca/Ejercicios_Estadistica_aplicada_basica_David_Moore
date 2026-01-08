@@ -1207,3 +1207,39 @@ No separa el diagnóstico del problema de la política concreta propuesta.
 
 Conclusión: la pregunta es clara, pero está redactada de forma sesgada, ya que introduce juicios previos 
 que pueden influir en la respuesta."
+
+# **************************************************
+# PREGUNTA 3.31 - Error de estimación en encuestas
+# **************************************************
+
+# Una encuesta de opinión del New York Times sobre temas relacionados con 
+# la mujer contactó con una muestra de 1.025 mujeres y 472 hombres mediante 
+# una selección aleatoria de números telefónicos. El New York Times publica 
+# habitualmente la descripción completa de sus métodos de encuesta. El siguiente 
+# párrafo es parte de la descripción de dicha encuesta:
+
+# "En teoría, en 19 de cada 20 casos, los resultados que se basan en toda la 
+# muestra diferirán en no más de tres puntos porcentuales en ambas direcciones 
+# de los resultados que se habrían obtenido preguntando a todos los estadounidenses 
+# adultos. El error de estimación potencial de los subgrupos más pequeños es mayor. 
+# Por ejemplo, para los hombres el error es de más menos un cinco por ciento."
+
+# Explica por qué el error de estimación es mayor en las conclusiones que se
+# refieren sólo a los hombres que en las conclusiones que se refieren a todos los
+# adultos.
+
+"La diferencia se debe principalmente al tamaño de la muestra sobre la que se calculan las estimaciones.
+
+En la encuesta, las conclusiones referidas a todos los adultos se basan en una muestra total relativamente 
+grande (1.497 personas), lo que reduce la variabilidad de las estimaciones y, por tanto, el error de estimación. 
+En cambio, las conclusiones que se refieren solo a los hombres se apoyan en un subgrupo mucho más pequeño 
+(472 personas).
+
+Desde el punto de vista estadístico, el error de estimación (o margen de error) aumenta cuando disminuye el tamaño 
+muestral, ya que las estimaciones son más sensibles a la variabilidad aleatoria. Por ello, al trabajar con subgrupos 
+más reducidos, como el de los hombres, la incertidumbre es mayor y el intervalo de error se amplía (±5 % frente a ±3 %).
+
+En resumen, aunque el método de muestreo sea el mismo, las estimaciones basadas en submuestras más pequeñas tienen 
+necesariamente un mayor error de estimación que las basadas en la muestra total."
+
+# :::::::::::::::::::::::::::::::::::::::::::::::::::: FIN SECCIÓN ::::::::::::::::::::::::::::::::::::::::::::::::::::
